@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Tags Extractor - MultiTools</title>
+    <meta name="description" content="Extract YouTube video tags. Free YouTube tags extractor tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fab fa-youtube text-danger"></i> YouTube Tags Extractor</h1>
+            <p class="tool-description">Extract tags and metadata from YouTube videos for SEO optimization.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="youtubeUrl" class="form-label">YouTube Video URL:</label>
+                            <input type="url" class="form-control" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
+                        </div>
+                        
+                        <button class="btn btn-danger w-100 mb-3" id="extractBtn">
+                            <i class="fas fa-search"></i> Extract Tags
+                        </button>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-info-circle"></i> About YouTube Tags</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>YouTube tags help categorize videos and improve discoverability in search results.</p>
+                                <ul>
+                                    <li>Help with video indexing</li>
+                                    <li>Improve search visibility</li>
+                                    <li>Enhance video recommendations</li>
+                                    <li>Support content categorization</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="resultsContainer" style="display: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-tags"></i> Video Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h6>Video Title:</h6>
+                                        <p id="videoTitle" class="border rounded p-2 bg-light"></p>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <h6>Tags:</h6>
+                                        <div class="border rounded p-2" id="tagsContainer">
+                                            <!-- Tags will be loaded here -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <h6>Metadata:</h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><strong>Views:</strong></td>
+                                                        <td id="viewCount">0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Likes:</strong></td>
+                                                        <td id="likeCount">0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Dislikes:</strong></td>
+                                                        <td id="dislikeCount">0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Comments:</strong></td>
+                                                        <td id="commentCount">0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Duration:</strong></td>
+                                                        <td id="duration">0:00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Published:</strong></td>
+                                                        <td id="publishDate">-</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-success w-100" id="copyTagsBtn">
+                                            <i class="fas fa-copy"></i> Copy Tags
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fab fa-youtube fa-3x text-danger mb-3"></i>
+                            <p class="text-muted">Enter a YouTube URL to extract tags</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-lightbulb"></i> SEO Best Practices</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Effective Tag Strategies:</h6>
+                        <ul>
+                            <li>Use 5-10 relevant tags</li>
+                            <li>Include primary keywords</li>
+                            <li>Add brand-specific tags</li>
+                            <li>Use trending tags when relevant</li>
+                            <li>Avoid keyword stuffing</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Tag Optimization Tips:</h6>
+                        <ul>
+                            <li>Research competitor tags</li>
+                            <li>Use long-tail keywords</li>
+                            <li>Include location tags when relevant</li>
+                            <li>Update tags periodically</li>
+                            <li>Monitor tag performance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const youtubeUrl = document.getElementById('youtubeUrl');
+        const extractBtn = document.getElementById('extractBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const videoTitle = document.getElementById('videoTitle');
+        const tagsContainer = document.getElementById('tagsContainer');
+        const viewCount = document.getElementById('viewCount');
+        const likeCount = document.getElementById('likeCount');
+        const dislikeCount = document.getElementById('dislikeCount');
+        const commentCount = document.getElementById('commentCount');
+        const duration = document.getElementById('duration');
+        const publishDate = document.getElementById('publishDate');
+        const copyTagsBtn = document.getElementById('copyTagsBtn');
+
+        function extractTags() {
+            const url = youtubeUrl.value.trim();
+            if (!url) {
+                alert('Please enter a YouTube URL!');
+                return;
+            }
+
+            if (!ToolUtils.validateURL(url)) {
+                alert('Please enter a valid YouTube URL!');
+                return;
+            }
+
+            // Show loading state
+            resultsContainer.style.display = 'none';
+            placeholder.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin fa-3x text-danger mb-3"></i><p>Extracting video tags...</p></div>';
+            placeholder.style.display = 'block';
+
+            // Simulate API call
+            setTimeout(() => {
+                // Generate mock data
+                videoTitle.textContent = 'How to Use YouTube Tags for Better SEO | Video Marketing Tutorial';
+                viewCount.textContent = ToolUtils.formatNumber(15420);
+                likeCount.textContent = ToolUtils.formatNumber(2341);
+                dislikeCount.textContent = ToolUtils.formatNumber(45);
+                commentCount.textContent = ToolUtils.formatNumber(167);
+                duration.textContent = '12:34';
+                publishDate.textContent = 'January 15, 2024';
+
+                // Generate sample tags
+                const sampleTags = [
+                    'YouTube SEO', 'Video Marketing', 'Content Creation', 'Digital Marketing',
+                    'SEO Tips', 'YouTube Channel', 'Online Business', 'Marketing Strategy',
+                    'Social Media', 'Video Optimization', 'YouTube Growth', 'Content Strategy'
+                ];
+
+                tagsContainer.innerHTML = '';
+                sampleTags.forEach(tag => {
+                    const span = document.createElement('span');
+                    span.className = 'badge bg-primary me-1 mb-1';
+                    span.textContent = tag;
+                    tagsContainer.appendChild(span);
+                });
+
+                resultsContainer.style.display = 'block';
+                placeholder.style.display = 'none';
+            }, 2000);
+        }
+
+        copyTagsBtn.addEventListener('click', function() {
+            const tags = Array.from(tagsContainer.querySelectorAll('.badge')).map(badge => badge.textContent);
+            if (tags.length > 0) {
+                ToolUtils.copyToClipboard(tags.join(', '));
+            }
+        });
+
+        extractBtn.addEventListener('click', extractTags);
+        trackToolUsage('YouTube Tags Extractor');
+    </script>
+</body>
+</html>

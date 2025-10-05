@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Generator - MultiTools</title>
+    <meta name="description" content="Generate barcodes. Free barcode generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-barcode text-success"></i> Barcode Generator</h1>
+            <p class="tool-description">Generate barcodes for products, inventory, and more.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Generator Options</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="barcodeText" class="form-label">Text/Number to Encode:</label>
+                            <input type="text" class="form-control" id="barcodeText" placeholder="Enter product code, number, or text">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="barcodeType" class="form-label">Barcode Type:</label>
+                            <select class="form-select" id="barcodeType">
+                                <option value="code128">CODE 128</option>
+                                <option value="code39">CODE 39</option>
+                                <option value="ean13">EAN-13</option>
+                                <option value="upc">UPC-A</option>
+                                <option value="code93">CODE 93</option>
+                            </select>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="width" class="form-label">Width:</label>
+                                <input type="number" class="form-control" id="width" value="2" min="1" max="10">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="height" class="form-label">Height:</label>
+                                <input type="number" class="form-control" id="height" value="50" min="20" max="200">
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success w-100" id="generateBtn">
+                            <i class="fas fa-barcode"></i> Generate Barcode
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-barcode"></i> Generated Barcode</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="barcodeContainer" class="border rounded p-3 mb-3" style="min-height: 150px; display: flex; align-items: center; justify-content: center;">
+                            <p class="text-muted">Generate a barcode to see preview</p>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="downloadBtn" style="display: none;">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Barcode Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>CODE 128:</strong> High density, alphanumeric</li>
+                            <li><strong>CODE 39:</strong> First alphanumeric barcode</li>
+                            <li><strong>EAN-13:</strong> Used for retail products</li>
+                            <li><strong>UPC-A:</strong> Used in North America</li>
+                            <li><strong>CODE 93:</strong> Compact version of CODE 39</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const barcodeText = document.getElementById('barcodeText');
+        const barcodeType = document.getElementById('barcodeType');
+        const width = document.getElementById('width');
+        const height = document.getElementById('height');
+        const generateBtn = document.getElementById('generateBtn');
+        const barcodeContainer = document.getElementById('barcodeContainer');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        function generateBarcode() {
+            const text = barcodeText.value.trim();
+            if (!text) {
+                alert('Please enter text to encode!');
+                return;
+            }
+
+            // In a real implementation, this would use a barcode library
+            // For demo, we'll create a placeholder
+            barcodeContainer.innerHTML = `
+                <div class="text-center">
+                    <div class="border rounded p-2 mb-2" style="background: linear-gradient(90deg, #000 20%, #fff 20%, #fff 40%, #000 40%, #000 60%, #fff 60%, #fff 80%, #000 80%); height: 60px;"></div>
+                    <p><strong>${text}</strong></p>
+                    <p class="small text-muted">Barcode Type: ${barcodeType.value.toUpperCase()}</p>
+                </div>
+            `;
+            downloadBtn.style.display = 'block';
+        }
+
+        function downloadBarcode() {
+            alert('In a real implementation, this would download the generated barcode as an image. You would need to integrate a barcode generation library like jsBarcode.');
+        }
+
+        generateBtn.addEventListener('click', generateBarcode);
+        downloadBtn.addEventListener('click', downloadBarcode);
+
+        trackToolUsage('Barcode Generator');
+    </script>
+</body>
+</html>

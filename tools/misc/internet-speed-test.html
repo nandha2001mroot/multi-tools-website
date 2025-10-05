@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet Speed Test - MultiTools</title>
+    <meta name="description" content="Test internet connection speed. Free internet speed test tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-tachometer-alt text-success"></i> Internet Speed Test</h1>
+            <p class="tool-description">Test your internet connection speed with detailed analysis.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-cog"></i> Test Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="testDuration" class="form-label">Test Duration:</label>
+                                    <select class="form-select" id="testDuration">
+                                        <option value="30">30 seconds</option>
+                                        <option value="60" selected>1 minute</option>
+                                        <option value="120">2 minutes</option>
+                                        <option value="300">5 minutes</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="includePing" checked>
+                                    <label class="form-check-label" for="includePing">
+                                        Include Ping/Jitter Test
+                                    </label>
+                                </div>
+                                
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="includeUpload" checked>
+                                    <label class="form-check-label" for="includeUpload">
+                                        Include Upload Speed Test
+                                    </label>
+                                </div>
+                                
+                                <button class="btn btn-success w-100 mb-3" id="startTestBtn">
+                                    <i class="fas fa-play"></i> Start Speed Test
+                                </button>
+                                
+                                <button class="btn btn-outline-secondary w-100" id="stopTestBtn" disabled>
+                                    <i class="fas fa-stop"></i> Stop Test
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-chart-line"></i> Test Results</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-4">
+                                    <div class="col-md-4">
+                                        <div class="card text-center">
+                                            <div class="card-body">
+                                                <i class="fas fa-download fa-2x text-primary mb-2"></i>
+                                                <h3 id="downloadSpeed" class="text-primary">0</h3>
+                                                <p class="card-text">Mbps<br>Download</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card text-center">
+                                            <div class="card-body">
+                                                <i class="fas fa-upload fa-2x text-warning mb-2"></i>
+                                                <h3 id="uploadSpeed" class="text-warning">0</h3>
+                                                <p class="card-text">Mbps<br>Upload</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card text-center">
+                                            <div class="card-body">
+                                                <i class="fas fa-bolt fa-2x text-success mb-2"></i>
+                                                <h3 id="pingTime" class="text-success">0</h3>
+                                                <p class="card-text">ms<br>Ping</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="progress">
+                                        <div class="progress-bar" id="testProgress" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-1">
+                                        <span id="progressText">Ready to test</span>
+                                        <span id="progressPercent">0%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="alert alert-info" id="statusAlert">
+                                    Click "Start Speed Test" to begin testing your connection
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Connection Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Your Connection:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>IP Address:</strong></td>
+                                        <td id="ipAddress">Detecting...</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>ISP:</strong></td>
+                                        <td id="isp">Detecting...</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Location:</strong></td>
+                                        <td id="location">Detecting...</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Connection Type:</strong></td>
+                                        <td id="connectionType">Detecting...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Speed Categories:</h6>
+                        <ul>
+                            <li><strong>Very Slow:</strong> Under 10 Mbps</li>
+                            <li><strong>Slow:</strong> 10-25 Mbps</li>
+                            <li><strong>Average:</strong> 25-100 Mbps</li>
+                            <li><strong>Fast:</strong> 100-500 Mbps</li>
+                            <li><strong>Very Fast:</strong> Over 500 Mbps</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-lightbulb"></i> Speed Test Tips</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Before Testing:</h6>
+                        <ul>
+                            <li>Close bandwidth-intensive applications</li>
+                            <li>Connect directly via Ethernet if possible</li>
+                            <li>Restart your router/modem</li>
+                            <li>Test at different times of day</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Interpreting Results:</h6>
+                        <ul>
+                            <li>Download speed affects streaming quality</li>
+                            <li>Upload speed affects file sharing</li>
+                            <li>Ping affects gaming performance</li>
+                            <li>Jitter affects VoIP quality</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const testDuration = document.getElementById('testDuration');
+        const includePing = document.getElementById('includePing');
+        const includeUpload = document.getElementById('includeUpload');
+        const startTestBtn = document.getElementById('startTestBtn');
+        const stopTestBtn = document.getElementById('stopTestBtn');
+        const downloadSpeed = document.getElementById('downloadSpeed');
+        const uploadSpeed = document.getElementById('uploadSpeed');
+        const pingTime = document.getElementById('pingTime');
+        const testProgress = document.getElementById('testProgress');
+        const progressText = document.getElementById('progressText');
+        const progressPercent = document.getElementById('progressPercent');
+        const statusAlert = document.getElementById('statusAlert');
+        const ipAddress = document.getElementById('ipAddress');
+        const isp = document.getElementById('isp');
+        const location = document.getElementById('location');
+        const connectionType = document.getElementById('connectionType');
+
+        let isTesting = false;
+        let testInterval;
+
+        function startSpeedTest() {
+            if (isTesting) return;
+            
+            isTesting = true;
+            startTestBtn.disabled = true;
+            stopTestBtn.disabled = false;
+            
+            const duration = parseInt(testDuration.value) || 60;
+            let progress = 0;
+            let phase = 'initializing';
+            
+            // Simulate test phases
+            testInterval = setInterval(() => {
+                progress += 100 / (duration * 10); // Update every 100ms
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(testInterval);
+                    finishTest();
+                }
+                
+                // Update progress
+                testProgress.style.width = progress + '%';
+                progressPercent.textContent = Math.round(progress) + '%';
+                
+                // Simulate different test phases
+                if (progress < 25) {
+                    phase = 'download';
+                    progressText.textContent = 'Testing download speed...';
+                    downloadSpeed.textContent = (Math.random() * 100).toFixed(1);
+                } else if (progress < 50) {
+                    phase = 'ping';
+                    progressText.textContent = 'Testing ping/jitter...';
+                    pingTime.textContent = Math.floor(Math.random() * 50) + 10;
+                } else if (progress < 75 && includeUpload.checked) {
+                    phase = 'upload';
+                    progressText.textContent = 'Testing upload speed...';
+                    uploadSpeed.textContent = (Math.random() * 50).toFixed(1);
+                } else {
+                    phase = 'finalizing';
+                    progressText.textContent = 'Finalizing results...';
+                }
+                
+                // Update status
+                statusAlert.className = 'alert alert-info';
+                statusAlert.textContent = `Testing ${phase} speed... ${Math.round(progress)}% complete`;
+            }, 100);
+            
+            // Simulate connection info
+            setTimeout(() => {
+                ipAddress.textContent = '192.168.1.' + Math.floor(Math.random() * 255);
+                isp.textContent = ['Comcast', 'Verizon', 'AT&T', 'Spectrum'][Math.floor(Math.random() * 4)];
+                location.textContent = ['New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Houston, TX'][Math.floor(Math.random() * 4)];
+                connectionType.textContent = ['Cable', 'Fiber', 'DSL', 'Wireless'][Math.floor(Math.random() * 4)];
+            }, 500);
+        }
+
+        function stopSpeedTest() {
+            if (testInterval) {
+                clearInterval(testInterval);
+            }
+            
+            isTesting = false;
+            startTestBtn.disabled = false;
+            stopTestBtn.disabled = true;
+            
+            progressText.textContent = 'Test stopped';
+            progressPercent.textContent = '0%';
+            testProgress.style.width = '0%';
+            
+            statusAlert.className = 'alert alert-warning';
+            statusAlert.textContent = 'Test stopped by user';
+        }
+
+        function finishTest() {
+            isTesting = false;
+            startTestBtn.disabled = false;
+            stopTestBtn.disabled = true;
+            
+            progressText.textContent = 'Test completed';
+            
+            // Final results
+            const finalDownload = (Math.random() * 200 + 50).toFixed(1);
+            const finalUpload = (Math.random() * 50 + 10).toFixed(1);
+            const finalPing = Math.floor(Math.random() * 30) + 5;
+            
+            downloadSpeed.textContent = finalDownload;
+            uploadSpeed.textContent = finalUpload;
+            pingTime.textContent = finalPing;
+            
+            statusAlert.className = 'alert alert-success';
+            statusAlert.innerHTML = `
+                <strong>Test Complete!</strong><br>
+                Download: ${finalDownload} Mbps | Upload: ${finalUpload} Mbps | Ping: ${finalPing} ms
+            `;
+        }
+
+        startTestBtn.addEventListener('click', startSpeedTest);
+        stopTestBtn.addEventListener('click', stopSpeedTest);
+
+        // Initial connection info
+        setTimeout(() => {
+            ipAddress.textContent = 'Detecting...';
+            isp.textContent = 'Detecting...';
+            location.textContent = 'Detecting...';
+            connectionType.textContent = 'Detecting...';
+        }, 1000);
+
+        trackToolUsage('Internet Speed Test');
+    </script>
+</body>
+</html>

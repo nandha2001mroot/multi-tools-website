@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compressor - MultiTools</title>
+    <meta name="description" content="Compress images online to reduce file size. Free image compression tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-compress text-primary"></i> Image Compressor</h1>
+            <p class="tool-description">Compress images to reduce file size while maintaining acceptable quality.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-upload"></i> Upload Image</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="imageUpload" class="form-label">Choose Image File</label>
+                            <input type="file" class="form-control" id="imageUpload" accept="image/*">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="quality" class="form-label">Compression Level</label>
+                            <input type="range" class="form-range" id="quality" min="1" max="100" value="70">
+                            <div class="d-flex justify-content-between">
+                                <small>High Quality</small>
+                                <span id="qualityValue">70%</span>
+                                <small>High Compression</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="autoResize">
+                            <label class="form-check-label" for="autoResize">
+                                Auto-resize for web (max 1920x1080)
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100" id="compressBtn">
+                            <i class="fas fa-compress"></i> Compress Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-bar"></i> Compression Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="resultsContainer" style="display: none;">
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <strong>Original:</strong>
+                                    <div id="originalSize">0 KB</div>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Compressed:</strong>
+                                    <div id="compressedSize">0 KB</div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Savings:</strong>
+                                <span id="savings">0%</span>
+                            </div>
+                            
+                            <img id="previewImage" class="img-fluid mb-3" style="max-height: 200px;">
+                            
+                            <button class="btn btn-success w-100" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download Compressed
+                            </button>
+                        </div>
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fas fa-image fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Upload an image to compress</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> How to Use</h5>
+            </div>
+            <div class="card-body">
+                <ol>
+                    <li>Upload your image file</li>
+                    <li>Adjust compression level (lower = more compression)</li>
+                    <li>Optionally enable auto-resize</li>
+                    <li>Click "Compress Image" button</li>
+                    <li>View compression results and download</li>
+                </ol>
+                <div class="alert alert-info">
+                    <i class="fas fa-lightbulb"></i> <strong>Tip:</strong> 70-80% quality usually provides good compression with minimal quality loss.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const imageUpload = document.getElementById('imageUpload');
+        const qualitySlider = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        const autoResize = document.getElementById('autoResize');
+        const compressBtn = document.getElementById('compressBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const previewImage = document.getElementById('previewImage');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const originalSize = document.getElementById('originalSize');
+        const compressedSize = document.getElementById('compressedSize');
+        const savings = document.getElementById('savings');
+
+        let originalImage = null;
+        let compressedImage = null;
+        let originalFileSize = 0;
+
+        qualitySlider.addEventListener('input', function() {
+            qualityValue.textContent = this.value + '%';
+        });
+
+        imageUpload.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    originalImage = e.target.result;
+                    originalFileSize = Math.round(file.size / 1024);
+                    originalSize.textContent = originalFileSize + ' KB';
+                    previewImage.src = originalImage;
+                    resultsContainer.style.display = 'block';
+                    placeholder.style.display = 'none';
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        compressBtn.addEventListener('click', function() {
+            if (!originalImage) {
+                alert('Please upload an image first!');
+                return;
+            }
+
+            const quality = qualitySlider.value / 100;
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                let width = img.width;
+                let height = img.height;
+                
+                if (autoResize.checked) {
+                    const maxWidth = 1920;
+                    const maxHeight = 1080;
+                    
+                    if (width > maxWidth || height > maxHeight) {
+                        const ratio = Math.min(maxWidth / width, maxHeight / height);
+                        width = Math.round(width * ratio);
+                        height = Math.round(height * ratio);
+                    }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                compressedImage = canvas.toDataURL('image/jpeg', quality);
+                previewImage.src = compressedImage;
+                
+                // Calculate compressed file size
+                const compressedSizeBytes = atob(compressedImage.split(',')[1]).length;
+                const compressedFileSize = Math.round(compressedSizeBytes / 1024);
+                compressedSize.textContent = compressedFileSize + ' KB';
+                
+                const savingsPercent = Math.round(((originalFileSize - compressedFileSize) / originalFileSize) * 100);
+                savings.textContent = savingsPercent + '%';
+            };
+            
+            img.src = originalImage;
+        });
+
+        downloadBtn.addEventListener('click', function() {
+            if (!compressedImage) {
+                alert('No compressed image to download!');
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.download = 'compressed-image.jpg';
+            link.href = compressedImage;
+            link.click();
+        });
+
+        trackToolUsage('Image Compressor');
+    </script>
+</body>
+</html>

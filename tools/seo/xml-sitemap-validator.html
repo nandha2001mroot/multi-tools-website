@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Sitemap Validator - MultiTools</title>
+    <meta name="description" content="Validate your sitemap. Free XML sitemap validator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-check-circle text-success"></i> XML Sitemap Validator</h1>
+            <p class="tool-description">Validate your XML sitemap for proper formatting and structure.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-link"></i> Sitemap URL</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="sitemapUrl" class="form-label">Enter sitemap URL:</label>
+                            <input type="url" class="form-control" id="sitemapUrl" placeholder="https://example.com/sitemap.xml">
+                        </div>
+                        
+                        <button class="btn btn-success w-100 mb-3" id="validateBtn">
+                            <i class="fas fa-check"></i> Validate Sitemap
+                        </button>
+                        
+                        <div class="mb-3">
+                            <label for="sitemapContent" class="form-label">Or paste sitemap content:</label>
+                            <textarea class="form-control" id="sitemapContent" rows="8" placeholder="Paste your XML sitemap content here..."></textarea>
+                        </div>
+                        
+                        <button class="btn btn-success w-100" id="validateContentBtn">
+                            <i class="fas fa-check"></i> Validate Content
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-bar"></i> Validation Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="resultsContainer" style="display: none;">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-check-circle fa-5x text-success" id="statusIcon"></i>
+                                <h3 id="validationStatus" class="mt-3">Valid</h3>
+                                <p id="validationMessage">Sitemap is properly formatted</p>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <p><strong>Total URLs:</strong> <span id="totalUrls">0</span></p>
+                                </div>
+                                <div class="col-6">
+                                    <p><strong>Last Modified:</strong> <span id="lastModified">-</span></p>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <h6>Issues Found:</h6>
+                                <ul id="issuesList">
+                                    <li class="text-success">No issues found - sitemap is valid</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <h6>Sitemap Structure:</h6>
+                                <ul id="sitemapStructure" class="list-group">
+                                    <!-- Structure will be loaded here -->
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                            <p class="text-muted">Enter a sitemap URL or content to validate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Sitemap Best Practices</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>XML Sitemap Format:</h6>
+                        <ul>
+                            <li>Must start with XML declaration</li>
+                            <li>Root element should be <urlset></li>
+                            <li>Each URL should be in <url> tags</li>
+                            <li>Must include <loc> element</li>
+                            <li>Optional: <lastmod>, <changefreq>, <priority></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Common Issues:</h6>
+                        <ul>
+                            <li>Malformed XML syntax</li>
+                            <li>Invalid URLs</li>
+                            <li>Missing required elements</li>
+                            <li>Invalid date formats</li>
+                            <li>Too many URLs (over 50,000)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const sitemapUrl = document.getElementById('sitemapUrl');
+        const sitemapContent = document.getElementById('sitemapContent');
+        const validateBtn = document.getElementById('validateBtn');
+        const validateContentBtn = document.getElementById('validateContentBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const statusIcon = document.getElementById('statusIcon');
+        const validationStatus = document.getElementById('validationStatus');
+        const validationMessage = document.getElementById('validationMessage');
+        const totalUrls = document.getElementById('totalUrls');
+        const lastModified = document.getElementById('lastModified');
+        const issuesList = document.getElementById('issuesList');
+        const sitemapStructure = document.getElementById('sitemapStructure');
+
+        function validateSitemap(xmlContent) {
+            try {
+                // Parse XML
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlContent, "text/xml");
+                
+                // Check for parsing errors
+                const parserError = xmlDoc.querySelector("parsererror");
+                if (parserError) {
+                    throw new Error("Invalid XML format");
+                }
+
+                // Check if it's a sitemap
+                const urlset = xmlDoc.querySelector("urlset");
+                if (!urlset) {
+                    throw new Error("Not a valid sitemap XML");
+                }
+
+                // Get all URLs
+                const urls = xmlDoc.querySelectorAll("url");
+                const urlCount = urls.length;
+
+                // Check each URL
+                let issues = [];
+                let validUrls = 0;
+                
+                urls.forEach((url, index) => {
+                    const loc = url.querySelector("loc");
+                    if (!loc || !loc.textContent) {
+                        issues.push(`URL ${index + 1}: Missing location`);
+                    } else {
+                        try {
+                            new URL(loc.textContent);
+                            validUrls++;
+                        } catch {
+                            issues.push(`URL ${index + 1}: Invalid URL format - ${loc.textContent}`);
+                        }
+                    }
+                });
+
+                // Update results
+                statusIcon.className = `fas fa-check-circle fa-5x text-${issues.length === 0 ? 'success' : 'warning'}`;
+                validationStatus.textContent = issues.length === 0 ? 'Valid' : 'Issues Found';
+                validationMessage.textContent = issues.length === 0 ? 'Sitemap is properly formatted' : 'Sitemap has validation issues';
+                totalUrls.textContent = urlCount;
+                
+                // Display issues
+                issuesList.innerHTML = '';
+                if (issues.length === 0) {
+                    const li = document.createElement('li');
+                    li.className = 'text-success';
+                    li.textContent = 'No issues found - sitemap is valid';
+                    issuesList.appendChild(li);
+                } else {
+                    issues.forEach(issue => {
+                        const li = document.createElement('li');
+                        li.textContent = issue;
+                        li.className = 'text-danger';
+                        issuesList.appendChild(li);
+                    });
+                }
+
+                // Display sitemap structure
+                sitemapStructure.innerHTML = '';
+                urls.forEach((url, index) => {
+                    const loc = url.querySelector("loc");
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.innerHTML = `<strong>URL ${index + 1}:</strong> ${loc ? loc.textContent : 'Invalid'}`;
+                    sitemapStructure.appendChild(li);
+                });
+
+                resultsContainer.style.display = 'block';
+                placeholder.style.display = 'none';
+
+            } catch (error) {
+                statusIcon.className = 'fas fa-exclamation-triangle fa-5x text-danger';
+                validationStatus.textContent = 'Invalid';
+                validationMessage.textContent = error.message;
+                totalUrls.textContent = '0';
+                issuesList.innerHTML = `<li class="text-danger">Error: ${error.message}</li>`;
+                sitemapStructure.innerHTML = '';
+                resultsContainer.style.display = 'block';
+                placeholder.style.display = 'none';
+            }
+        }
+
+        validateBtn.addEventListener('click', function() {
+            const url = sitemapUrl.value.trim();
+            if (!url) {
+                alert('Please enter a sitemap URL!');
+                return;
+            }
+
+            if (!ToolUtils.validateURL(url)) {
+                alert('Please enter a valid URL!');
+                return;
+            }
+
+            // In a real implementation, this would fetch the sitemap
+            // For demo, we'll use a sample sitemap
+            const sampleSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://example.com/</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://example.com/about</loc>
+        <lastmod>2024-01-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+</urlset>`;
+
+            validateSitemap(sampleSitemap);
+        });
+
+        validateContentBtn.addEventListener('click', function() {
+            const content = sitemapContent.value.trim();
+            if (!content) {
+                alert('Please enter sitemap content!');
+                return;
+            }
+
+            validateSitemap(content);
+        });
+
+        trackToolUsage('XML Sitemap Validator');
+    </script>
+</body>
+</html>

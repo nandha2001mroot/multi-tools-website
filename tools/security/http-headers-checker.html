@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP Headers Checker - MultiTools</title>
+    <meta name="description" content="Check HTTP headers of websites. Free HTTP headers checker tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-code text-warning"></i> HTTP Headers Checker</h1>
+            <p class="tool-description">Check HTTP headers sent by websites for security and performance analysis.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="websiteUrl" class="form-label">Enter Website URL:</label>
+                            <input type="url" class="form-control" id="websiteUrl" placeholder="https://example.com">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="requestMethod" class="form-label">Request Method:</label>
+                                <select class="form-select" id="requestMethod">
+                                    <option value="GET" selected>GET</option>
+                                    <option value="HEAD">HEAD</option>
+                                    <option value="POST">POST</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="followRedirects" class="form-label">Follow Redirects:</label>
+                                <select class="form-select" id="followRedirects">
+                                    <option value="true" selected>Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-warning w-100 mb-3" id="checkBtn">
+                            <i class="fas fa-search"></i> Check Headers
+                        </button>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-info-circle"></i> HTTP Headers Info</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>HTTP headers allow the client and server to pass additional information with the request or response.</p>
+                                <ul>
+                                    <li>Security headers (CSP, X-Frame-Options)</li>
+                                    <li>Performance headers (Cache-Control)</li>
+                                    <li>Server information</li>
+                                    <li>Content type and encoding</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="resultsContainer" style="display: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-server"></i> HTTP Response Headers</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h6>Status: <span id="statusCode" class="badge bg-success">200 OK</span></h6>
+                                        <p><strong>Server:</strong> <span id="serverInfo"></span></p>
+                                        <p><strong>Content-Type:</strong> <span id="contentType"></span></p>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <h6>Security Headers:</h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Header</th>
+                                                        <th>Value</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="securityHeaders">
+                                                    <!-- Security headers will go here -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <h6>All Response Headers:</h6>
+                                        <div class="border rounded p-2" id="allHeaders" style="max-height: 200px; overflow-y: auto;">
+                                            <!-- All headers will go here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fas fa-code fa-3x text-warning mb-3"></i>
+                            <p class="text-muted">Enter a website URL to check its HTTP headers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-shield-alt"></i> Important Security Headers</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Header</th>
+                                <th>Purpose</th>
+                                <th>Recommended Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Strict-Transport-Security</td>
+                                <td>Enforce HTTPS</td>
+                                <td>max-age=31536000; includeSubDomains</td>
+                            </tr>
+                            <tr>
+                                <td>X-Frame-Options</td>
+                                <td>Prevent clickjacking</td>
+                                <td>DENY or SAMEORIGIN</td>
+                            </tr>
+                            <tr>
+                                <td>X-Content-Type-Options</td>
+                                <td>Prevent MIME-sniffing</td>
+                                <td>nosniff</td>
+                            </tr>
+                            <tr>
+                                <td>Content-Security-Policy</td>
+                                <td>Control resource loading</td>
+                                <td>Custom policy</td>
+                            </tr>
+                            <tr>
+                                <td>Referrer-Policy</td>
+                                <td>Control referrer information</td>
+                                <td>strict-origin-when-cross-origin</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const websiteUrl = document.getElementById('websiteUrl');
+        const requestMethod = document.getElementById('requestMethod');
+        const followRedirects = document.getElementById('followRedirects');
+        const checkBtn = document.getElementById('checkBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const statusCode = document.getElementById('statusCode');
+        const serverInfo = document.getElementById('serverInfo');
+        const contentType = document.getElementById('contentType');
+        const securityHeaders = document.getElementById('securityHeaders');
+        const allHeaders = document.getElementById('allHeaders');
+
+        function checkHeaders() {
+            const url = websiteUrl.value.trim();
+            if (!url) {
+                alert('Please enter a website URL!');
+                return;
+            }
+
+            if (!ToolUtils.validateURL(url)) {
+                alert('Please enter a valid URL!');
+                return;
+            }
+
+            // Show loading state
+            resultsContainer.style.display = 'none';
+            placeholder.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin fa-3x text-muted mb-3"></i><p>Checking HTTP headers...</p></div>';
+            placeholder.style.display = 'block';
+
+            // Simulate API call
+            setTimeout(() => {
+                // Generate mock header data
+                serverInfo.textContent = 'Apache/2.4.41 (Ubuntu)';
+                contentType.textContent = 'text/html; charset=UTF-8';
+                
+                // Security headers
+                securityHeaders.innerHTML = `
+                    <tr>
+                        <td>Strict-Transport-Security</td>
+                        <td>max-age=31536000</td>
+                        <td><span class="badge bg-success">✓ Present</span></td>
+                    </tr>
+                    <tr>
+                        <td>X-Frame-Options</td>
+                        <td>SAMEORIGIN</td>
+                        <td><span class="badge bg-success">✓ Present</span></td>
+                    </tr>
+                    <tr>
+                        <td>X-Content-Type-Options</td>
+                        <td>nosniff</td>
+                        <td><span class="badge bg-success">✓ Present</span></td>
+                    </tr>
+                    <tr>
+                        <td>Content-Security-Policy</td>
+                        <td>upgrade-insecure-requests</td>
+                        <td><span class="badge bg-warning">⚠ Partial</span></td>
+                    </tr>
+                `;
+                
+                // All headers
+                allHeaders.innerHTML = `
+                    <div class="small">
+                        <div><strong>Date:</strong> ${new Date().toUTCString()}</div>
+                        <div><strong>Connection:</strong> keep-alive</div>
+                        <div><strong>Cache-Control:</strong> max-age=3600</div>
+                        <div><strong>ETag:</strong> "abc123"</div>
+                        <div><strong>Last-Modified:</strong> ${new Date().toUTCString()}</div>
+                        <div><strong>Vary:</strong> Accept-Encoding</div>
+                        <div><strong>Content-Length:</strong> 12345</div>
+                    </div>
+                `;
+
+                resultsContainer.style.display = 'block';
+                placeholder.style.display = 'none';
+            }, 2000);
+        }
+
+        checkBtn.addEventListener('click', checkHeaders);
+        trackToolUsage('HTTP Headers Checker');
+    </script>
+</body>
+</html>

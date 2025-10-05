@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Base64 - MultiTools</title>
+    <meta name="description" content="Convert images to Base64 string. Free image to Base64 converter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-code text-primary"></i> Image to Base64</h1>
+            <p class="tool-description">Convert images to Base64 encoded strings for embedding in HTML/CSS.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-upload"></i> Upload Image</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="imageUpload" class="form-label">Choose Image File</label>
+                            <input type="file" class="form-control" id="imageUpload" accept="image/*">
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includePrefix">
+                            <label class="form-check-label" for="includePrefix">
+                                Include Data URI Prefix (data:image/jpeg;base64,)
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100" id="convertBtn">
+                            <i class="fas fa-cogs"></i> Convert to Base64
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-code"></i> Base64 Result</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="base64Output" class="form-label">Base64 String:</label>
+                            <textarea class="form-control" id="base64Output" rows="8" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Base64
+                            </button>
+                            <button class="btn btn-outline-secondary" id="resetBtn">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Usage Examples</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>HTML Image Tag:</strong></p>
+                        <code><img src="image/jpeg;base64,...base64_string..." alt="Image"></code>
+                        
+                        <p class="mt-2"><strong>CSS Background:</strong></p>
+                        <code>background-image: url("data:image/jpeg;base64,...base64_string...");</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const imageUpload = document.getElementById('imageUpload');
+        const includePrefix = document.getElementById('includePrefix');
+        const convertBtn = document.getElementById('convertBtn');
+        const base64Output = document.getElementById('base64Output');
+        const copyBtn = document.getElementById('copyBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        imageUpload.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    let base64String = e.target.result.split(',')[1];
+                    
+                    if (includePrefix.checked) {
+                        base64String = e.target.result;
+                    }
+                    
+                    base64Output.value = base64String;
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        convertBtn.addEventListener('click', function() {
+            if (imageUpload.files.length === 0) {
+                alert('Please upload an image first!');
+                return;
+            }
+            
+            const file = imageUpload.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                let base64String = e.target.result.split(',')[1];
+                
+                if (includePrefix.checked) {
+                    base64String = e.target.result;
+                }
+                
+                base64Output.value = base64String;
+            };
+            
+            reader.readAsDataURL(file);
+        });
+
+        copyBtn.addEventListener('click', function() {
+            if (base64Output.value) {
+                ToolUtils.copyToClipboard(base64Output.value);
+            }
+        });
+
+        resetBtn.addEventListener('click', function() {
+            imageUpload.value = '';
+            base64Output.value = '';
+        });
+
+        trackToolUsage('Image to Base64');
+    </script>
+</body>
+</html>

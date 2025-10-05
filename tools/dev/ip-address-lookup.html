@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Lookup - MultiTools</title>
+    <meta name="description" content="Lookup IP address information. Free IP address lookup tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-network-wired text-dark"></i> IP Address Lookup</h1>
+            <p class="tool-description">Lookup information about IP addresses including location and ISP details.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="ipAddress" class="form-label">Enter IP Address:</label>
+                            <input type="text" class="form-control" id="ipAddress" placeholder="192.168.1.1" value="8.8.8.8">
+                        </div>
+                        
+                        <button class="btn btn-dark w-100 mb-3" id="lookupBtn">
+                            <i class="fas fa-search"></i> Lookup IP Address
+                        </button>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-info-circle"></i> Your IP Address</h5>
+                            </div>
+                            <div class="card-body">
+                                <p id="yourIp">Detecting...</p>
+                                <button class="btn btn-outline-secondary" id="detectIpBtn">
+                                    <i class="fas fa-sync"></i> Detect My IP
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-map-marker-alt"></i> IP Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="resultsContainer" style="display: none;">
+                                    <div class="mb-3">
+                                        <h6>IP Address:</h6>
+                                        <p id="ipResult" class="mb-2"></p>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Location:</h6>
+                                            <p id="locationResult" class="mb-2"></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>ISP:</h6>
+                                            <p id="ispResult" class="mb-2"></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Country:</h6>
+                                            <p id="countryResult" class="mb-2"></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Region:</h6>
+                                            <p id="regionResult" class="mb-2"></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>City:</h6>
+                                            <p id="cityResult" class="mb-2"></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Timezone:</h6>
+                                            <p id="timezoneResult" class="mb-2"></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Latitude:</h6>
+                                            <p id="latResult" class="mb-2"></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Longitude:</h6>
+                                            <p id="lngResult" class="mb-2"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="placeholder" class="text-center py-5">
+                                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">Enter an IP address to lookup information</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> About IP Addresses</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>IP Address Types:</h6>
+                        <ul>
+                            <li><strong>IPv4:</strong> 32-bit address (e.g., 192.168.1.1)</li>
+                            <li><strong>IPv6:</strong> 128-bit address (e.g., 2001:0db8::1)</li>
+                            <li><strong>Public:</strong> Accessible on the internet</li>
+                            <li><strong>Private:</strong> Used within local networks</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Geolocation Accuracy:</h6>
+                        <ul>
+                            <li>Country level: 99% accuracy</li>
+                            <li>Regional level: 90% accuracy</li>
+                            <li>City level: 80% accuracy</li>
+                            <li>Exact address: Not available</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const ipAddress = document.getElementById('ipAddress');
+        const lookupBtn = document.getElementById('lookupBtn');
+        const detectIpBtn = document.getElementById('detectIpBtn');
+        const yourIp = document.getElementById('yourIp');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const ipResult = document.getElementById('ipResult');
+        const locationResult = document.getElementById('locationResult');
+        const ispResult = document.getElementById('ispResult');
+        const countryResult = document.getElementById('countryResult');
+        const regionResult = document.getElementById('regionResult');
+        const cityResult = document.getElementById('cityResult');
+        const timezoneResult = document.getElementById('timezoneResult');
+        const latResult = document.getElementById('latResult');
+        const lngResult = document.getElementById('lngResult');
+
+        function validateIP(ip) {
+            const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            const ipv6Regex = /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^::1$|^::$/;
+            return ipv4Regex.test(ip) || ipv6Regex.test(ip);
+        }
+
+        function lookupIP(ip) {
+            if (!validateIP(ip)) {
+                alert('Please enter a valid IP address!');
+                return;
+            }
+
+            // Show loading state
+            resultsContainer.style.display = 'none';
+            placeholder.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin fa-3x text-muted mb-3"></i><p>Looking up IP address...</p></div>';
+
+            // Simulate API call (in real implementation, this would call an actual API)
+            setTimeout(() => {
+                // Generate mock data for demo
+                const mockData = {
+                    ip: ip,
+                    location: 'Mountain View, CA',
+                    isp: 'Google LLC',
+                    country: 'United States',
+                    region: 'California',
+                    city: 'Mountain View',
+                    timezone: 'America/Los_Angeles',
+                    lat: '37.4056',
+                    lng: '-122.0775'
+                };
+
+                // Update display
+                ipResult.textContent = mockData.ip;
+                locationResult.textContent = mockData.location;
+                ispResult.textContent = mockData.isp;
+                countryResult.textContent = mockData.country;
+                regionResult.textContent = mockData.region;
+                cityResult.textContent = mockData.city;
+                timezoneResult.textContent = mockData.timezone;
+                latResult.textContent = mockData.lat;
+                lngResult.textContent = mockData.lng;
+
+                resultsContainer.style.display = 'block';
+                placeholder.style.display = 'none';
+            }, 1500);
+        }
+
+        function detectMyIP() {
+            // In a real implementation, this would call an API to detect the user's IP
+            // For demo, we'll simulate it
+            yourIp.textContent = '192.168.1.1 (Demo)';
+        }
+
+        lookupBtn.addEventListener('click', function() {
+            const ip = ipAddress.value.trim();
+            if (!ip) {
+                alert('Please enter an IP address!');
+                return;
+            }
+            lookupIP(ip);
+        });
+
+        detectIpBtn.addEventListener('click', detectMyIP);
+
+        // Initial detection
+        detectMyIP();
+        trackToolUsage('IP Address Lookup');
+    </script>
+</body>
+</html>

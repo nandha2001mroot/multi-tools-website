@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy Generator - MultiTools</title>
+    <meta name="description" content="Generate privacy policies. Free privacy policy generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-file-contract text-success"></i> Privacy Policy Generator</h1>
+            <p class="tool-description">Generate customized privacy policies for your website or app.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Policy Configuration</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="websiteName" class="form-label">Website/App Name:</label>
+                            <input type="text" class="form-control" id="websiteName" placeholder="Your Website Name">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="websiteUrl" class="form-label">Website URL:</label>
+                            <input type="url" class="form-control" id="websiteUrl" placeholder="https://example.com">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="contactEmail" class="form-label">Contact Email:</label>
+                            <input type="email" class="form-control" id="contactEmail" placeholder="contact@example.com">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">What data do you collect?</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="collectPersonal" checked>
+                                <label class="form-check-label" for="collectPersonal">
+                                    Personal Information (name, email, etc.)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="collectUsage" checked>
+                                <label class="form-check-label" for="collectUsage">
+                                    Usage Data (analytics, cookies)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="collectLocation">
+                                <label class="form-check-label" for="collectLocation">
+                                    Location Data
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="collectDevice">
+                                <label class="form-check-label" for="collectDevice">
+                                    Device Information
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Services Used:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="useGoogleAnalytics" checked>
+                                <label class="form-check-label" for="useGoogleAnalytics">
+                                    Google Analytics
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="useCookies" checked>
+                                <label class="form-check-label" for="useCookies">
+                                    Cookies
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="useThirdParty">
+                                <label class="form-check-label" for="useThirdParty">
+                                    Third-Party Services
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success w-100" id="generateBtn">
+                            <i class="fas fa-file-contract"></i> Generate Privacy Policy
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-file-alt"></i> Generated Privacy Policy</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="policyOutput" class="form-label">Privacy Policy:</label>
+                            <textarea class="form-control" id="policyOutput" rows="12" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Policy
+                            </button>
+                            <button class="btn btn-outline-secondary" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-lightbulb"></i> Legal Disclaimer</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="small text-muted">
+                            This privacy policy generator provides a template for informational purposes only. 
+                            It does not constitute legal advice. For specific legal requirements, consult with a qualified attorney.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> GDPR Compliance</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Required Elements:</h6>
+                        <ul>
+                            <li>Clear purpose statement</li>
+                            <li>Data collection disclosure</li>
+                            <li>User rights information</li>
+                            <li>Contact information</li>
+                            <li>Cookie consent mechanism</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>User Rights:</h6>
+                        <ul>
+                            <li>Right to access personal data</li>
+                            <li>Right to rectification</li>
+                            <li>Right to erasure</li>
+                            <li>Right to data portability</li>
+                            <li>Right to object</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const websiteName = document.getElementById('websiteName');
+        const websiteUrl = document.getElementById('websiteUrl');
+        const contactEmail = document.getElementById('contactEmail');
+        const collectPersonal = document.getElementById('collectPersonal');
+        const collectUsage = document.getElementById('collectUsage');
+        const collectLocation = document.getElementById('collectLocation');
+        const collectDevice = document.getElementById('collectDevice');
+        const useGoogleAnalytics = document.getElementById('useGoogleAnalytics');
+        const useCookies = document.getElementById('useCookies');
+        const useThirdParty = document.getElementById('useThirdParty');
+        const generateBtn = document.getElementById('generateBtn');
+        const policyOutput = document.getElementById('policyOutput');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        function generatePrivacyPolicy() {
+            const name = websiteName.value.trim() || 'Your Website';
+            const url = websiteUrl.value.trim() || 'https://yourwebsite.com';
+            const email = contactEmail.value.trim() || 'contact@yourwebsite.com';
+
+            let collectedData = [];
+            if (collectPersonal.checked) collectedData.push('personal information such as name, email address, and contact details');
+            if (collectUsage.checked) collectedData.push('usage data including IP addresses, browser type, and browsing behavior');
+            if (collectLocation.checked) collectedData.push('location data when you consent to location services');
+            if (collectDevice.checked) collectedData.push('device information including device type, operating system, and unique device identifiers');
+
+            let servicesUsed = [];
+            if (useGoogleAnalytics.checked) servicesUsed.push('Google Analytics for website analytics');
+            if (useCookies.checked) servicesUsed.push('cookies for user preferences and session management');
+            if (useThirdParty.checked) servicesUsed.push('third-party services for enhanced functionality');
+
+            const policy = `PRIVACY POLICY
+
+Last Updated: ${new Date().toLocaleDateString()}
+
+1. INTRODUCTION
+
+Welcome to ${name} ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy notice or our practices with regard to your personal information, please contact us at ${email}.
+
+This privacy notice describes how we might use your information if you:
+- Visit our website at ${url}
+- Engage with us in other related ways
+
+2. INFORMATION WE COLLECT
+
+We may collect the following types of information:
+
+${collectedData.length > 0 ? collectedData.map(data => `- ${data}`).join('\n') : 'None specified'}
+
+3. HOW WE USE YOUR INFORMATION
+
+We may process your information for these purposes:
+- To provide and maintain our service
+- To improve and personalize user experience
+- To understand how users interact with our service
+- To communicate with you
+- To protect our service and users
+
+4. SERVICES WE USE
+
+${servicesUsed.length > 0 ? servicesUsed.map(service => `- ${service}`).join('\n') : 'None specified'}
+
+5. YOUR PRIVACY RIGHTS
+
+Depending on where you are located geographically, the applicable privacy law may mean you have certain rights regarding your personal information, such as:
+- The right to access, update, or delete your information
+- The right of rectification
+- The right to object
+- The right of restriction
+- The right to data portability
+- The right to withdraw consent
+
+6. SECURITY OF YOUR INFORMATION
+
+We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable.
+
+7. CONTACT US
+
+If you have questions or comments about this notice, you may email us at ${email} or by post to:
+${name}
+[Your Address]
+[City, State ZIP Code]
+
+8. CHANGES TO THIS PRIVACY POLICY
+
+We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date at the top of this Privacy Policy.`;
+
+            policyOutput.value = policy;
+        }
+
+        generateBtn.addEventListener('click', generatePrivacyPolicy);
+        copyBtn.addEventListener('click', function() {
+            if (policyOutput.value) {
+                ToolUtils.copyToClipboard(policyOutput.value);
+            }
+        });
+        downloadBtn.addEventListener('click', function() {
+            if (policyOutput.value) {
+                ToolUtils.downloadFile(policyOutput.value, 'privacy-policy.txt', 'text/plain');
+            }
+        });
+
+        trackToolUsage('Privacy Policy Generator');
+    </script>
+</body>
+</html>

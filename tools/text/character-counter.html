@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Counter - MultiTools</title>
+    <meta name="description" content="Count characters, words, and sentences in your text. Free character counter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-calculator text-info"></i> Character Counter</h1>
+            <p class="tool-description">Count characters, words, sentences, and paragraphs in your text instantly.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="textInput" class="form-label">Enter your text:</label>
+                    <textarea class="form-control" id="textInput" rows="10" placeholder="Start typing or paste your text here..."></textarea>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 id="charCount" class="text-primary">0</h3>
+                                <p class="card-text">Characters</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 id="charCountNoSpaces" class="text-success">0</h3>
+                                <p class="card-text">No Spaces</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 id="wordCount" class="text-warning">0</h3>
+                                <p class="card-text">Words</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 id="sentenceCount" class="text-info">0</h3>
+                                <p class="card-text">Sentences</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary" id="clearBtn">
+                        <i class="fas fa-eraser"></i> Clear Text
+                    </button>
+                    <button class="btn btn-success" id="copyBtn">
+                        <i class="fas fa-copy"></i> Copy Results
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Reading Time</h6>
+                        <p id="readingTime">0 minutes</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Reading Speed</h6>
+                        <p id="readingSpeed">0 WPM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const textInput = document.getElementById('textInput');
+        const charCount = document.getElementById('charCount');
+        const charCountNoSpaces = document.getElementById('charCountNoSpaces');
+        const wordCount = document.getElementById('wordCount');
+        const sentenceCount = document.getElementById('sentenceCount');
+        const readingTime = document.getElementById('readingTime');
+        const readingSpeed = document.getElementById('readingSpeed');
+        const clearBtn = document.getElementById('clearBtn');
+        const copyBtn = document.getElementById('copyBtn');
+
+        function countText() {
+            const text = textInput.value;
+            
+            // Character count
+            const chars = text.length;
+            
+            // Character count without spaces
+            const charsNoSpaces = text.replace(/\s/g, '').length;
+            
+            // Word count
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            
+            // Sentence count
+            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+            
+            // Reading time (average 200 WPM)
+            const time = Math.ceil(words / 200);
+            
+            // Update displays
+            charCount.textContent = ToolUtils.formatNumber(chars);
+            charCountNoSpaces.textContent = ToolUtils.formatNumber(charsNoSpaces);
+            wordCount.textContent = ToolUtils.formatNumber(words);
+            sentenceCount.textContent = ToolUtils.formatNumber(sentences);
+            readingTime.textContent = `${time} minute${time !== 1 ? 's' : ''}`;
+            readingSpeed.textContent = `200 WPM`;
+        }
+
+        // Event listeners
+        textInput.addEventListener('input', countText);
+        textInput.addEventListener('paste', () => setTimeout(countText, 10));
+
+        clearBtn.addEventListener('click', () => {
+            textInput.value = '';
+            countText();
+        });
+
+        copyBtn.addEventListener('click', () => {
+            const results = `Character Count: ${charCount.textContent}
+Character Count (No Spaces): ${charCountNoSpaces.textContent}
+Word Count: ${wordCount.textContent}
+Sentence Count: ${sentenceCount.textContent}
+Reading Time: ${readingTime.textContent}`;
+            
+            ToolUtils.copyToClipboard(results);
+        });
+
+        // Initial count
+        countText();
+        trackToolUsage('Character Counter');
+    </script>
+</body>
+</html>

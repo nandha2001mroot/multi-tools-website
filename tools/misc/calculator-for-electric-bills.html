@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Bill Calculator - MultiTools</title>
+    <meta name="description" content="Calculate electric bills. Free electric bill calculator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-bolt text-warning"></i> Electric Bill Calculator</h1>
+            <p class="tool-description">Calculate your monthly electric bill based on usage and rates.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-calculator"></i> Billing Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="kwhUsed" class="form-label">Electricity Usage (kWh):</label>
+                            <input type="number" class="form-control" id="kwhUsed" value="500" min="0" step="1">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="ratePerKwh" class="form-label">Rate per kWh ($):</label>
+                                <input type="number" class="form-control" id="ratePerKwh" value="0.12" min="0" step="0.01">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fixedCharge" class="form-label">Fixed Monthly Charge ($):</label>
+                                <input type="number" class="form-control" id="fixedCharge" value="15.00" min="0" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="surcharge" class="form-label">Surcharge/Tax (%):</label>
+                            <input type="number" class="form-control" id="surcharge" value="8.25" min="0" step="0.01">
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includeTiers">
+                            <label class="form-check-label" for="includeTiers">
+                                Include Tiered Pricing
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-warning w-100" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Calculate Bill
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-receipt"></i> Billing Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h3 id="totalBill" class="text-warning">$0.00</h3>
+                                        <p class="card-text">Total Bill</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h3 id="averageRate" class="text-info">$0.00/kWh</h3>
+                                        <p class="card-text">Average Rate</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Bill Breakdown:</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td>Energy Charge:</td>
+                                                <td class="text-end" id="energyCharge">$0.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fixed Charge:</td>
+                                                <td class="text-end" id="fixedChargeDisplay">$0.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Taxes/Surcharges:</td>
+                                                <td class="text-end" id="taxCharge">$0.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Total:</strong></td>
+                                                <td class="text-end"><strong id="totalBillDisplay">$0.00</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h6>Usage Comparison:</h6>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-warning" id="usageBar" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <p class="text-center" id="usageComparison">Average monthly usage: 900 kWh</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-lightbulb"></i> Energy Saving Tips</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Reduce Consumption:</h6>
+                        <ul>
+                            <li>Use LED light bulbs</li>
+                            <li>Unplug unused electronics</li>
+                            <li>Adjust thermostat settings</li>
+                            <li>Use energy-efficient appliances</li>
+                            <li>Install smart power strips</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Monitor Usage:</h6>
+                        <ul>
+                            <li>Track daily consumption</li>
+                            <li>Identify peak usage times</li>
+                            <li>Compare monthly bills</li>
+                            <li>Set usage goals</li>
+                            <li>Consider solar panels</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-line"></i> Electricity Rates by Region</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Region</th>
+                                <th>Average Rate ($/kWh)</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Northeast</td>
+                                <td>$0.21</td>
+                                <td>High population density</td>
+                            </tr>
+                            <tr>
+                                <td>South</td>
+                                <td>$0.12</td>
+                                <td>Lowest rates</td>
+                            </tr>
+                            <tr>
+                                <td>Midwest</td>
+                                <td>$0.13</td>
+                                <td>Moderate rates</td>
+                            </tr>
+                            <tr>
+                                <td>West</td>
+                                <td>$0.15</td>
+                                <td>Varies by state</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const kwhUsed = document.getElementById('kwhUsed');
+        const ratePerKwh = document.getElementById('ratePerKwh');
+        const fixedCharge = document.getElementById('fixedCharge');
+        const surcharge = document.getElementById('surcharge');
+        const includeTiers = document.getElementById('includeTiers');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const totalBill = document.getElementById('totalBill');
+        const averageRate = document.getElementById('averageRate');
+        const energyCharge = document.getElementById('energyCharge');
+        const fixedChargeDisplay = document.getElementById('fixedChargeDisplay');
+        const taxCharge = document.getElementById('taxCharge');
+        const totalBillDisplay = document.getElementById('totalBillDisplay');
+        const usageBar = document.getElementById('usageBar');
+        const usageComparison = document.getElementById('usageComparison');
+
+        function calculateBill() {
+            const kwh = parseFloat(kwhUsed.value) || 0;
+            const rate = parseFloat(ratePerKwh.value) || 0;
+            const fixed = parseFloat(fixedCharge.value) || 0;
+            const tax = parseFloat(surcharge.value) || 0;
+            const tiered = includeTiers.checked;
+
+            if (kwh <= 0 || rate <= 0) {
+                alert('Please enter valid usage and rate values!');
+                return;
+            }
+
+            // Calculate charges
+            let energyCost = kwh * rate;
+            
+            // Apply tiered pricing if selected
+            if (tiered && kwh > 500) {
+                const baseCost = 500 * rate;
+                const excessKwh = kwh - 500;
+                const excessRate = rate * 1.2; // 20% higher rate for excess usage
+                energyCost = baseCost + (excessKwh * excessRate);
+            }
+            
+            const fixedCost = fixed;
+            const taxAmount = (energyCost + fixedCost) * (tax / 100);
+            const total = energyCost + fixedCost + taxAmount;
+            const avgRate = total / kwh;
+
+            // Update display
+            energyCharge.textContent = '$' + energyCost.toFixed(2);
+            fixedChargeDisplay.textContent = '$' + fixedCost.toFixed(2);
+            taxCharge.textContent = '$' + taxAmount.toFixed(2);
+            totalBillDisplay.textContent = '$' + total.toFixed(2);
+            totalBill.textContent = '$' + total.toFixed(2);
+            averageRate.textContent = '$' + avgRate.toFixed(3) + '/kWh';
+
+            // Update usage comparison
+            const averageUsage = 900;
+            const usagePercent = Math.min(100, (kwh / averageUsage) * 100);
+            usageBar.style.width = usagePercent + '%';
+            usageBar.className = `progress-bar bg-${usagePercent < 80 ? 'success' : usagePercent < 120 ? 'warning' : 'danger'}`;
+            usageComparison.textContent = `Your usage: ${kwh} kWh (${usagePercent.toFixed(1)}% of average)`;
+        }
+
+        calculateBtn.addEventListener('click', calculateBill);
+        kwhUsed.addEventListener('input', calculateBill);
+        ratePerKwh.addEventListener('input', calculateBill);
+        fixedCharge.addEventListener('input', calculateBill);
+        surcharge.addEventListener('input', calculateBill);
+        includeTiers.addEventListener('change', calculateBill);
+
+        // Initial calculation
+        calculateBill();
+        trackToolUsage('Electric Bill Calculator');
+    </script>
+</body>
+</html>

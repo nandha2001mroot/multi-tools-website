@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer - MultiTools</title>
+    <meta name="description" content="Resize images online to custom dimensions. Free image resizing tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-expand text-primary"></i> Image Resizer</h1>
+            <p class="tool-description">Resize images to custom dimensions while maintaining quality.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-upload"></i> Upload Image</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="imageUpload" class="form-label">Choose Image File</label>
+                            <input type="file" class="form-control" id="imageUpload" accept="image/*">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="width" class="form-label">Width (px)</label>
+                                <input type="number" class="form-control" id="width" placeholder="800" value="800">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="height" class="form-label">Height (px)</label>
+                                <input type="number" class="form-control" id="height" placeholder="600" value="600">
+                            </div>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="maintainRatio" checked>
+                            <label class="form-check-label" for="maintainRatio">
+                                Maintain Aspect Ratio
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100" id="resizeBtn">
+                            <i class="fas fa-compress"></i> Resize Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-download"></i> Download Result</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="previewContainer" style="display: none;">
+                            <img id="previewImage" class="img-fluid mb-3" style="max-height: 200px;">
+                            <button class="btn btn-success" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download Resized
+                            </button>
+                            <button class="btn btn-outline-secondary" id="resetBtn">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                        </div>
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fas fa-image fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Upload an image to resize</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> How to Use</h5>
+            </div>
+            <div class="card-body">
+                <ol>
+                    <li>Upload your image file</li>
+                    <li>Enter desired width and height</li>
+                    <li>Choose whether to maintain aspect ratio</li>
+                    <li>Click "Resize Image" button</li>
+                    <li>Preview and download your resized image</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const imageUpload = document.getElementById('imageUpload');
+        const widthInput = document.getElementById('width');
+        const heightInput = document.getElementById('height');
+        const maintainRatio = document.getElementById('maintainRatio');
+        const resizeBtn = document.getElementById('resizeBtn');
+        const previewContainer = document.getElementById('previewContainer');
+        const placeholder = document.getElementById('placeholder');
+        const previewImage = document.getElementById('previewImage');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        let currentImage = null;
+        let originalWidth = 0;
+        let originalHeight = 0;
+
+        imageUpload.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    currentImage = e.target.result;
+                    const img = new Image();
+                    img.onload = function() {
+                        originalWidth = img.width;
+                        originalHeight = img.height;
+                        previewImage.src = currentImage;
+                        previewContainer.style.display = 'block';
+                        placeholder.style.display = 'none';
+                    };
+                    img.src = currentImage;
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        maintainRatio.addEventListener('change', function() {
+            if (this.checked && currentImage) {
+                const aspectRatio = originalWidth / originalHeight;
+                widthInput.value = Math.round(heightInput.value * aspectRatio);
+            }
+        });
+
+        heightInput.addEventListener('input', function() {
+            if (maintainRatio.checked && currentImage) {
+                const aspectRatio = originalWidth / originalHeight;
+                widthInput.value = Math.round(this.value * aspectRatio);
+            }
+        });
+
+        widthInput.addEventListener('input', function() {
+            if (maintainRatio.checked && currentImage) {
+                const aspectRatio = originalHeight / originalWidth;
+                heightInput.value = Math.round(this.value * aspectRatio);
+            }
+        });
+
+        resizeBtn.addEventListener('click', function() {
+            if (!currentImage) {
+                alert('Please upload an image first!');
+                return;
+            }
+
+            const targetWidth = parseInt(widthInput.value) || 800;
+            const targetHeight = parseInt(heightInput.value) || 600;
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                canvas.width = targetWidth;
+                canvas.height = targetHeight;
+                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                
+                const resizedData = canvas.toDataURL('image/jpeg', 0.9);
+                previewImage.src = resizedData;
+                currentImage = resizedData;
+            };
+            
+            img.src = currentImage;
+        });
+
+        downloadBtn.addEventListener('click', function() {
+            if (!currentImage) {
+                alert('No image to download!');
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.download = 'resized-image.jpg';
+            link.href = currentImage;
+            link.click();
+        });
+
+        resetBtn.addEventListener('click', function() {
+            imageUpload.value = '';
+            widthInput.value = '800';
+            heightInput.value = '600';
+            maintainRatio.checked = true;
+            currentImage = null;
+            previewContainer.style.display = 'none';
+            placeholder.style.display = 'block';
+        });
+
+        trackToolUsage('Image Resizer');
+    </script>
+</body>
+</html>

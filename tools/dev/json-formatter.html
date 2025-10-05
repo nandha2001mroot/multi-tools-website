@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter - MultiTools</title>
+    <meta name="description" content="Format and validate JSON. Free JSON formatter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-code text-dark"></i> JSON Formatter</h1>
+            <p class="tool-description">Format, validate, and prettify your JSON data.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-edit"></i> Input JSON</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="inputJson" class="form-label">Enter your JSON:</label>
+                            <textarea class="form-control" id="inputJson" rows="12" placeholder='{"name": "John", "age": 30}'></textarea>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="indentSize" class="form-label">Indent Size:</label>
+                                <input type="number" class="form-control" id="indentSize" value="2" min="0" max="8">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="indentType" class="form-label">Indent Type:</label>
+                                <select class="form-select" id="indentType">
+                                    <option value="spaces">Spaces</option>
+                                    <option value="tabs">Tabs</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary" id="formatBtn">
+                                <i class="fas fa-indent"></i> Format JSON
+                            </button>
+                            <button class="btn btn-success" id="validateBtn">
+                                <i class="fas fa-check-circle"></i> Validate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-file-code"></i> Formatted JSON</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="outputJson" class="form-label">Formatted JSON:</label>
+                            <textarea class="form-control" id="outputJson" rows="12" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button class="btn btn-outline-secondary" id="clearBtn">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Validation Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="validationResult" class="text-center">
+                            <i class="fas fa-question-circle fa-3x text-muted mb-2"></i>
+                            <p class="text-muted">Enter JSON to validate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const inputJson = document.getElementById('inputJson');
+        const outputJson = document.getElementById('outputJson');
+        const indentSize = document.getElementById('indentSize');
+        const indentType = document.getElementById('indentType');
+        const formatBtn = document.getElementById('formatBtn');
+        const validateBtn = document.getElementById('validateBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const validationResult = document.getElementById('validationResult');
+
+        function validateJson() {
+            const jsonText = inputJson.value.trim();
+            if (!jsonText) {
+                validationResult.innerHTML = `
+                    <i class="fas fa-question-circle fa-3x text-muted mb-2"></i>
+                    <p class="text-muted">Enter JSON to validate</p>
+                `;
+                return null;
+            }
+
+            try {
+                const parsed = JSON.parse(jsonText);
+                validationResult.innerHTML = `
+                    <i class="fas fa-check-circle fa-3x text-success mb-2"></i>
+                    <p class="text-success">Valid JSON</p>
+                    <p class="small">Type: ${Array.isArray(parsed) ? 'Array' : typeof parsed}</p>
+                `;
+                return parsed;
+            } catch (error) {
+                validationResult.innerHTML = `
+                    <i class="fas fa-times-circle fa-3x text-danger mb-2"></i>
+                    <p class="text-danger">Invalid JSON</p>
+                    <p class="small">${error.message}</p>
+                `;
+                return null;
+            }
+        }
+
+        function formatJson() {
+            const parsed = validateJson();
+            if (!parsed) return;
+
+            const spaces = indentType.value === 'spaces' ? parseInt(indentSize.value) : '\t';
+            const formatted = JSON.stringify(parsed, null, spaces);
+            outputJson.value = formatted;
+        }
+
+        formatBtn.addEventListener('click', formatJson);
+        validateBtn.addEventListener('click', validateJson);
+
+        copyBtn.addEventListener('click', function() {
+            if (outputJson.value) {
+                ToolUtils.copyToClipboard(outputJson.value);
+            }
+        });
+
+        clearBtn.addEventListener('click', function() {
+            inputJson.value = '';
+            outputJson.value = '';
+            validationResult.innerHTML = `
+                <i class="fas fa-question-circle fa-3x text-muted mb-2"></i>
+                <p class="text-muted">Enter JSON to validate</p>
+            `;
+        });
+
+        trackToolUsage('JSON Formatter');
+    </script>
+</body>
+</html>

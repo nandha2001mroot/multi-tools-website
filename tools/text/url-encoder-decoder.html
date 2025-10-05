@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Encoder/Decoder - MultiTools</title>
+    <meta name="description" content="Encode and decode URLs. Free URL encoder/decoder tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-link text-info"></i> URL Encoder/Decoder</h1>
+            <p class="tool-description">Encode URLs to make them safe for web transmission or decode encoded URLs.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-edit"></i> Input Text</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="inputText" class="form-label">Enter text to encode/decode:</label>
+                            <textarea class="form-control" id="inputText" rows="8" placeholder="Enter your text here..."></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary w-50" id="encodeBtn">
+                                <i class="fas fa-lock"></i> Encode
+                            </button>
+                            <button class="btn btn-success w-50" id="decodeBtn">
+                                <i class="fas fa-unlock"></i> Decode
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-code"></i> Output Text</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="outputText" class="form-label">Result:</label>
+                            <textarea class="form-control" id="outputText" rows="8" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Result
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> URL Encoding Rules</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Spaces become %20</li>
+                            <li>Special characters are converted to %XX format</li>
+                            <li>Non-ASCII characters are converted to UTF-8 and then encoded</li>
+                            <li>Safe characters (A-Z, a-z, 0-9, -, _, ., ~) remain unchanged</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const inputText = document.getElementById('inputText');
+        const outputText = document.getElementById('outputText');
+        const encodeBtn = document.getElementById('encodeBtn');
+        const decodeBtn = document.getElementById('decodeBtn');
+        const copyBtn = document.getElementById('copyBtn');
+
+        encodeBtn.addEventListener('click', function() {
+            try {
+                const encoded = encodeURIComponent(inputText.value);
+                outputText.value = encoded;
+            } catch (error) {
+                alert('Error encoding URL: ' + error.message);
+            }
+        });
+
+        decodeBtn.addEventListener('click', function() {
+            try {
+                const decoded = decodeURIComponent(inputText.value);
+                outputText.value = decoded;
+            } catch (error) {
+                alert('Error decoding URL: ' + error.message);
+            }
+        });
+
+        copyBtn.addEventListener('click', function() {
+            if (outputText.value) {
+                ToolUtils.copyToClipboard(outputText.value);
+            }
+        });
+
+        trackToolUsage('URL Encoder/Decoder');
+    </script>
+</body>
+</html>

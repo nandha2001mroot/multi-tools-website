@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Formatter - MultiTools</title>
+    <meta name="description" content="Format SQL queries. Free SQL formatter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-database text-dark"></i> SQL Formatter</h1>
+            <p class="tool-description">Format and prettify your SQL queries with proper indentation and syntax highlighting.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-edit"></i> Input SQL</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="inputSql" class="form-label">Enter your SQL query:</label>
+                            <textarea class="form-control" id="inputSql" rows="12" placeholder="SELECT * FROM users WHERE id = 1;"></textarea>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="indentSize" class="form-label">Indent Size:</label>
+                                <input type="number" class="form-control" id="indentSize" value="2" min="1" max="8">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="caseStyle" class="form-label">Case Style:</label>
+                                <select class="form-select" id="caseStyle">
+                                    <option value="upper">UPPERCASE Keywords</option>
+                                    <option value="lower">lowercase keywords</option>
+                                    <option value="preserve">Preserve Case</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-dark w-100" id="formatBtn">
+                                <i class="fas fa-indent"></i> Format SQL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-code"></i> Formatted SQL</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="outputSql" class="form-label">Formatted SQL:</label>
+                            <textarea class="form-control" id="outputSql" rows="12" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy SQL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-lightbulb"></i> SQL Best Practices</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Use proper indentation for readability</li>
+                            <li>Capitalize SQL keywords for clarity</li>
+                            <li>Use meaningful table and column aliases</li>
+                            <li>Format complex queries with multiple lines</li>
+                            <li>Use consistent naming conventions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const inputSql = document.getElementById('inputSql');
+        const outputSql = document.getElementById('outputSql');
+        const formatBtn = document.getElementById('formatBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const indentSize = document.getElementById('indentSize');
+        const caseStyle = document.getElementById('caseStyle');
+
+        function formatSQL(sql) {
+            const indent = ' '.repeat(parseInt(indentSize.value) || 2);
+            const caseType = caseStyle.value;
+            
+            // Basic SQL formatting
+            let formatted = sql;
+            
+            // Replace common SQL keywords with proper case
+            const keywords = ['SELECT', 'FROM', 'WHERE', 'ORDER', 'GROUP', 'HAVING', 'JOIN', 'INNER', 'LEFT', 'RIGHT', 'OUTER', 'ON', 'AND', 'OR', 'NOT', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'DROP', 'ALTER', 'TABLE', 'INDEX', 'VIEW', 'PROCEDURE', 'FUNCTION', 'TRIGGER', 'DATABASE', 'USE', 'LIMIT', 'OFFSET', 'UNION', 'ALL', 'DISTINCT', 'AS', 'IS', 'NULL', 'NOT', 'IN', 'EXISTS', 'BETWEEN', 'LIKE', 'CASE', 'WHEN', 'THEN', 'ELSE', 'END', 'BEGIN', 'COMMIT', 'ROLLBACK'];
+            
+            keywords.forEach(keyword => {
+                const regex = new RegExp('\\b' + keyword + '\\b', 'gi');
+                const replacement = caseType === 'upper' ? keyword.toUpperCase() : 
+                                  caseType === 'lower' ? keyword.toLowerCase() : keyword;
+                formatted = formatted.replace(regex, replacement);
+            });
+            
+            // Add newlines for common SQL clauses
+            formatted = formatted.replace(/\b(FROM|WHERE|ORDER BY|GROUP BY|HAVING|JOIN|LEFT JOIN|RIGHT JOIN|INNER JOIN|OUTER JOIN|UNION|LIMIT|OFFSET)\b/gi, '\n$1');
+            
+            // Add newlines for AND/OR
+            formatted = formatted.replace(/\b(AND|OR)\b/gi, '\n$1');
+            
+            // Add newlines for SELECT clauses that are too long
+            formatted = formatted.replace(/,\s*(?=[A-Z])/g, ',\n' + indent);
+            
+            // Basic indentation
+            let lines = formatted.split('\n');
+            let currentIndent = 0;
+            let result = [];
+            
+            lines.forEach(line => {
+                const trimmedLine = line.trim();
+                
+                if (trimmedLine.match(/\b(ELSE|END|THEN)\b/i)) {
+                    currentIndent = Math.max(0, currentIndent - 1);
+                }
+                
+                const indentedLine = ' '.repeat(currentIndent * parseInt(indentSize.value)) + trimmedLine;
+                result.push(indentedLine);
+                
+                if (trimmedLine.match(/\b(SELECT|FROM|WHERE|ORDER BY|GROUP BY|HAVING|JOIN|CASE|IF|BEGIN)\b/i)) {
+                    currentIndent++;
+                }
+            });
+            
+            return result.join('\n');
+        }
+
+        formatBtn.addEventListener('click', function() {
+            const sql = inputSql.value.trim();
+            if (!sql) {
+                alert('Please enter SQL to format!');
+                return;
+            }
+            
+            const formatted = formatSQL(sql);
+            outputSql.value = formatted;
+        });
+
+        copyBtn.addEventListener('click', function() {
+            if (outputSql.value) {
+                ToolUtils.copyToClipboard(outputSql.value);
+            }
+        });
+
+        trackToolUsage('SQL Formatter');
+    </script>
+</body>
+</html>

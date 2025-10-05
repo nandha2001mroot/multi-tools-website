@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator - MultiTools</title>
+    <meta name="description" content="Calculate age from birth date. Free age calculator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-birthday-cake text-warning"></i> Age Calculator</h1>
+            <p class="tool-description">Calculate your exact age from your birth date.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-calendar"></i> Enter Birth Date</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="birthDate" class="form-label">Birth Date:</label>
+                            <input type="date" class="form-control" id="birthDate">
+                        </div>
+                        
+                        <button class="btn btn-warning w-100" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Calculate Age
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-clock"></i> Age Results</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="resultsContainer" style="display: none;">
+                            <h2 id="ageYears" class="display-4 text-warning mb-3">0</h2>
+                            <p class="lead">Years</p>
+                            
+                            <div class="row mt-4">
+                                <div class="col-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 id="ageMonths">0</h4>
+                                            <p class="card-text">Months</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 id="ageDays">0</h4>
+                                            <p class="card-text">Days</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 id="ageHours">0</h4>
+                                            <p class="card-text">Hours</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <p><strong>Birth Date:</strong> <span id="displayBirthDate"></span></p>
+                                <p><strong>Today's Date:</strong> <span id="currentDate"></span></p>
+                            </div>
+                        </div>
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fas fa-birthday-cake fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Enter your birth date to calculate age</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> How to Use</h5>
+            </div>
+            <div class="card-body">
+                <ol>
+                    <li>Select your birth date from the calendar</li>
+                    <li>Click "Calculate Age" button</li>
+                    <li>View your age in years, months, days, and hours</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const birthDate = document.getElementById('birthDate');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const ageYears = document.getElementById('ageYears');
+        const ageMonths = document.getElementById('ageMonths');
+        const ageDays = document.getElementById('ageDays');
+        const ageHours = document.getElementById('ageHours');
+        const displayBirthDate = document.getElementById('displayBirthDate');
+        const currentDate = document.getElementById('currentDate');
+
+        function calculateAge() {
+            const birth = new Date(birthDate.value);
+            const today = new Date();
+            
+            if (!birthDate.value) {
+                alert('Please enter a birth date!');
+                return;
+            }
+            
+            const diffTime = Math.abs(today - birth);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            // Calculate years
+            let years = today.getFullYear() - birth.getFullYear();
+            let months = today.getMonth() - birth.getMonth();
+            let days = today.getDate() - birth.getDate();
+            
+            if (days < 0) {
+                months--;
+                const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            const totalMonths = years * 12 + months;
+            const hours = Math.floor(diffTime / (1000 * 60 * 60));
+            
+            ageYears.textContent = years;
+            ageMonths.textContent = totalMonths;
+            ageDays.textContent = diffDays;
+            ageHours.textContent = hours;
+            displayBirthDate.textContent = birth.toLocaleDateString();
+            currentDate.textContent = today.toLocaleDateString();
+            
+            resultsContainer.style.display = 'block';
+            placeholder.style.display = 'none';
+        }
+
+        calculateBtn.addEventListener('click', calculateAge);
+        
+        // Set today's date as default
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        birthDate.value = formattedDate;
+
+        trackToolUsage('Age Calculator');
+    </script>
+</body>
+</html>

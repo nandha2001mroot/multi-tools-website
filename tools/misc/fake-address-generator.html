@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Address Generator - MultiTools</title>
+    <meta name="description" content="Generate fake addresses. Free fake address generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-map-marker-alt text-success"></i> Fake Address Generator</h1>
+            <p class="tool-description">Generate realistic fake addresses for testing and development purposes.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country:</label>
+                            <select class="form-select" id="country">
+                                <option value="usa">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="canada">Canada</option>
+                                <option value="australia">Australia</option>
+                                <option value="germany">Germany</option>
+                                <option value="france">France</option>
+                                <option value="random">Random Country</option>
+                            </select>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="quantity" class="form-label">Number of Addresses:</label>
+                                <input type="number" class="form-control" id="quantity" value="1" min="1" max="100">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="addressType" class="form-label">Address Type:</label>
+                                <select class="form-select" id="addressType">
+                                    <option value="residential">Residential</option>
+                                    <option value="commercial">Commercial</option>
+                                    <option value="mixed">Mixed</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includeCoordinates" checked>
+                            <label class="form-check-label" for="includeCoordinates">
+                                Include GPS Coordinates
+                            </label>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includePhone" checked>
+                            <label class="form-check-label" for="includePhone">
+                                Include Phone Numbers
+                            </label>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includeEmail">
+                            <label class="form-check-label" for="includeEmail">
+                                Include Email Addresses
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-success w-100" id="generateBtn">
+                            <i class="fas fa-map-marker-alt"></i> Generate Addresses
+                        </button>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="addressesOutput" class="form-label">Generated Addresses:</label>
+                            <textarea class="form-control" id="addressesOutput" rows="12" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary w-100" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Addresses
+                            </button>
+                            <button class="btn btn-outline-secondary" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Address Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Features:</h6>
+                        <ul>
+                            <li>Realistic address generation</li>
+                            <li>Multiple country support</li>
+                            <li>GPS coordinates included</li>
+                            <li>Customizable quantities</li>
+                            <li>Export options</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Use Cases:</h6>
+                        <ul>
+                            <li>Database testing</li>
+                            <li>Application development</li>
+                            <li>Data anonymization</li>
+                            <li>Quality assurance</li>
+                            <li>Training data</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-lightbulb"></i> Important Notice</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <h6>Disclaimer:</h6>
+                    <p>These addresses are completely fictional and should only be used for testing purposes. They are not real addresses and should not be used for any illegal activities.</p>
+                    <ul>
+                        <li>Addresses are randomly generated</li>
+                        <li>No real person or business</li>
+                        <li>For testing and development only</li>
+                        <li>Do not use for official correspondence</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const country = document.getElementById('country');
+        const quantity = document.getElementById('quantity');
+        const addressType = document.getElementById('addressType');
+        const includeCoordinates = document.getElementById('includeCoordinates');
+        const includePhone = document.getElementById('includePhone');
+        const includeEmail = document.getElementById('includeEmail');
+        const generateBtn = document.getElementById('generateBtn');
+        const addressesOutput = document.getElementById('addressesOutput');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        function generateAddresses() {
+            const count = parseInt(quantity.value) || 1;
+            const countryValue = country.value;
+            const type = addressType.value;
+            
+            if (count <= 0 || count > 100) {
+                alert('Please enter a quantity between 1 and 100!');
+                return;
+            }
+
+            let addresses = [];
+            
+            for (let i = 0; i < count; i++) {
+                const address = generateFakeAddress(countryValue, type);
+                addresses.push(address);
+            }
+            
+            let output = '';
+            addresses.forEach((addr, index) => {
+                output += `=== Address ${index + 1} ===\n`;
+                output += `${addr.street}\n`;
+                output += `${addr.city}, ${addr.state} ${addr.zip}\n`;
+                output += `${addr.country}\n`;
+                
+                if (includeCoordinates.checked) {
+                    output += `Coordinates: ${addr.latitude}, ${addr.longitude}\n`;
+                }
+                
+                if (includePhone.checked) {
+                    output += `Phone: ${addr.phone}\n`;
+                }
+                
+                if (includeEmail.checked) {
+                    output += `Email: ${addr.email}\n`;
+                }
+                
+                output += '\n';
+            });
+            
+            addressesOutput.value = output;
+        }
+
+        function generateFakeAddress(countryValue, type) {
+            // Mock address data generators
+            const streets = [
+                'Oak Street', 'Main Street', 'Park Avenue', 'Elm Street', 'Maple Avenue',
+                'Cedar Road', 'Pine Street', 'Washington Avenue', 'Lincoln Boulevard', 'Madison Street'
+            ];
+            
+            const cities = {
+                usa: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
+                uk: ['London', 'Manchester', 'Birmingham', 'Liverpool', 'Leeds'],
+                canada: ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Ottawa'],
+                australia: ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide'],
+                germany: ['Berlin', 'Hamburg', 'Munich', 'Cologne', 'Frankfurt'],
+                france: ['Paris', 'Lyon', 'Marseille', 'Toulouse', 'Nice']
+            };
+            
+            const states = {
+                usa: ['NY', 'CA', 'IL', 'TX', 'AZ'],
+                uk: ['England', 'Scotland', 'Wales', 'Northern Ireland'],
+                canada: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba'],
+                australia: ['NSW', 'VIC', 'QLD', 'WA', 'SA'],
+                germany: ['Berlin', 'Hamburg', 'Bayern', 'NRW', 'Baden-Württemberg'],
+                france: ['Île-de-France', 'Auvergne-Rhône-Alpes', 'Occitanie', 'Grand Est', 'Hauts-de-France']
+            };
+            
+            const zipCodes = {
+                usa: ['10001', '90210', '60601', '77001', '85001'],
+                uk: ['SW1A 1AA', 'M1 1AA', 'B1 1AA', 'L1 1AA', 'LS1 1AA'],
+                canada: ['M5V 3L9', 'V6B 4N7', 'H3B 2Y5', 'T2P 4J3', 'K1P 1J1'],
+                australia: ['2000', '3000', '4000', '5000', '6000'],
+                germany: ['10115', '20095', '80331', '50667', '70173'],
+                france: ['75001', '69001', '13001', '31000', '06000']
+            };
+
+            // Select country data
+            let countryData = countryValue;
+            if (countryValue === 'random') {
+                const countries = Object.keys(cities);
+                countryData = countries[Math.floor(Math.random() * countries.length)];
+            }
+            
+            const city = cities[countryData][Math.floor(Math.random() * cities[countryData].length)];
+            const state = states[countryData][Math.floor(Math.random() * states[countryData].length)];
+            const zip = zipCodes[countryData][Math.floor(Math.random() * zipCodes[countryData].length)];
+            const street = `${Math.floor(Math.random() * 9999) + 1} ${streets[Math.floor(Math.random() * streets.length)]}`;
+            
+            // Generate fake data
+            const address = {
+                street: street,
+                city: city,
+                state: state,
+                zip: zip,
+                country: countryData.toUpperCase(),
+                latitude: (Math.random() * 180 - 90).toFixed(6),
+                longitude: (Math.random() * 360 - 180).toFixed(6),
+                phone: `+1 (${Math.floor(Math.random() * 900) + 100}) ${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`,
+                email: `user${Math.floor(Math.random() * 1000)}@example.com`
+            };
+            
+            return address;
+        }
+
+        function copyAddresses() {
+            if (addressesOutput.value) {
+                ToolUtils.copyToClipboard(addressesOutput.value);
+            }
+        }
+
+        function downloadAddresses() {
+            if (addressesOutput.value) {
+                ToolUtils.downloadFile(addressesOutput.value, 'fake-addresses.txt', 'text/plain');
+            }
+        }
+
+        generateBtn.addEventListener('click', generateAddresses);
+        copyBtn.addEventListener('click', copyAddresses);
+        downloadBtn.addEventListener('click', downloadAddresses);
+
+        // Initial generation
+        generateAddresses();
+        trackToolUsage('Fake Address Generator');
+    </script>
+</body>
+</html>

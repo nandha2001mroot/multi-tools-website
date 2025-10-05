@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator - MultiTools</title>
+    <meta name="description" content="Advanced scientific calculator. Free scientific calculator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-calculator text-warning"></i> Scientific Calculator</h1>
+            <p class="tool-description">Advanced scientific calculator with trigonometric, logarithmic, and other functions.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-calculator"></i> Scientific Calculator</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg text-end" id="display" value="0" readonly>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="btn-group w-100 mb-2" role="group">
+                                    <button type="button" class="btn btn-outline-secondary" data-value="sin">sin</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="cos">cos</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="tan">tan</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="log">log</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="ln">ln</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="btn-group w-100 mb-2" role="group">
+                                    <button type="button" class="btn btn-outline-secondary" data-value="sinh">sinh</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="cosh">cosh</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="tanh">tanh</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="sqrt">√</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="^">x^y</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="btn-group w-100 mb-2" role="group">
+                                    <button type="button" class="btn btn-outline-secondary" data-value="π">π</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="e">e</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="!">x!</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value="(">(</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-value=")">)</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-danger w-100" data-value="C">C</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-warning w-100" data-value="CE">CE</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-info w-100" data-value="⌫">⌫</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-success w-100" data-value="=">=</button>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="7">7</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="8">8</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="9">9</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-primary w-100" data-value="/">/</button>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="4">4</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="5">5</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="6">6</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-primary w-100" data-value="*">*</button>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="1">1</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="2">2</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="3">3</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-primary w-100" data-value="-">-</button>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="0">0</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value=".">.</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100" data-value="+">+</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-success w-100" data-value="=">=</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Calculator Functions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Basic Operations:</h6>
+                        <ul>
+                            <li><strong>+, -, *, /:</strong> Basic arithmetic</li>
+                            <li><strong>^:</strong> Exponentiation (x^y)</li>
+                            <li><strong>√:</strong> Square root</li>
+                            <li><strong>!:</strong> Factorial</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Advanced Functions:</h6>
+                        <ul>
+                            <li><strong>sin, cos, tan:</strong> Trigonometric functions</li>
+                            <li><strong>log, ln:</strong> Logarithmic functions</li>
+                            <li><strong>π, e:</strong> Mathematical constants</li>
+                            <li><strong>()</strong> Parentheses for grouping</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const display = document.getElementById('display');
+        const buttons = document.querySelectorAll('[data-value]');
+
+        let currentInput = '0';
+        let previousInput = '';
+        let operation = null;
+        let shouldResetDisplay = false;
+
+        function updateDisplay() {
+            display.value = currentInput;
+        }
+
+        function appendNumber(number) {
+            if (currentInput === '0' || shouldResetDisplay) {
+                currentInput = number;
+                shouldResetDisplay = false;
+            } else {
+                currentInput += number;
+            }
+        }
+
+        function appendDecimal() {
+            if (shouldResetDisplay) {
+                currentInput = '0.';
+                shouldResetDisplay = false;
+                return;
+            }
+            
+            if (!currentInput.includes('.')) {
+                currentInput += '.';
+            }
+        }
+
+        function chooseOperation(op) {
+            if (currentInput === '') return;
+            if (previousInput !== '') {
+                calculate();
+            }
+            
+            operation = op;
+            previousInput = currentInput;
+            shouldResetDisplay = true;
+        }
+
+        function calculate() {
+            let computation;
+            const prev = parseFloat(previousInput);
+            const current = parseFloat(currentInput);
+            
+            if (isNaN(prev) || isNaN(current)) return;
+            
+            switch (operation) {
+                case '+':
+                    computation = prev + current;
+                    break;
+                case '-':
+                    computation = prev - current;
+                    break;
+                case '*':
+                    computation = prev * current;
+                    break;
+                case '/':
+                    computation = prev / current;
+                    break;
+                case '^':
+                    computation = Math.pow(prev, current);
+                    break;
+                default:
+                    return;
+            }
+            
+            currentInput = computation.toString();
+            operation = null;
+            previousInput = '';
+            shouldResetDisplay = true;
+        }
+
+        function clear() {
+            currentInput = '0';
+            previousInput = '';
+            operation = null;
+        }
+
+        function clearEntry() {
+            currentInput = '0';
+        }
+
+        function backspace() {
+            currentInput = currentInput.toString().slice(0, -1);
+            if (currentInput === '') {
+                currentInput = '0';
+            }
+        }
+
+        function handleFunction(func) {
+            const current = parseFloat(currentInput);
+            if (isNaN(current)) return;
+            
+            switch (func) {
+                case 'sin':
+                    currentInput = Math.sin(current * Math.PI / 180).toString();
+                    break;
+                case 'cos':
+                    currentInput = Math.cos(current * Math.PI / 180).toString();
+                    break;
+                case 'tan':
+                    currentInput = Math.tan(current * Math.PI / 180).toString();
+                    break;
+                case 'log':
+                    currentInput = Math.log10(current).toString();
+                    break;
+                case 'ln':
+                    currentInput = Math.log(current).toString();
+                    break;
+                case 'sqrt':
+                    currentInput = Math.sqrt(current).toString();
+                    break;
+                case '!':
+                    let result = 1;
+                    for (let i = 2; i <= current; i++) {
+                        result *= i;
+                    }
+                    currentInput = result.toString();
+                    break;
+                case 'π':
+                    currentInput = Math.PI.toString();
+                    break;
+                case 'e':
+                    currentInput = Math.E.toString();
+                    break;
+                default:
+                    return;
+            }
+            
+            shouldResetDisplay = true;
+        }
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.getAttribute('data-value');
+                
+                if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(value)) {
+                    appendNumber(value);
+                } else if (value === '.') {
+                    appendDecimal();
+                } else if (['+', '-', '*', '/', '^'].includes(value)) {
+                    chooseOperation(value);
+                } else if (value === '=') {
+                    calculate();
+                } else if (value === 'C') {
+                    clear();
+                } else if (value === 'CE') {
+                    clearEntry();
+                } else if (value === '⌫') {
+                    backspace();
+                } else if (['sin', 'cos', 'tan', 'log', 'ln', 'sqrt', '!', 'π', 'e', '(', ')'].includes(value)) {
+                    handleFunction(value);
+                }
+                
+                updateDisplay();
+            });
+        });
+
+        trackToolUsage('Scientific Calculator');
+    </script>
+</body>
+</html>

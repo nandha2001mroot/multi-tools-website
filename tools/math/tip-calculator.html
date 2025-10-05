@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator - MultiTools</title>
+    <meta name="description" content="Calculate restaurant tips and split bills. Free tip calculator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-hand-holding-usd text-warning"></i> Tip Calculator</h1>
+            <p class="tool-description">Calculate restaurant tips, split bills, and determine total costs.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-calculator"></i> Bill Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="billAmount" class="form-label">Bill Amount ($):</label>
+                            <input type="number" class="form-control" id="billAmount" placeholder="Enter total bill amount" value="50.00" step="0.01" min="0">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="tipPercentage" class="form-label">Tip Percentage:</label>
+                            <input type="range" class="form-range" id="tipPercentage" min="0" max="50" value="15">
+                            <div class="d-flex justify-content-between">
+                                <small>0%</small>
+                                <span id="tipPercentageValue">15%</span>
+                                <small>50%</small>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="numberOfPeople" class="form-label">Number of People:</label>
+                            <input type="number" class="form-control" id="numberOfPeople" placeholder="Enter number of people" value="2" min="1" max="50">
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="roundUp">
+                            <label class="form-check-label" for="roundUp">
+                                Round Up Total Amount
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-warning w-100" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Calculate Tip
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-receipt"></i> Calculation Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5>Tip Amount</h5>
+                                        <h3 id="tipAmount" class="text-warning">$0.00</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5>Total Bill</h5>
+                                        <h3 id="totalBill" class="text-success">$0.00</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>Per Person Cost</h5>
+                                <div class="row text-center">
+                                    <div class="col-6">
+                                        <p><strong>Bill Share:</strong></p>
+                                        <h4 id="perPersonBill" class="text-primary">$0.00</h4>
+                                    </div>
+                                    <div class="col-6">
+                                        <p><strong>Tip Share:</strong></p>
+                                        <h4 id="perPersonTip" class="text-warning">$0.00</h4>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <p><strong>Total Per Person:</strong></p>
+                                    <h3 id="perPersonTotal" class="text-success">$0.00</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Tip Guidelines</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Standard Tip Percentages:</h6>
+                        <ul>
+                            <li><strong>10%:</strong> Poor service</li>
+                            <li><strong>15%:</strong> Average service</li>
+                            <li><strong>18-20%:</strong> Good service</li>
+                            <li><strong>20-25%:</strong> Excellent service</li>
+                            <li><strong>25%+:</strong> Outstanding service</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>When to Tip More:</h6>
+                        <ul>
+                            <li>Exceptional service quality</li>
+                            <li>Special requests fulfilled</li>
+                            <li>Large parties or special occasions</li>
+                            <li>Fine dining establishments</li>
+                            <li>Personalized attention</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <h6>Pro Tips:</h6>
+                    <ul class="mb-0">
+                        <li>Round up small amounts for convenience</li>
+                        <li>Consider the total experience, not just service</li>
+                        <li>Tip based on pre-tax amount in most cases</li>
+                        <li>Split evenly unless someone ordered significantly more</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const billAmount = document.getElementById('billAmount');
+        const tipPercentage = document.getElementById('tipPercentage');
+        const tipPercentageValue = document.getElementById('tipPercentageValue');
+        const numberOfPeople = document.getElementById('numberOfPeople');
+        const roundUp = document.getElementById('roundUp');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const tipAmount = document.getElementById('tipAmount');
+        const totalBill = document.getElementById('totalBill');
+        const perPersonBill = document.getElementById('perPersonBill');
+        const perPersonTip = document.getElementById('perPersonTip');
+        const perPersonTotal = document.getElementById('perPersonTotal');
+
+        // Update tip percentage display
+        tipPercentage.addEventListener('input', function() {
+            tipPercentageValue.textContent = this.value + '%';
+            calculateTip();
+        });
+
+        // Calculate tip function
+        function calculateTip() {
+            const bill = parseFloat(billAmount.value) || 0;
+            const tipPercent = parseInt(tipPercentage.value) || 0;
+            const people = parseInt(numberOfPeople.value) || 1;
+
+            if (bill <= 0) {
+                alert('Please enter a valid bill amount!');
+                return;
+            }
+
+            // Calculate tip and totals
+            const tipAmt = bill * (tipPercent / 100);
+            const totalAmt = bill + tipAmt;
+            const perPersonBillAmt = bill / people;
+            const perPersonTipAmt = tipAmt / people;
+            let perPersonTotalAmt = totalAmt / people;
+
+            // Round up if selected
+            if (roundUp.checked) {
+                perPersonTotalAmt = Math.ceil(perPersonTotalAmt * 100) / 100;
+            }
+
+            // Update display
+            tipAmount.textContent = '$' + tipAmt.toFixed(2);
+            totalBill.textContent = '$' + totalAmt.toFixed(2);
+            perPersonBill.textContent = '$' + perPersonBillAmt.toFixed(2);
+            perPersonTip.textContent = '$' + perPersonTipAmt.toFixed(2);
+            perPersonTotal.textContent = '$' + perPersonTotalAmt.toFixed(2);
+        }
+
+        // Event listeners
+        calculateBtn.addEventListener('click', calculateTip);
+        billAmount.addEventListener('input', calculateTip);
+        numberOfPeople.addEventListener('input', calculateTip);
+        roundUp.addEventListener('change', calculateTip);
+
+        // Initialize
+        calculateTip();
+        trackToolUsage('Tip Calculator');
+    </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTACCESS Redirect Generator - MultiTools</title>
+    <meta name="description" content="Generate .htaccess redirects. Free HTACCESS redirect generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-cog text-dark"></i> HTACCESS Redirect Generator</h1>
+            <p class="tool-description">Generate .htaccess redirect rules for Apache web servers.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Redirect Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="redirectType" class="form-label">Redirect Type:</label>
+                            <select class="form-select" id="redirectType">
+                                <option value="301">301 - Permanent Redirect</option>
+                                <option value="302">302 - Temporary Redirect</option>
+                                <option value="307">307 - Temporary Redirect</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="sourceUrl" class="form-label">Source URL:</label>
+                            <input type="text" class="form-control" id="sourceUrl" placeholder="/old-page.html">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="targetUrl" class="form-label">Target URL:</label>
+                            <input type="text" class="form-control" id="targetUrl" placeholder="/new-page.html">
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="regexEnabled">
+                            <label class="form-check-label" for="regexEnabled">
+                                Enable Regular Expressions
+                            </label>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="queryPreserve">
+                            <label class="form-check-label" for="queryPreserve">
+                                Preserve Query Parameters
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-dark w-100" id="generateBtn">
+                            <i class="fas fa-cogs"></i> Generate Redirect
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-code"></i> Generated .htaccess</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="htaccessOutput" class="form-label">.htaccess Code:</label>
+                            <textarea class="form-control" id="htaccessOutput" rows="10" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Code
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Redirect Types</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>301:</strong> Permanent redirect (SEO friendly)</li>
+                            <li><strong>302:</strong> Temporary redirect</li>
+                            <li><strong>307:</strong> Temporary redirect (HTTP/1.1)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-lightbulb"></i> Common Redirect Examples</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Single Page Redirect:</h6>
+                        <code>Redirect 301 /old-page.html /new-page.html</code>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Directory Redirect:</h6>
+                        <code>Redirect 301 /old-directory/ /new-directory/</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const redirectType = document.getElementById('redirectType');
+        const sourceUrl = document.getElementById('sourceUrl');
+        const targetUrl = document.getElementById('targetUrl');
+        const regexEnabled = document.getElementById('regexEnabled');
+        const queryPreserve = document.getElementById('queryPreserve');
+        const generateBtn = document.getElementById('generateBtn');
+        const htaccessOutput = document.getElementById('htaccessOutput');
+        const copyBtn = document.getElementById('copyBtn');
+
+        function generateRedirect() {
+            const type = redirectType.value;
+            const source = sourceUrl.value.trim();
+            const target = targetUrl.value.trim();
+            const useRegex = regexEnabled.checked;
+            const preserveQuery = queryPreserve.checked;
+
+            if (!source || !target) {
+                alert('Please enter both source and target URLs!');
+                return;
+            }
+
+            let redirectCode = '';
+            
+            if (useRegex) {
+                // Use RewriteRule for regex support
+                redirectCode = `RewriteEngine On\nRewriteRule ^${source}$ ${target} [R=${type},L`;
+                if (preserveQuery) {
+                    redirectCode += ',QSA';
+                }
+                redirectCode += ']';
+            } else {
+                // Use simple Redirect
+                redirectCode = `Redirect ${type} ${source} ${target}`;
+                if (preserveQuery) {
+                    redirectCode += '\nRewriteEngine On\nRewriteCond %{QUERY_STRING} ^(.*)$\nRewriteRule ^' + source.replace(/^\//, '') + '$ ' + target + '?$1 [R=' + type + ',L]';
+                }
+            }
+
+            htaccessOutput.value = redirectCode;
+        }
+
+        generateBtn.addEventListener('click', generateRedirect);
+        
+        // Update on input change
+        redirectType.addEventListener('change', generateRedirect);
+        sourceUrl.addEventListener('input', generateRedirect);
+        targetUrl.addEventListener('input', generateRedirect);
+        regexEnabled.addEventListener('change', generateRedirect);
+        queryPreserve.addEventListener('change', generateRedirect);
+
+        copyBtn.addEventListener('click', function() {
+            if (htaccessOutput.value) {
+                ToolUtils.copyToClipboard(htaccessOutput.value);
+            }
+        });
+
+        trackToolUsage('HTACCESS Redirect Generator');
+    </script>
+</body>
+</html>

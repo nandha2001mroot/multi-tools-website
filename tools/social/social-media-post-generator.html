@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Post Generator - MultiTools</title>
+    <meta name="description" content="Generate social media posts. Free social media post generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-edit text-primary"></i> Social Media Post Generator</h1>
+            <p class="tool-description">Generate engaging social media posts for different platforms.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Post Configuration</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="postTopic" class="form-label">Post Topic:</label>
+                            <input type="text" class="form-control" id="postTopic" placeholder="Enter your post topic or idea">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="postType" class="form-label">Post Type:</label>
+                            <select class="form-select" id="postType">
+                                <option value="general">General Announcement</option>
+                                <option value="promotion">Promotional Post</option>
+                                <option value="educational">Educational Content</option>
+                                <option value="testimonial">Customer Testimonial</option>
+                                <option value="behind_scenes">Behind the Scenes</option>
+                                <option value="question">Question/Engagement</option>
+                                <option value="milestone">Milestone Celebration</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="platform" class="form-label">Platform:</label>
+                            <select class="form-select" id="platform">
+                                <option value="instagram">Instagram</option>
+                                <option value="twitter">Twitter/X</option>
+                                <option value="facebook">Facebook</option>
+                                <option value="linkedin">LinkedIn</option>
+                                <option value="tiktok">TikTok</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="tone" class="form-label">Tone of Voice:</label>
+                            <select class="form-select" id="tone">
+                                <option value="professional">Professional</option>
+                                <option value="friendly">Friendly</option>
+                                <option value="enthusiastic">Enthusiastic</option>
+                                <option value="informative">Informative</option>
+                                <option value="humorous">Humorous</option>
+                                <option value="inspirational">Inspirational</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includeEmojis">
+                            <label class="form-check-label" for="includeEmojis">
+                                Include Relevant Emojis
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100" id="generateBtn">
+                            <i class="fas fa-magic"></i> Generate Post
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-file-alt"></i> Generated Post</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="postOutput" class="form-label">Post Content:</label>
+                            <textarea class="form-control" id="postOutput" rows="8" readonly></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="characterCount" class="form-label">Character Count:</label>
+                            <input type="text" class="form-control" id="characterCount" readonly>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Post
+                            </button>
+                            <button class="btn btn-outline-secondary" id="regenerateBtn">
+                                <i class="fas fa-redo"></i> Regenerate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-lightbulb"></i> Post Enhancement</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="callToAction" class="form-label">Call to Action:</label>
+                            <select class="form-select" id="callToAction">
+                                <option value="none">No Call to Action</option>
+                                <option value="visit">Visit Our Website</option>
+                                <option value="learn">Learn More</option>
+                                <option value="shop">Shop Now</option>
+                                <option value="share">Share This Post</option>
+                                <option value="comment">Comment Below</option>
+                                <option value="follow">Follow Us</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="mentions" class="form-label">Mentions (comma separated):</label>
+                            <input type="text" class="form-control" id="mentions" placeholder="@username1, @username2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-line"></i> Platform Character Limits</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Platform</th>
+                                <th>Character Limit</th>
+                                <th>Best Practices</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Twitter/X</td>
+                                <td>280 characters</td>
+                                <td>Concise, timely, conversational</td>
+                            </tr>
+                            <tr>
+                                <td>Instagram</td>
+                                <td>2,200 characters</td>
+                                <td>Visual focus, storytelling</td>
+                            </tr>
+                            <tr>
+                                <td>Facebook</td>
+                                <td>63,206 characters</td>
+                                <td>Community-focused, detailed</td>
+                            </tr>
+                            <tr>
+                                <td>LinkedIn</td>
+                                <td>3,000 characters</td>
+                                <td>Professional, informative</td>
+                            </tr>
+                            <tr>
+                                <td>TikTok</td>
+                                <td>2,200 characters</td>
+                                <td>Creative, engaging, trend-focused</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const postTopic = document.getElementById('postTopic');
+        const postType = document.getElementById('postType');
+        const platform = document.getElementById('platform');
+        const tone = document.getElementById('tone');
+        const includeEmojis = document.getElementById('includeEmojis');
+        const generateBtn = document.getElementById('generateBtn');
+        const postOutput = document.getElementById('postOutput');
+        const characterCount = document.getElementById('characterCount');
+        const copyBtn = document.getElementById('copyBtn');
+        const regenerateBtn = document.getElementById('regenerateBtn');
+        const callToAction = document.getElementById('callToAction');
+        const mentions = document.getElementById('mentions');
+
+        function generatePost() {
+            const topic = postTopic.value.trim();
+            if (!topic) {
+                alert('Please enter a post topic!');
+                return;
+            }
+
+            const type = postType.value;
+            const plat = platform.value;
+            const toneValue = tone.value;
+            const emojis = includeEmojis.checked;
+            const cta = callToAction.value;
+            const mentionList = mentions.value.trim();
+
+            // Generate post based on configuration
+            let postContent = '';
+            const emojiSet = {
+                enthusiastic: '🎉✨🔥🎯',
+                friendly: '😊👋🌟💡',
+                professional: '💼📊🚀📈',
+                humorous: '😂🤣😅😄',
+                inspirational: '💪🌟✨🎯',
+                informative: '📚🔍💡📝'
+            };
+
+            const emojisUsed = emojis ? emojiSet[toneValue] || '✨🌟🎯' : '';
+
+            switch(type) {
+                case 'promotion':
+                    postContent = `🚀 Exciting News! ${emojisUsed}\n\nWe're thrilled to announce something amazing related to "${topic}"!\n\nStay tuned for more updates!\n\n#ExcitingNews #${topic.replace(/\s+/g, '')}`;
+                    break;
+                case 'educational':
+                    postContent = `📚 Did You Know? ${emojisUsed}\n\nHere's an interesting fact about "${topic}":\n\n"${topic}" is fascinating because...\n\nWant to learn more? Comment below! 📝\n\n#DidYouKnow #${topic.replace(/\s+/g, '')} #Education`;
+                    break;
+                case 'testimonial':
+                    postContent = `🌟 Customer Success Story ${emojisUsed}\n\nWe love hearing from our amazing customers who love "${topic}"!\n\n"${topic}" has helped thousands achieve their goals.\n\nJoin our community today! 🚀\n\n#CustomerSuccess #${topic.replace(/\s+/g, '')} #Testimonial`;
+                    break;
+                case 'behind_scenes':
+                    postContent = `🎥 Behind the Scenes ${emojisUsed}\n\nEver wondered what goes into creating "${topic}"?\n\nHere's a sneak peek at our process!\n\nStay curious! 🔍\n\n#BehindTheScenes #${topic.replace(/\s+/g, '')} #Process`;
+                    break;
+                case 'question':
+                    postContent = `🤔 Question of the Day ${emojisUsed}\n\nWhat do you think about "${topic}"?\n\nWe'd love to hear your thoughts in the comments below!\n\nDrop a ❤️ if you agree!\n\n#QuestionOfTheDay #${topic.replace(/\s+/g, '')} #Discussion`;
+                    break;
+                case 'milestone':
+                    postContent = `🎉 Milestone Achievement ${emojisUsed}\n\nWe've reached a major milestone with "${topic}"!\n\nThank you to our amazing community for making this possible!\n\nOnward and upward! 🚀\n\n#Milestone #${topic.replace(/\s+/g, '')} #Achievement`;
+                    break;
+                default:
+                    postContent = `📢 Quick Update ${emojisUsed}\n\nWe're excited to share some news about "${topic}"!\n\nThis is important because...\n\nStay informed! 📰\n\n#${topic.replace(/\s+/g, '')} #Update`;
+            }
+
+            // Add call to action
+            if (cta !== 'none') {
+                const ctas = {
+                    visit: 'Visit our website for more details! 🌐',
+                    learn: 'Learn more at the link in bio! 🔗',
+                    shop: 'Shop now and save big! 🛍️',
+                    share: 'Share this with someone who needs to see this! 🔄',
+                    comment: 'What do you think? Comment below! 💬',
+                    follow: 'Follow us for more updates! 👥'
+                };
+                postContent += '\n\n' + ctas[cta];
+            }
+
+            // Add mentions
+            if (mentionList) {
+                postContent += '\n\n' + mentionList;
+            }
+
+            postOutput.value = postContent;
+            characterCount.value = `${postContent.length} characters`;
+        }
+
+        generateBtn.addEventListener('click', generatePost);
+        regenerateBtn.addEventListener('click', generatePost);
+        copyBtn.addEventListener('click', function() {
+            if (postOutput.value) {
+                ToolUtils.copyToClipboard(postOutput.value);
+            }
+        });
+
+        // Update character count on input
+        postOutput.addEventListener('input', function() {
+            characterCount.value = `${this.value.length} characters`;
+        });
+
+        trackToolUsage('Social Media Post Generator');
+    </script>
+</body>
+</html>

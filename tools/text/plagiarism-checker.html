@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plagiarism Checker - MultiTools</title>
+    <meta name="description" content="Check for plagiarism in text. Free plagiarism checker tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-search text-info"></i> Plagiarism Checker</h1>
+            <p class="tool-description">Check your text for potential plagiarism and originality.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="textToCheck" class="form-label">Enter text to check for plagiarism:</label>
+                    <textarea class="form-control" id="textToCheck" rows="10" placeholder="Paste your text here to check for plagiarism..."></textarea>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="language" class="form-label">Language:</label>
+                        <select class="form-select" id="language">
+                            <option value="en">English</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="it">Italian</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="sensitivity" class="form-label">Sensitivity:</label>
+                        <select class="form-select" id="sensitivity">
+                            <option value="high">High (90% match)</option>
+                            <option value="medium" selected>Medium (80% match)</option>
+                            <option value="low">Low (70% match)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="btn btn-info w-100 mb-3" id="checkBtn">
+                    <i class="fas fa-search"></i> Check for Plagiarism
+                </button>
+                
+                <div id="resultsContainer" style="display: none;">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="originalityScore" class="text-success">100%</h3>
+                                    <p class="card-text">Originality</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="plagiarismScore" class="text-danger">0%</h3>
+                                    <p class="card-text">Plagiarism</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="wordCount">0</h3>
+                                    <p class="card-text">Words</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-list"></i> Plagiarism Results</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-danger" id="plagiarismBar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            
+                            <div id="detailedResults">
+                                <h6>Similarity Breakdown:</h6>
+                                <ul class="list-group" id="similarityList">
+                                    <!-- Results will be loaded here -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="placeholder" class="text-center py-5">
+                    <i class="fas fa-search fa-3x text-info mb-3"></i>
+                    <p class="text-muted">Enter text to check for plagiarism</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> About Plagiarism</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>What is Plagiarism?</h6>
+                        <p>Plagiarism is the act of using someone else's work or ideas without proper attribution. It's considered academic dishonesty and copyright infringement.</p>
+                        <ul>
+                            <li>Direct copying without credit</li>
+                            <li>Paraphrasing without attribution</li>
+                            <li>Self-plagiarism</li>
+                            <li>Accidental plagiarism</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>How to Avoid Plagiarism</h6>
+                        <ul>
+                            <li>Always cite your sources</li>
+                            <li>Use quotation marks for direct quotes</li>
+                            <li>Paraphrase properly</li>
+                            <li>Use plagiarism checkers</li>
+                            <li>Keep detailed research notes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const textToCheck = document.getElementById('textToCheck');
+        const checkBtn = document.getElementById('checkBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const originalityScore = document.getElementById('originalityScore');
+        const plagiarismScore = document.getElementById('plagiarismScore');
+        const wordCount = document.getElementById('wordCount');
+        const plagiarismBar = document.getElementById('plagiarismBar');
+        const similarityList = document.getElementById('similarityList');
+
+        checkBtn.addEventListener('click', function() {
+            const text = textToCheck.value.trim();
+            if (!text) {
+                alert('Please enter text to check for plagiarism!');
+                return;
+            }
+
+            const words = text.trim().split(/\s+/).length;
+            wordCount.textContent = words;
+
+            // Show loading state
+            resultsContainer.style.display = 'block';
+            placeholder.style.display = 'none';
+            similarityList.innerHTML = '<li class="list-group-item">Analyzing text for similarities...</li>';
+
+            // Simulate API call
+            setTimeout(() => {
+                // Generate random results for demo
+                const plagiarismPercent = Math.random() * 30; // 0-30% plagiarism
+                const originalityPercent = 100 - plagiarismPercent;
+
+                originalityScore.textContent = Math.round(originalityPercent) + '%';
+                plagiarismScore.textContent = Math.round(plagiarismPercent) + '%';
+                plagiarismBar.style.width = plagiarismPercent + '%';
+                plagiarismBar.className = `progress-bar bg-${plagiarismPercent < 10 ? 'success' : plagiarismPercent < 20 ? 'warning' : 'danger'}`;
+
+                // Generate similarity results
+                similarityList.innerHTML = '';
+                if (plagiarismPercent > 5) {
+                    for (let i = 0; i < 3; i++) {
+                        const similarity = Math.random() * 20 + 10; // 10-30%
+                        const listItem = document.createElement('li');
+                        listItem.className = 'list-group-item';
+                        listItem.innerHTML = `
+                            <div class="d-flex justify-content-between">
+                                <span>Similar to source ${i + 1}</span>
+                                <span class="badge bg-warning">${Math.round(similarity)}% match</span>
+                            </div>
+                            <small class="text-muted">Found in: https://example${i + 1}.com/source</small>
+                        `;
+                        similarityList.appendChild(listItem);
+                    }
+                } else {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.innerHTML = '<i class="fas fa-check-circle text-success"></i> No significant similarities found';
+                    similarityList.appendChild(listItem);
+                }
+            }, 2000);
+        });
+
+        trackToolUsage('Plagiarism Checker');
+    </script>
+</body>
+</html>

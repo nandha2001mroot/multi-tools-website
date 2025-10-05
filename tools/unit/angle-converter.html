@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angle Converter - MultiTools</title>
+    <meta name="description" content="Convert between angle units. Free angle converter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-circle text-danger"></i> Angle Converter</h1>
+            <p class="tool-description">Convert between different angle measurement units (degrees, radians, gradians, etc.).</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="mb-3">
+                            <label for="fromUnit" class="form-label">From Unit:</label>
+                            <select class="form-select" id="fromUnit">
+                                <option value="degrees" selected>Degrees (°)</option>
+                                <option value="radians">Radians (rad)</option>
+                                <option value="gradians">Gradians (gon)</option>
+                                <option value="minutes">Minutes (')</option>
+                                <option value="seconds">Seconds (")</option>
+                                <option value="turns">Turns</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="fromValue" class="form-label">Value:</label>
+                            <input type="number" class="form-control" id="fromValue" placeholder="Enter value" value="90" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-exchange-alt fa-2x text-muted"></i>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <div class="mb-3">
+                            <label for="toUnit" class="form-label">To Unit:</label>
+                            <select class="form-select" id="toUnit">
+                                <option value="degrees">Degrees (°)</option>
+                                <option value="radians" selected>Radians (rad)</option>
+                                <option value="gradians">Gradians (gon)</option>
+                                <option value="minutes">Minutes (')</option>
+                                <option value="seconds">Seconds (")</option>
+                                <option value="turns">Turns</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="result" class="form-label">Result:</label>
+                            <input type="text" class="form-control" id="result" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-danger w-100" id="convertBtn">
+                        <i class="fas fa-calculator"></i> Convert
+                    </button>
+                    <button class="btn btn-outline-secondary" id="swapBtn">
+                        <i class="fas fa-sync"></i> Swap
+                    </button>
+                    <button class="btn btn-outline-secondary" id="clearBtn">
+                        <i class="fas fa-eraser"></i> Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Angle Conversion Formulas</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>From Unit</th>
+                                <th>To Unit</th>
+                                <th>Formula</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Degrees</td>
+                                <td>Radians</td>
+                                <td>Degrees × π/180</td>
+                            </tr>
+                            <tr>
+                                <td>Radians</td>
+                                <td>Degrees</td>
+                                <td>Radians × 180/π</td>
+                            </tr>
+                            <tr>
+                                <td>Degrees</td>
+                                <td>Gradians</td>
+                                <td>Degrees × 400/360</td>
+                            </tr>
+                            <tr>
+                                <td>Gradians</td>
+                                <td>Degrees</td>
+                                <td>Gradians × 360/400</td>
+                            </tr>
+                            <tr>
+                                <td>Degrees</td>
+                                <td>Minutes</td>
+                                <td>Degrees × 60</td>
+                            </tr>
+                            <tr>
+                                <td>Minutes</td>
+                                <td>Degrees</td>
+                                <td>Minutes / 60</td>
+                            </tr>
+                            <tr>
+                                <td>Degrees</td>
+                                <td>Seconds</td>
+                                <td>Degrees × 3600</td>
+                            </tr>
+                            <tr>
+                                <td>Seconds</td>
+                                <td>Degrees</td>
+                                <td>Seconds / 3600</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-compass"></i> Common Angles</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Angle</th>
+                                <th>Degrees</th>
+                                <th>Radians</th>
+                                <th>Gradians</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Zero</td>
+                                <td>0°</td>
+                                <td>0 rad</td>
+                                <td>0 gon</td>
+                            </tr>
+                            <tr>
+                                <td>Right Angle</td>
+                                <td>90°</td>
+                                <td>π/2 rad</td>
+                                <td>100 gon</td>
+                            </tr>
+                            <tr>
+                                <td>Straight Angle</td>
+                                <td>180°</td>
+                                <td>π rad</td>
+                                <td>200 gon</td>
+                            </tr>
+                            <tr>
+                                <td>Full Circle</td>
+                                <td>360°</td>
+                                <td>2π rad</td>
+                                <td>400 gon</td>
+                            </tr>
+                            <tr>
+                                <td>30 Degrees</td>
+                                <td>30°</td>
+                                <td>π/6 rad</td>
+                                <td>33.33 gon</td>
+                            </tr>
+                            <tr>
+                                <td>45 Degrees</td>
+                                <td>45°</td>
+                                <td>π/4 rad</td>
+                                <td>50 gon</td>
+                            </tr>
+                            <tr>
+                                <td>60 Degrees</td>
+                                <td>60°</td>
+                                <td>π/3 rad</td>
+                                <td>66.67 gon</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const fromUnit = document.getElementById('fromUnit');
+        const toUnit = document.getElementById('toUnit');
+        const fromValue = document.getElementById('fromValue');
+        const result = document.getElementById('result');
+        const convertBtn = document.getElementById('convertBtn');
+        const swapBtn = document.getElementById('swapBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        function convertAngle() {
+            const value = parseFloat(fromValue.value);
+            if (isNaN(value)) {
+                result.value = '';
+                return;
+            }
+
+            const from = fromUnit.value;
+            const to = toUnit.value;
+            let convertedValue = 0;
+
+            // Convert to degrees first
+            let degrees = 0;
+            switch(from) {
+                case 'degrees':
+                    degrees = value;
+                    break;
+                case 'radians':
+                    degrees = value * 180 / Math.PI;
+                    break;
+                case 'gradians':
+                    degrees = value * 360 / 400;
+                    break;
+                case 'minutes':
+                    degrees = value / 60;
+                    break;
+                case 'seconds':
+                    degrees = value / 3600;
+                    break;
+                case 'turns':
+                    degrees = value * 360;
+                    break;
+            }
+
+            // Convert from degrees to target unit
+            switch(to) {
+                case 'degrees':
+                    convertedValue = degrees;
+                    break;
+                case 'radians':
+                    convertedValue = degrees * Math.PI / 180;
+                    break;
+                case 'gradians':
+                    convertedValue = degrees * 400 / 360;
+                    break;
+                case 'minutes':
+                    convertedValue = degrees * 60;
+                    break;
+                case 'seconds':
+                    convertedValue = degrees * 3600;
+                    break;
+                case 'turns':
+                    convertedValue = degrees / 360;
+                    break;
+            }
+
+            result.value = convertedValue.toFixed(6);
+        }
+
+        convertBtn.addEventListener('click', convertAngle);
+        fromValue.addEventListener('input', convertAngle);
+        fromUnit.addEventListener('change', convertAngle);
+        toUnit.addEventListener('change', convertAngle);
+
+        swapBtn.addEventListener('click', function() {
+            const tempUnit = fromUnit.value;
+            fromUnit.value = toUnit.value;
+            toUnit.value = tempUnit;
+            convertAngle();
+        });
+
+        clearBtn.addEventListener('click', function() {
+            fromValue.value = '';
+            result.value = '';
+        });
+
+        // Initial conversion
+        convertAngle();
+        trackToolUsage('Angle Converter');
+    </script>
+</body>
+</html>

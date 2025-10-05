@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Geolocation Finder - MultiTools</title>
+    <meta name="description" content="Find geographic location of IP addresses. Free IP geolocation finder tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-map-marker-alt text-info"></i> IP Geolocation Finder</h1>
+            <p class="tool-description">Find the geographic location and details of any IP address.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="ipAddress" class="form-label">Enter IP Address:</label>
+                            <input type="text" class="form-control" id="ipAddress" placeholder="Enter IP address (leave blank for your IP)">
+                        </div>
+                        
+                        <button class="btn btn-info w-100 mb-3" id="lookupBtn">
+                            <i class="fas fa-search-location"></i> Find Location
+                        </button>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-info-circle"></i> Your IP Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Your Public IP:</strong> <span id="yourIp">Detecting...</span></p>
+                                <button class="btn btn-outline-secondary btn-sm" id="detectIpBtn">
+                                    <i class="fas fa-sync"></i> Detect My IP
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="resultsContainer" style="display: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-map-marked-alt"></i> Location Details</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>IP Address:</strong> <span id="resultIp"></span></p>
+                                            <p><strong>Country:</strong> <span id="resultCountry"></span></p>
+                                            <p><strong>Region:</strong> <span id="resultRegion"></span></p>
+                                            <p><strong>City:</strong> <span id="resultCity"></span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>Latitude:</strong> <span id="resultLat"></span></p>
+                                            <p><strong>Longitude:</strong> <span id="resultLng"></span></p>
+                                            <p><strong>Timezone:</strong> <span id="resultTimezone"></span></p>
+                                            <p><strong>ISP:</strong> <span id="resultIsp"></span></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-3">
+                                        <div id="mapPlaceholder" class="border rounded p-3 text-center">
+                                            <i class="fas fa-map fa-3x text-muted mb-2"></i>
+                                            <p class="text-muted">Map would appear here in real implementation</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fas fa-map-marker-alt fa-3x text-info mb-3"></i>
+                            <p class="text-muted">Enter an IP address to find its location</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> About IP Geolocation</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>What is IP Geolocation?</h6>
+                        <p>IP geolocation is the process of determining the physical location of a device connected to the internet based on its IP address.</p>
+                        <ul>
+                            <li>Used for targeted advertising</li>
+                            <li>Content localization</li>
+                            <li>Security and fraud prevention</li>
+                            <li>Analytics and reporting</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Accuracy Levels:</h6>
+                        <ul>
+                            <li><strong>Country:</strong> 95-99% accurate</li>
+                            <li><strong>Region:</strong> 75-90% accurate</li>
+                            <li><strong>City:</strong> 50-80% accurate</li>
+                            <li><strong>Coordinates:</strong> Varies by provider</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const ipAddress = document.getElementById('ipAddress');
+        const lookupBtn = document.getElementById('lookupBtn');
+        const yourIp = document.getElementById('yourIp');
+        const detectIpBtn = document.getElementById('detectIpBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const resultIp = document.getElementById('resultIp');
+        const resultCountry = document.getElementById('resultCountry');
+        const resultRegion = document.getElementById('resultRegion');
+        const resultCity = document.getElementById('resultCity');
+        const resultLat = document.getElementById('resultLat');
+        const resultLng = document.getElementById('resultLng');
+        const resultTimezone = document.getElementById('resultTimezone');
+        const resultIsp = document.getElementById('resultIsp');
+
+        function detectMyIP() {
+            // In real implementation, this would call an API
+            yourIp.textContent = '192.168.1.1 (Demo)';
+        }
+
+        function lookupIP() {
+            const ip = ipAddress.value.trim();
+            
+            // Show loading state
+            resultsContainer.style.display = 'none';
+            placeholder.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin fa-3x text-muted mb-3"></i><p>Detecting location...</p></div>';
+            placeholder.style.display = 'block';
+
+            // Simulate API call
+            setTimeout(() => {
+                // Generate mock data for demo
+                const mockData = {
+                    ip: ip || '192.168.1.1',
+                    country: 'United States',
+                    region: 'California',
+                    city: 'Los Angeles',
+                    latitude: '34.0522',
+                    longitude: '-118.2437',
+                    timezone: 'America/Los_Angeles',
+                    isp: 'Example ISP Provider'
+                };
+
+                // Update results
+                resultIp.textContent = mockData.ip;
+                resultCountry.textContent = mockData.country;
+                resultRegion.textContent = mockData.region;
+                resultCity.textContent = mockData.city;
+                resultLat.textContent = mockData.latitude;
+                resultLng.textContent = mockData.longitude;
+                resultTimezone.textContent = mockData.timezone;
+                resultIsp.textContent = mockData.isp;
+
+                resultsContainer.style.display = 'block';
+                placeholder.style.display = 'none';
+            }, 1500);
+        }
+
+        detectIpBtn.addEventListener('click', detectMyIP);
+        lookupBtn.addEventListener('click', lookupIP);
+
+        // Initial detection
+        detectMyIP();
+        trackToolUsage('IP Geolocation Finder');
+    </script>
+</body>
+</html>

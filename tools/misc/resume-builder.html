@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder - MultiTools</title>
+    <meta name="description" content="Create professional resumes. Free resume builder tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-file-alt text-success"></i> Resume Builder</h1>
+            <p class="tool-description">Create professional resumes with customizable templates.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-user"></i> Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name:</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="John Doe">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="john@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone:</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="+1 (555) 123-4567">
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address:</label>
+                            <textarea class="form-control" id="address" rows="2" placeholder="123 Street, City, State"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="linkedin" class="form-label">LinkedIn:</label>
+                            <input type="url" class="form-control" id="linkedin" placeholder="https://linkedin.com/in/username">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-briefcase"></i> Work Experience</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="workExperience">
+                            <div class="mb-3">
+                                <label for="jobTitle1" class="form-label">Job Title:</label>
+                                <input type="text" class="form-control" id="jobTitle1" placeholder="Software Engineer">
+                            </div>
+                            <div class="mb-3">
+                                <label for="company1" class="form-label">Company:</label>
+                                <input type="text" class="form-control" id="company1" placeholder="Company Name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="duration1" class="form-label">Duration:</label>
+                                <input type="text" class="form-control" id="duration1" placeholder="Jan 2020 - Present">
+                            </div>
+                            <div class="mb-3">
+                                <label for="description1" class="form-label">Description:</label>
+                                <textarea class="form-control" id="description1" rows="3" placeholder="Job responsibilities..."></textarea>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline-secondary" id="addExperience">
+                            <i class="fas fa-plus"></i> Add Experience
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-graduation-cap"></i> Education</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="degree" class="form-label">Degree:</label>
+                            <input type="text" class="form-control" id="degree" placeholder="Bachelor of Science">
+                        </div>
+                        <div class="mb-3">
+                            <label for="school" class="form-label">School:</label>
+                            <input type="text" class="form-control" id="school" placeholder="University Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="educationDuration" class="form-label">Duration:</label>
+                            <input type="text" class="form-control" id="educationDuration" placeholder="2016 - 2020">
+                        </div>
+                        <div class="mb-3">
+                            <label for="educationDescription" class="form-label">Description:</label>
+                            <textarea class="form-control" id="educationDescription" rows="2" placeholder="Additional details..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-star"></i> Skills</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="skills" class="form-label">Skills (comma separated):</label>
+                            <textarea class="form-control" id="skills" rows="4" placeholder="JavaScript, HTML, CSS, React, Node.js"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-file-pdf"></i> Resume Preview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="resumePreview" class="border rounded p-3" style="min-height: 400px;">
+                            <div class="text-center mb-3">
+                                <h2 id="previewName">John Doe</h2>
+                                <p id="previewContact">john@example.com | +1 (555) 123-4567</p>
+                                <p id="previewAddress">123 Street, City, State</p>
+                                <p id="previewLinkedIn">LinkedIn: <a href="#" id="previewLinkedInUrl">linkedin.com/in/username</a></p>
+                            </div>
+                            
+                            <h4>Professional Summary</h4>
+                            <p id="previewSummary">Professional summary goes here...</p>
+                            
+                            <h4>Work Experience</h4>
+                            <div id="previewExperience">
+                                <p id="previewJobTitle">Software Engineer</p>
+                                <p id="previewCompany">Company Name</p>
+                                <p id="previewDuration">Jan 2020 - Present</p>
+                                <p id="previewJobDescription">Job responsibilities...</p>
+                            </div>
+                            
+                            <h4>Education</h4>
+                            <div id="previewEducation">
+                                <p id="previewDegree">Bachelor of Science</p>
+                                <p id="previewSchool">University Name</p>
+                                <p id="previewEducationDuration">2016 - 2020</p>
+                            </div>
+                            
+                            <h4>Skills</h4>
+                            <div id="previewSkills">
+                                <p id="previewSkillsList">JavaScript, HTML, CSS, React, Node.js</p>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success w-100 mt-3" id="downloadResume">
+                            <i class="fas fa-download"></i> Download Resume
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const fullName = document.getElementById('fullName');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const address = document.getElementById('address');
+        const linkedin = document.getElementById('linkedin');
+        const jobTitle1 = document.getElementById('jobTitle1');
+        const company1 = document.getElementById('company1');
+        const duration1 = document.getElementById('duration1');
+        const description1 = document.getElementById('description1');
+        const degree = document.getElementById('degree');
+        const school = document.getElementById('school');
+        const educationDuration = document.getElementById('educationDuration');
+        const educationDescription = document.getElementById('educationDescription');
+        const skills = document.getElementById('skills');
+
+        const previewName = document.getElementById('previewName');
+        const previewContact = document.getElementById('previewContact');
+        const previewAddress = document.getElementById('previewAddress');
+        const previewLinkedInUrl = document.getElementById('previewLinkedInUrl');
+        const previewJobTitle = document.getElementById('previewJobTitle');
+        const previewCompany = document.getElementById('previewCompany');
+        const previewDuration = document.getElementById('previewDuration');
+        const previewJobDescription = document.getElementById('previewJobDescription');
+        const previewDegree = document.getElementById('previewDegree');
+        const previewSchool = document.getElementById('previewSchool');
+        const previewEducationDuration = document.getElementById('previewEducationDuration');
+        const previewSkillsList = document.getElementById('previewSkillsList');
+
+        function updatePreview() {
+            previewName.textContent = fullName.value || 'John Doe';
+            previewContact.textContent = `${email.value || 'john@example.com'} | ${phone.value || '+1 (555) 123-4567'}`;
+            previewAddress.textContent = address.value || '123 Street, City, State';
+            previewLinkedInUrl.textContent = linkedin.value || 'linkedin.com/in/username';
+            
+            previewJobTitle.textContent = jobTitle1.value || 'Software Engineer';
+            previewCompany.textContent = company1.value || 'Company Name';
+            previewDuration.textContent = duration1.value || 'Jan 2020 - Present';
+            previewJobDescription.textContent = description1.value || 'Job responsibilities...';
+            
+            previewDegree.textContent = degree.value || 'Bachelor of Science';
+            previewSchool.textContent = school.value || 'University Name';
+            previewEducationDuration.textContent = educationDuration.value || '2016 - 2020';
+            
+            previewSkillsList.textContent = skills.value || 'JavaScript, HTML, CSS, React, Node.js';
+        }
+
+        // Add event

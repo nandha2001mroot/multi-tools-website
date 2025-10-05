@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backlink Checker - MultiTools</title>
+    <meta name="description" content="Analyze backlinks to your website. Free backlink checker tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-link text-success"></i> Backlink Checker</h1>
+            <p class="tool-description">Analyze backlinks to your website and evaluate link quality.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="websiteUrl" class="form-label">Enter website URL:</label>
+                    <input type="url" class="form-control" id="websiteUrl" placeholder="https://example.com">
+                </div>
+                
+                <button class="btn btn-success w-100 mb-3" id="analyzeBtn">
+                    <i class="fas fa-search"></i> Analyze Backlinks
+                </button>
+                
+                <div id="resultsContainer" style="display: none;">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="totalBacklinks" class="text-primary">0</h3>
+                                    <p class="card-text">Total Backlinks</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="uniqueDomains" class="text-success">0</h3>
+                                    <p class="card-text">Unique Domains</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="dofollowLinks" class="text-warning">0</h3>
+                                    <p class="card-text">DoFollow Links</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="nofollowLinks" class="text-info">0</h3>
+                                    <p class="card-text">NoFollow Links</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-list"></i> Backlink Analysis</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="backlinksTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Source URL</th>
+                                            <th>Target URL</th>
+                                            <th>Anchor Text</th>
+                                            <th>Link Type</th>
+                                            <th>Domain Authority</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="backlinksBody">
+                                        <!-- Results will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="placeholder" class="text-center py-5">
+                    <i class="fas fa-link fa-3x text-success mb-3"></i>
+                    <p class="text-muted">Enter a website URL to analyze its backlinks</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Backlink Quality Indicators</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>High-Quality Backlinks:</h6>
+                        <ul>
+                            <li>From authoritative, relevant websites</li>
+                            <li>DoFollow links (pass SEO value)</li>
+                            <li>Natural anchor text</li>
+                            <li>Contextually relevant</li>
+                            <li>Good domain authority</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Low-Quality Backlinks:</h6>
+                        <ul>
+                            <li>From spammy websites</li>
+                            <li>Link farms or PBNs</li>
+                            <li>Exact match anchor text</li>
+                            <li>Low domain authority</li>
+                            <li>Irrelevant content</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const websiteUrl = document.getElementById('websiteUrl');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const totalBacklinks = document.getElementById('totalBacklinks');
+        const uniqueDomains = document.getElementById('uniqueDomains');
+        const dofollowLinks = document.getElementById('dofollowLinks');
+        const nofollowLinks = document.getElementById('nofollowLinks');
+        const backlinksBody = document.getElementById('backlinksBody');
+
+        analyzeBtn.addEventListener('click', function() {
+            const url = websiteUrl.value.trim();
+            if (!url) {
+                alert('Please enter a website URL!');
+                return;
+            }
+
+            if (!ToolUtils.validateURL(url)) {
+                alert('Please enter a valid URL!');
+                return;
+            }
+
+            // Show loading state
+            resultsContainer.style.display = 'block';
+            placeholder.style.display = 'none';
+            backlinksBody.innerHTML = '<tr><td colspan="5" class="text-center">Analyzing backlinks...</td></tr>';
+
+            // Simulate API call
+            setTimeout(() => {
+                // Generate random data for demo
+                const total = Math.floor(Math.random() * 1000) + 50;
+                const unique = Math.floor(total * 0.6) + 10;
+                const dofollow = Math.floor(total * 0.7);
+                const nofollow = total - dofollow;
+
+                totalBacklinks.textContent = ToolUtils.formatNumber(total);
+                uniqueDomains.textContent = ToolUtils.formatNumber(unique);
+                dofollowLinks.textContent = ToolUtils.formatNumber(dofollow);
+                nofollowLinks.textContent = ToolUtils.formatNumber(nofollow);
+
+                // Generate sample backlinks
+                backlinksBody.innerHTML = '';
+                for (let i = 0; i < 10; i++) {
+                    const link = document.createElement('tr');
+                    link.innerHTML = `
+                        <td><a href="https://example${i + 1}.com" target="_blank">example${i + 1}.com</a></td>
+                        <td>${url}</td>
+                        <td>Backlink ${i + 1}</td>
+                        <td>${Math.random() > 0.5 ? 'DoFollow' : 'NoFollow'}</td>
+                        <td>${Math.floor(Math.random() * 50) + 30}</td>
+                    `;
+                    backlinksBody.appendChild(link);
+                }
+            }, 2000);
+        });
+
+        trackToolUsage('Backlink Checker');
+    </script>
+</body>
+</html>

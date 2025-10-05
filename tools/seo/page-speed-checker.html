@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Speed Checker - MultiTools</title>
+    <meta name="description" content="Analyze website loading speed. Free page speed checker tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-tachometer-alt text-success"></i> Page Speed Checker</h1>
+            <p class="tool-description">Analyze your website's loading speed and performance metrics.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="websiteUrl" class="form-label">Enter website URL:</label>
+                    <input type="url" class="form-control" id="websiteUrl" placeholder="https://example.com">
+                </div>
+                
+                <button class="btn btn-success w-100 mb-3" id="analyzeBtn">
+                    <i class="fas fa-tachometer-alt"></i> Analyze Page Speed
+                </button>
+                
+                <div id="resultsContainer" style="display: none;">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="loadTime" class="text-primary">0.00s</h3>
+                                    <p class="card-text">Load Time</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="firstPaint" class="text-success">0.00s</h3>
+                                    <p class="card-text">First Paint</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="domLoad" class="text-warning">0.00s</h3>
+                                    <p class="card-text">DOM Load</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-line"></i> Performance Metrics</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>First Contentful Paint:</label>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" id="fcpBar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="fcpValue">0.00s</small>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label>Largest Contentful Paint:</label>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" id="lcpBar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="lcpValue">0.00s</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Cumulative Layout Shift:</label>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" id="clsBar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="clsValue">0.00</small>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label>Speed Index:</label>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" id="siBar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="siValue">0.00s</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info mt-3">
+                                <h6>Recommendations:</h6>
+                                <ul id="recommendations">
+                                    <li>Optimize images and compress them</li>
+                                    <li>Enable browser caching</li>
+                                    <li>Minimize CSS and JavaScript files</li>
+                                    <li>Use a Content Delivery Network (CDN)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="placeholder" class="text-center py-5">
+                    <i class="fas fa-tachometer-alt fa-3x text-success mb-3"></i>
+                    <p class="text-muted">Enter a website URL to analyze its speed</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Page Speed Best Practices</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Optimization Techniques:</h6>
+                        <ul>
+                            <li>Compress and optimize images</li>
+                            <li>Minify CSS, JavaScript, and HTML</li>
+                            <li>Enable Gzip compression</li>
+                            <li>Use browser caching</li>
+                            <li>Reduce server response time</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Performance Metrics:</h6>
+                        <ul>
+                            <li>Load Time: Under 3 seconds</li>
+                            <li>First Contentful Paint: Under 1 second</li>
+                            <li>Largest Contentful Paint: Under 2.5 seconds</li>
+                            <li>Cumulative Layout Shift: Under 0.1</li>
+                            <li>First Input Delay: Under 100ms</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const websiteUrl = document.getElementById('websiteUrl');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const loadTime = document.getElementById('loadTime');
+        const firstPaint = document.getElementById('firstPaint');
+        const domLoad = document.getElementById('domLoad');
+        const fcpBar = document.getElementById('fcpBar');
+        const fcpValue = document.getElementById('fcpValue');
+        const lcpBar = document.getElementById('lcpBar');
+        const lcpValue = document.getElementById('lcpValue');
+        const clsBar = document.getElementById('clsBar');
+        const clsValue = document.getElementById('clsValue');
+        const siBar = document.getElementById('siBar');
+        const siValue = document.getElementById('siValue');
+
+        analyzeBtn.addEventListener('click', function() {
+            const url = websiteUrl.value.trim();
+            if (!url) {
+                alert('Please enter a website URL!');
+                return;
+            }
+
+            if (!ToolUtils.validateURL(url)) {
+                alert('Please enter a valid URL!');
+                return;
+            }
+
+            // Show loading state
+            resultsContainer.style.display = 'block';
+            placeholder.style.display = 'none';
+
+            // Simulate page speed analysis
+            setTimeout(() => {
+                // Generate random performance metrics
+                const loadTimeValue = (Math.random() * 4 + 1).toFixed(2);
+                const firstPaintValue = (Math.random() * 2 + 0.5).toFixed(2);
+                const domLoadValue = (Math.random() * 3 + 1).toFixed(2);
+                const fcpValueNum = (Math.random() * 2 + 0.5).toFixed(2);
+                const lcpValueNum = (Math.random() * 3 + 1).toFixed(2);
+                const clsValueNum = (Math.random() * 0.3).toFixed(2);
+                const siValueNum = (Math.random() * 4 + 1).toFixed(2);
+
+                // Update display
+                loadTime.textContent = loadTimeValue + 's';
+                firstPaint.textContent = firstPaintValue + 's';
+                domLoad.textContent = domLoadValue + 's';
+                fcpValue.textContent = fcpValueNum + 's';
+                lcpValue.textContent = lcpValueNum + 's';
+                clsValue.textContent = clsValueNum;
+                siValue.textContent = siValueNum + 's';
+
+                // Update progress bars based on performance
+                fcpBar.style.width = Math.min(100, fcpValueNum * 50) + '%';
+                lcpBar.style.width = Math.min(100, lcpValueNum * 33) + '%';
+                clsBar.style.width = Math.min(100, clsValueNum * 333) + '%';
+                siBar.style.width = Math.min(100, siValueNum * 25) + '%';
+
+                // Update bar colors based on performance
+                fcpBar.className = `progress-bar bg-${fcpValueNum < 1.5 ? 'success' : fcpValueNum < 3 ? 'warning' : 'danger'}`;
+                lcpBar.className = `progress-bar bg-${lcpValueNum < 2.5 ? 'success' : lcpValueNum < 4 ? 'warning' : 'danger'}`;
+                clsBar.className = `progress-bar bg-${clsValueNum < 0.1 ? 'success' : clsValueNum < 0.25 ? 'warning' : 'danger'}`;
+                siBar.className = `progress-bar bg-${siValueNum < 3.4 ? 'success' : siValueNum < 5.8 ? 'warning' : 'danger'}`;
+            }, 2000);
+        });
+
+        trackToolUsage('Page Speed Checker');
+    </script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller Simulator - MultiTools</title>
+    <meta name="description" content="Roll virtual dice. Free dice roller simulator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-dice text-danger"></i> Dice Roller Simulator</h1>
+            <p class="tool-description">Roll virtual dice with customizable options and realistic physics.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Dice Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="numDice" class="form-label">Number of Dice:</label>
+                                <input type="number" class="form-control" id="numDice" value="2" min="1" max="10">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="diceSides" class="form-label">Sides per Die:</label>
+                                <select class="form-select" id="diceSides">
+                                    <option value="6">6-sided (Standard)</option>
+                                    <option value="4">4-sided (D4)</option>
+                                    <option value="8">8-sided (D8)</option>
+                                    <option value="10">10-sided (D10)</option>
+                                    <option value="12">12-sided (D12)</option>
+                                    <option value="20">20-sided (D20)</option>
+                                    <option value="100">100-sided (D100)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="modifier" class="form-label">Modifier (+/-):</label>
+                            <input type="number" class="form-control" id="modifier" value="0" step="1">
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="showAnimation" checked>
+                            <label class="form-check-label" for="showAnimation">
+                                Show Rolling Animation
+                            </label>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="recordHistory">
+                            <label class="form-check-label" for="recordHistory">
+                                Record Roll History
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-danger w-100 mb-3" id="rollBtn">
+                            <i class="fas fa-dice"></i> Roll Dice
+                        </button>
+                        
+                        <button class="btn btn-outline-secondary w-100" id="clearBtn">
+                            <i class="fas fa-eraser"></i> Clear History
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-dice"></i> Roll Results</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="diceAnimation" class="mb-4">
+                            <div class="dice-container d-flex justify-content-center gap-2 flex-wrap">
+                                <!-- Dice will be generated here -->
+                            </div>
+                        </div>
+                        
+                        <div id="rollResult" class="mb-3">
+                            <h2 id="totalResult">Ready to roll!</h2>
+                            <p id="individualResults" class="text-muted"></p>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5>Total Rolls</h5>
+                                        <h3 id="totalRolls" class="text-danger">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5>Average</h5>
+                                        <h3 id="averageRoll" class="text-warning">0.0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5>Highest</h5>
+                                        <h3 id="highestRoll" class="text-success">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-history"></i> Roll History</h5>
+            </div>
+            <div class="card-body">
+                <div id="historyContainer">
+                    <p class="text-muted">Roll history will appear here</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-dice-d20"></i> Dice Types</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4>D4</h4>
+                                <p>4-sided die</p>
+                                <p class="small">Used for damage rolls</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4>D6</h4>
+                                <p>6-sided die</p>
+                                <p class="small">Most common dice</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4>D20</h4>
+                                <p>20-sided die</p>
+                                <p class="small">Critical hit rolls</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const numDice = document.getElementById('numDice');
+        const diceSides = document.getElementById('diceSides');
+        const modifier = document.getElementById('modifier');
+        const showAnimation = document.getElementById('showAnimation');
+        const recordHistory = document.getElementById('recordHistory');
+        const rollBtn = document.getElementById('rollBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const diceAnimation = document.getElementById('diceAnimation');
+        const totalResult = document.getElementById('totalResult');
+        const individualResults = document.getElementById('individualResults');
+        const totalRolls = document.getElementById('totalRolls');
+        const averageRoll = document.getElementById('averageRoll');
+        const highestRoll = document.getElementById('highestRoll');
+        const historyContainer = document.getElementById('historyContainer');
+
+        let rollHistory = [];
+        let stats = {
+            totalRolls: 0,
+            totalSum: 0,
+            highest: 0
+        };
+
+        function rollDice() {
+            const diceCount = parseInt(numDice.value) || 1;
+            const sides = parseInt(diceSides.value) || 6;
+            const mod = parseInt(modifier.value) || 0;
+            
+            if (diceCount <= 0 || diceCount > 10) {
+                alert('Please enter between 1-10 dice!');
+                return;
+            }
+
+            // Show rolling animation
+            if (showAnimation.checked) {
+                animateDiceRoll(diceCount, sides, mod);
+            } else {
+                simulateRoll(diceCount, sides, mod);
+            }
+        }
+
+        function animateDiceRoll(diceCount, sides, mod) {
+            totalResult.textContent = 'Rolling...';
+            individualResults.textContent = '';
+            
+            // Create dice elements
+            const diceContainer = diceAnimation.querySelector('.dice-container');
+            diceContainer.innerHTML = '';
+            
+            for (let i = 0; i < diceCount; i++) {
+                const die = document.createElement('div');
+                die.className = 'die';
+                die.style.fontSize = '2rem';
+                die.textContent = '🎲';
+                diceContainer.appendChild(die);
+            }
+            
+            // Animate
+            let rollCount = 0;
+            const rollInterval = setInterval(() => {
+                diceContainer.querySelectorAll('.die').forEach(die => {
+                    die.textContent = ['🎲', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅'][Math.floor(Math.random() * 7)];
+                });
+                rollCount++;
+                
+                if (rollCount > 10) {
+                    clearInterval(rollInterval);
+                    simulateRoll(diceCount, sides, mod);
+                }
+            }, 100);
+        }
+
+        function simulateRoll(diceCount, sides, mod) {
+            let rolls = [];
+            let sum = 0;
+            
+            for (let i = 0; i < diceCount; i++) {
+                const roll = Math.floor(Math.random() * sides) + 1;
+                rolls.push(roll);
+                sum += roll;
+            }
+            
+            const total = sum + mod;
+            
+            // Update display
+            totalResult.textContent = `Total: ${total}`;
+            individualResults.textContent = `Rolls: ${rolls.join(', ')} ${mod !== 0 ? `(Modifier: ${mod >= 0 ? '+' : ''}${mod})` : ''}`;
+            
+            // Update statistics
+            stats.totalRolls += diceCount;
+            stats.totalSum += sum;
+            stats.highest = Math.max(stats.highest, ...rolls);
+            
+            totalRolls.textContent = stats.totalRolls;
+            averageRoll.textContent = (stats.totalSum / stats.totalRolls).toFixed(1);
+            highestRoll.textContent = stats.highest;
+            
+            // Record history
+            if (recordHistory.checked) {
+                const historyEntry = {
+                    timestamp: new Date().toLocaleTimeString(),
+                    dice: diceCount,
+                    sides: sides,
+                    rolls: rolls,
+                    modifier: mod,
+                    total: total
+                };
+                rollHistory.push(historyEntry);
+                updateHistoryDisplay();
+            }
+        }
+
+        function updateHistoryDisplay() {
+            if (rollHistory.length === 0) {
+                historyContainer.innerHTML = '<p class="text-muted">Roll history will appear here</p>';
+                return;
+            }
+            
+            let html = '<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Time</th><th>Dice</th><th>Rolls</th><th>Total</th></tr></thead><tbody>';
+            
+            rollHistory.slice(-10).reverse().forEach(entry => {
+                html += `
+                    <tr>
+                        <td>${entry.timestamp}</td>
+                        <td>${entry.dice}d${entry.sides}</td>
+                        <td>${entry.rolls.join(', ')}</td>
+                        <td>${entry.total}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table></div>';
+            historyContainer.innerHTML = html;
+        }
+
+        function clearHistory() {
+            rollHistory = [];
+            stats = { totalRolls: 0, totalSum: 0, highest: 0 };
+            
+            totalRolls.textContent = '0';
+            averageRoll.textContent = '0.0';
+            highestRoll.textContent = '0';
+            totalResult.textContent = 'Ready to roll!';
+            individualResults.textContent = '';
+            
+            historyContainer.innerHTML = '<p class="text-muted">Roll history will appear here</p>';
+        }
+
+        // Add CSS for dice animation
+        const style = document.createElement('style');
+        style.textContent = `
+            .die {
+                transition: transform 0.1s;
+            }
+            
+            .die:hover {
+                transform: scale(1.1);
+            }
+        `;
+        document.head.appendChild(style);
+
+        rollBtn.addEventListener('click', rollDice);
+        clearBtn.addEventListener('click', clearHistory);
+
+        trackToolUsage('Dice Roller Simulator');
+    </script>
+</body>
+</html>

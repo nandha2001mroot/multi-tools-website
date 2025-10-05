@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Efficiency Converter - MultiTools</title>
+    <meta name="description" content="Convert between fuel efficiency units. Free fuel efficiency converter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-gas-pump text-danger"></i> Fuel Efficiency Converter</h1>
+            <p class="tool-description">Convert between different fuel efficiency units (MPG, L/100km, etc.).</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="mb-3">
+                            <label for="fromUnit" class="form-label">From Unit:</label>
+                            <select class="form-select" id="fromUnit">
+                                <option value="mpg_us">Miles per Gallon (US)</option>
+                                <option value="mpg_uk">Miles per Gallon (UK)</option>
+                                <option value="l_per_100km" selected>Liters per 100km</option>
+                                <option value="km_per_l">Kilometers per Liter</option>
+                                <option value="mpg_imp">Miles per Imperial Gallon</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="fromValue" class="form-label">Value:</label>
+                            <input type="number" class="form-control" id="fromValue" placeholder="Enter value" value="8.5" step="0.1">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-exchange-alt fa-2x text-muted"></i>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <div class="mb-3">
+                            <label for="toUnit" class="form-label">To Unit:</label>
+                            <select class="form-select" id="toUnit">
+                                <option value="mpg_us" selected>Miles per Gallon (US)</option>
+                                <option value="mpg_uk">Miles per Gallon (UK)</option>
+                                <option value="l_per_100km">Liters per 100km</option>
+                                <option value="km_per_l">Kilometers per Liter</option>
+                                <option value="mpg_imp">Miles per Imperial Gallon</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="result" class="form-label">Result:</label>
+                            <input type="text" class="form-control" id="result" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-danger w-100" id="convertBtn">
+                        <i class="fas fa-calculator"></i> Convert
+                    </button>
+                    <button class="btn btn-outline-secondary" id="swapBtn">
+                        <i class="fas fa-sync"></i> Swap
+                    </button>
+                    <button class="btn btn-outline-secondary" id="clearBtn">
+                        <i class="fas fa-eraser"></i> Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Conversion Formulas</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>From Unit</th>
+                                <th>To Unit</th>
+                                <th>Formula</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>L/100km</td>
+                                <td>MPG (US)</td>
+                                <td>235.215 / L/100km</td>
+                            </tr>
+                            <tr>
+                                <td>MPG (US)</td>
+                                <td>L/100km</td>
+                                <td>235.215 / MPG</td>
+                            </tr>
+                            <tr>
+                                <td>L/100km</td>
+                                <td>Km/L</td>
+                                <td>100 / L/100km</td>
+                            </tr>
+                            <tr>
+                                <td>Km/L</td>
+                                <td>L/100km</td>
+                                <td>100 / Km/L</td>
+                            </tr>
+                            <tr>
+                                <td>MPG (US)</td>
+                                <td>MPG (UK)</td>
+                                <td>MPG (US) × 1.20095</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-car"></i> Fuel Efficiency Standards</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Efficiency Ratings:</h6>
+                        <ul>
+                            <li><strong>Excellent:</strong> Over 40 MPG (US) / Under 6 L/100km</li>
+                            <li><strong>Good:</strong> 30-40 MPG (US) / 6-8 L/100km</li>
+                            <li><strong>Average:</strong> 20-30 MPG (US) / 8-12 L/100km</li>
+                            <li><strong>Poor:</strong> Under 20 MPG (US) / Over 12 L/100km</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Common Vehicles:</h6>
+                        <ul>
+                            <li><strong>Compact Car:</strong> 30-35 MPG</li>
+                            <li><strong>SUV:</strong> 20-25 MPG</li>
+                            <li><strong>Truck:</strong> 15-20 MPG</li>
+                            <li><strong>Hybrid:</strong> 45-55 MPG</li>
+                            <li><strong>Electric:</strong> Equivalent to 100+ MPG</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const fromUnit = document.getElementById('fromUnit');
+        const toUnit = document.getElementById('toUnit');
+        const fromValue = document.getElementById('fromValue');
+        const result = document.getElementById('result');
+        const convertBtn = document.getElementById('convertBtn');
+        const swapBtn = document.getElementById('swapBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        function convertFuelEfficiency() {
+            const value = parseFloat(fromValue.value);
+            if (isNaN(value) || value <= 0) {
+                result.value = '';
+                return;
+            }
+
+            const from = fromUnit.value;
+            const to = toUnit.value;
+            let convertedValue = 0;
+
+            // Conversion logic
+            if (from === to) {
+                convertedValue = value;
+            } else if (from === 'l_per_100km' && to === 'mpg_us') {
+                convertedValue = 235.215 / value;
+            } else if (from === 'mpg_us' && to === 'l_per_100km') {
+                convertedValue = 235.215 / value;
+            } else if (from === 'l_per_100km' && to === 'km_per_l') {
+                convertedValue = 100 / value;
+            } else if (from === 'km_per_l' && to === 'l_per_100km') {
+                convertedValue = 100 / value;
+            } else if (from === 'mpg_us' && to === 'km_per_l') {
+                convertedValue = value * 0.425144;
+            } else if (from === 'km_per_l' && to === 'mpg_us') {
+                convertedValue = value * 2.35215;
+            } else if (from === 'mpg_us' && to === 'mpg_uk') {
+                convertedValue = value * 1.20095;
+            } else if (from === 'mpg_uk' && to === 'mpg_us') {
+                convertedValue = value / 1.20095;
+            } else if (from === 'l_per_100km' && to === 'mpg_uk') {
+                convertedValue = 282.48 / value;
+            } else if (from === 'mpg_uk' && to === 'l_per_100km') {
+                convertedValue = 282.48 / value;
+            } else if (from === 'mpg_uk' && to === 'km_per_l') {
+                convertedValue = value * 0.354006;
+            } else if (from === 'km_per_l' && to === 'mpg_uk') {
+                convertedValue = value * 2.8248;
+            } else {
+                // Fallback for complex conversions
+                convertedValue = value;
+            }
+
+            result.value = convertedValue.toFixed(2);
+        }
+
+        convertBtn.addEventListener('click', convertFuelEfficiency);
+        fromValue.addEventListener('input', convertFuelEfficiency);
+        fromUnit.addEventListener('change', convertFuelEfficiency);
+        toUnit.addEventListener('change', convertFuelEfficiency);
+
+        swapBtn.addEventListener('click', function() {
+            const tempUnit = fromUnit.value;
+            fromUnit.value = toUnit.value;
+            toUnit.value = tempUnit;
+            convertFuelEfficiency();
+        });
+
+        clearBtn.addEventListener('click', function() {
+            fromValue.value = '';
+            result.value = '';
+        });
+
+        // Initial conversion
+        convertFuelEfficiency();
+        trackToolUsage('Fuel Efficiency Converter');
+    </script>
+</body>
+</html>

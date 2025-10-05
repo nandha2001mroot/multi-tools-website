@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Tag Generator - MultiTools</title>
+    <meta name="description" content="Generate SEO meta tags for your website. Free meta tag generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-code text-success"></i> Meta Tag Generator</h1>
+            <p class="tool-description">Generate SEO-friendly meta tags for your website pages.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-edit"></i> Meta Tag Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="pageTitle" class="form-label">Page Title</label>
+                            <input type="text" class="form-control" id="pageTitle" placeholder="Enter page title">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="metaDescription" class="form-label">Meta Description</label>
+                            <textarea class="form-control" id="metaDescription" rows="3" placeholder="Enter meta description (150-160 characters)"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="keywords" class="form-label">Keywords (comma separated)</label>
+                            <input type="text" class="form-control" id="keywords" placeholder="keyword1, keyword2, keyword3">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="author" class="form-label">Author</label>
+                            <input type="text" class="form-control" id="author" placeholder="Enter author name">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="canonicalUrl" class="form-label">Canonical URL</label>
+                            <input type="url" class="form-control" id="canonicalUrl" placeholder="https://example.com/page">
+                        </div>
+                        
+                        <button class="btn btn-success w-100" id="generateBtn">
+                            <i class="fas fa-cogs"></i> Generate Meta Tags
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-code"></i> Generated Meta Tags</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">HTML Code:</label>
+                            <textarea class="form-control" id="metaTagsOutput" rows="10" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy to Clipboard
+                            </button>
+                            <button class="btn btn-outline-secondary" id="clearBtn">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> SEO Best Practices</h5>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li><strong>Page Title:</strong> Keep under 60 characters for optimal display</li>
+                    <li><strong>Meta Description:</strong> Keep between 150-160 characters</li>
+                    <li><strong>Keywords:</strong> Focus on 3-5 relevant keywords</li>
+                    <li><strong>Canonical URL:</strong> Use to prevent duplicate content issues</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const pageTitle = document.getElementById('pageTitle');
+        const metaDescription = document.getElementById('metaDescription');
+        const keywords = document.getElementById('keywords');
+        const author = document.getElementById('author');
+        const canonicalUrl = document.getElementById('canonicalUrl');
+        const generateBtn = document.getElementById('generateBtn');
+        const metaTagsOutput = document.getElementById('metaTagsOutput');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        generateBtn.addEventListener('click', function() {
+            const title = pageTitle.value.trim();
+            const description = metaDescription.value.trim();
+            const keywordsList = keywords.value.trim();
+            const authorName = author.value.trim();
+            const canonical = canonicalUrl.value.trim();
+
+            let metaTags = '<!-- SEO Meta Tags -->\n';
+            
+            if (title) {
+                metaTags += `<title>${title}</title>\n`;
+                metaTags += `<meta name="title" content="${title}">\n`;
+            }
+            
+            if (description) {
+                metaTags += `<meta name="description" content="${description}">\n`;
+            }
+            
+            if (keywordsList) {
+                metaTags += `<meta name="keywords" content="${keywordsList}">\n`;
+            }
+            
+            if (authorName) {
+                metaTags += `<meta name="author" content="${authorName}">\n`;
+            }
+            
+            if (canonical) {
+                metaTags += `<link rel="canonical" href="${canonical}">\n`;
+            }
+            
+            // Open Graph tags
+            metaTags += `\n<!-- Open Graph / Facebook -->\n`;
+            metaTags += `<meta property="og:type" content="website">\n`;
+            if (title) metaTags += `<meta property="og:title" content="${title}">\n`;
+            if (description) metaTags += `<meta property="og:description" content="${description}">\n`;
+            
+            // Twitter Card tags
+            metaTags += `\n<!-- Twitter -->\n`;
+            metaTags += `<meta name="twitter:card" content="summary_large_image">\n`;
+            if (title) metaTags += `<meta name="twitter:title" content="${title}">\n`;
+            if (description) metaTags += `<meta name="twitter:description" content="${description}">\n`;
+
+            metaTagsOutput.value = metaTags;
+        });
+
+        copyBtn.addEventListener('click', function() {
+            if (metaTagsOutput.value) {
+                ToolUtils.copyToClipboard(metaTagsOutput.value);
+            }
+        });
+
+        clearBtn.addEventListener('click', function() {
+            pageTitle.value = '';
+            metaDescription.value = '';
+            keywords.value = '';
+            author.value = '';
+            canonicalUrl.value = '';
+            metaTagsOutput.value = '';
+        });
+
+        trackToolUsage('Meta Tag Generator');
+    </script>
+</body>
+</html>

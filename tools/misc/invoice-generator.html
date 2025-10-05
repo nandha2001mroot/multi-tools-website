@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator - MultiTools</title>
+    <meta name="description" content="Generate professional invoices. Free invoice generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-file-invoice text-success"></i> Invoice Generator</h1>
+            <p class="tool-description">Create professional invoices with customizable templates.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Invoice Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="invoiceNumber" class="form-label">Invoice Number:</label>
+                            <input type="text" class="form-control" id="invoiceNumber" value="INV-001">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="invoiceDate" class="form-label">Invoice Date:</label>
+                            <input type="date" class="form-control" id="invoiceDate">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="dueDate" class="form-label">Due Date:</label>
+                            <input type="date" class="form-control" id="dueDate">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="currency" class="form-label">Currency:</label>
+                            <select class="form-select" id="currency">
+                                <option value="USD">USD - US Dollar</option>
+                                <option value="EUR">EUR - Euro</option>
+                                <option value="GBP">GBP - British Pound</option>
+                                <option value="INR">INR - Indian Rupee</option>
+                                <option value="CAD">CAD - Canadian Dollar</option>
+                                <option value="AUD">AUD - Australian Dollar</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="taxRate" class="form-label">Tax Rate (%):</label>
+                            <input type="number" class="form-control" id="taxRate" value="0" min="0" max="100">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-business-time"></i> Company Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="companyName" class="form-label">Company Name:</label>
+                            <input type="text" class="form-control" id="companyName" placeholder="Your Company Name">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="companyAddress" class="form-label">Company Address:</label>
+                            <textarea class="form-control" id="companyAddress" rows="3" placeholder="Company Address"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="companyEmail" class="form-label">Company Email:</label>
+                            <input type="email" class="form-control" id="companyEmail" placeholder="company@email.com">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-user"></i> Client Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="clientName" class="form-label">Client Name:</label>
+                            <input type="text" class="form-control" id="clientName" placeholder="Client Name">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="clientAddress" class="form-label">Client Address:</label>
+                            <textarea class="form-control" id="clientAddress" rows="3" placeholder="Client Address"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="clientEmail" class="form-label">Client Email:</label>
+                            <input type="email" class="form-control" id="clientEmail" placeholder="client@email.com">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-list"></i> Line Items</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="lineItems">
+                            <div class="line-item mb-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control mb-2" placeholder="Item description">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control mb-2" placeholder="Qty" value="1" min="1">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control mb-2" placeholder="Price" value="0" step="0.01" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-outline-primary w-100" id="addItemBtn">
+                            <i class="fas fa-plus"></i> Add Item
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-receipt"></i> Invoice Preview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="invoicePreview">
+                            <div class="text-center mb-3">
+                                <h4>INVOICE</h4>
+                                <p class="text-muted">Preview will appear here</p>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <h6>Summary:</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td>Subtotal:</td>
+                                                <td id="subtotalPreview">$0.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tax:</td>
+                                                <td id="taxPreview">$0.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Total:</strong></td>
+                                                <td><strong id="totalPreview">$0.00</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-success w-100" id="generateBtn">
+                                    <i class="fas fa-file-invoice"></i> Generate Invoice
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Invoice Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" id="saveBtn">
+                                <i class="fas fa-save"></i> Save Invoice
+                            </button>
+                            <button class="btn btn-info" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download PDF
+                            </button>
+                            <button class="btn btn-success" id="sendBtn">
+                                <i class="fas fa-paper-plane"></i> Send to Client
+                            </button>
+                            <button class="btn btn-outline-secondary" id="resetBtn">
+                                <i class="fas fa-redo"></i> Reset Form
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Invoice Best Practices</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Essential Elements:</h6>
+                        <ul>
+                            <li>Unique invoice number</li>
+                            <li>Clear payment terms</li>
+                            <li>Detailed line items</li>
+                            <li>Professional branding</li>
+                            <li>Accurate calculations</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Legal Requirements:</h6>
+                        <ul>
+                            <li>Tax identification numbers</li>
+                            <li>Business registration details</li>
+                            <li>Payment due dates</li>
+                            <li>Currency specification</li>
+                            <li>Contact information</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const invoiceNumber = document.getElementById('invoiceNumber');
+        const invoiceDate = document.getElementById('invoiceDate');
+        const dueDate = document.getElementById('dueDate');
+        const currency = document.getElementById('currency');
+        const taxRate = document.getElementById('taxRate');
+        const companyName = document.getElementById('companyName');
+        const companyAddress = document.getElementById('companyAddress');
+        const companyEmail = document.getElementById('companyEmail');
+        const clientName = document.getElementById('clientName');
+        const clientAddress = document.getElementById('clientAddress');
+        const clientEmail = document.getElementById('clientEmail');
+        const lineItems = document.getElementById('lineItems');
+        const addItemBtn = document.getElementById('addItemBtn');
+        const generateBtn = document.getElementById('generateBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const sendBtn = document.getElementById('sendBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const subtotalPreview = document.getElementById('subtotalPreview');
+        const taxPreview = document.getElementById('taxPreview');
+        const totalPreview = document.getElementById('totalPreview');
+
+        // Set default dates
+        const today = new Date();
+        invoiceDate.value = today.toISOString().split('T')[0];
+        dueDate.value = new Date(today.getTime() + (30 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
+
+        function addItem() {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'line-item mb-3';
+            itemDiv.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control mb-2" placeholder="Item description">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control mb-2" placeholder="Qty" value="1" min="1">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control mb-2" placeholder="Price" value="0" step="0.01" min="0">
+                    </div>
+                </div>
+                <button class="btn btn-outline-danger btn-sm remove-item" type="button">
+                    <i class="fas fa-trash"></i> Remove
+                </button>
+            `;
+            lineItems.appendChild(itemDiv);
+            
+            // Add event listener to remove button
+            itemDiv.querySelector('.remove-item').addEventListener('click', function() {
+                lineItems.removeChild(itemDiv);
+                calculateTotals();
+            });
+            
+            // Add input listeners for calculation
+            const inputs = itemDiv.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateTotals);
+            });
+        }
+
+        function calculateTotals() {
+            let subtotal = 0;
+            const items = document.querySelectorAll('.line-item');
+            
+            items.forEach(item => {
+                const qty = parseFloat(item.querySelector('input[type="number"]:nth-child(1)').value) || 0;
+                const price = parseFloat(item.querySelector('input[type="number"]:nth-child(2)').value) || 0;
+                subtotal += qty * price;
+            });
+            
+            const tax = subtotal * (parseFloat(taxRate.value) || 0) / 100;
+            const total = subtotal + tax;
+            
+            subtotalPreview.textContent = formatCurrency(subtotal);
+            taxPreview.textContent = formatCurrency(tax);
+            totalPreview.textContent = formatCurrency(total);
+        }
+
+        function formatCurrency(amount) {
+            const currencySymbol = {
+                'USD': '$',
+                'EUR': '€',
+                'GBP': '£',
+                'INR': '₹',
+                'CAD': 'C$',
+                'AUD': 'A$'
+            };
+            return (currencySymbol[currency.value] || '$') + amount.toFixed(2);
+        }
+
+        function generateInvoice() {
+            // In a real implementation, this would generate a proper invoice
+            // For demo, we'll show a success message
+            alert('Invoice generated successfully! In a real application, this would create a downloadable PDF.');
+        }
+
+        function downloadInvoice() {
+            alert('In a real implementation, this would download the invoice as a PDF.');
+        }
+
+        function sendInvoice() {
+            alert('In a real implementation, this would send the invoice to the client via email.');
+        }
+
+        function resetForm() {
+            if (confirm('Are you sure you want to reset the form?')) {
+                invoiceNumber.value = 'INV-001';
+                companyName.value = '';
+                companyAddress.value = '';
+                companyEmail.value = '';
+                clientName.value = '';
+                clientAddress.value = '';
+                clientEmail.value = '';
+                
+                // Clear line items except the first one
+                while (lineItems.children.length > 1) {
+                    lineItems.removeChild(lineItems.lastChild);
+                }
+                
+                // Reset first line item
+                const firstItem = lineItems.querySelector('.line-item');
+                firstItem.querySelector('input:nth-child(1)').value = '';
+                firstItem.querySelector('input:nth-child(2)').value = '1';
+                firstItem.querySelector('input:nth-child(3)').value = '0';
+                
+                calculateTotals();
+            }
+        }
+
+        // Event listeners
+        addItemBtn.addEventListener('click', addItem);
+        generateBtn.addEventListener('click', generateInvoice);
+        saveBtn.addEventListener('click', generateInvoice);
+        downloadBtn.addEventListener('click', downloadInvoice);
+        sendBtn.addEventListener('click', sendInvoice);
+        resetBtn.addEventListener('click', resetForm);
+        taxRate.addEventListener('input', calculateTotals);
+
+        // Add event listeners to existing inputs
+        document.querySelectorAll('.line-item input').forEach(input => {
+            input.addEventListener('input', calculateTotals);
+        });
+
+        // Initial calculation
+        calculateTotals();
+        trackToolUsage('Invoice Generator');
+    </script>
+</body>
+</html>

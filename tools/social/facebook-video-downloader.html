@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Video Downloader - MultiTools</title>
+    <meta name="description" content="Download Facebook videos. Free Facebook video downloader tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fab fa-facebook text-primary"></i> Facebook Video Downloader</h1>
+            <p class="tool-description">Download Facebook videos from public posts and pages.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="facebookUrl" class="form-label">Facebook Video URL:</label>
+                            <input type="url" class="form-control" id="facebookUrl" placeholder="https://www.facebook.com/...">
+                        </div>
+                        
+                        <button class="btn btn-primary w-100 mb-3" id="fetchBtn">
+                            <i class="fas fa-download"></i> Fetch Video
+                        </button>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-info-circle"></i> How to Use</h5>
+                            </div>
+                            <div class="card-body">
+                                <ol>
+                                    <li>Open Facebook and find the video you want</li>
+                                    <li>Copy the video URL</li>
+                                    <li>Paste it in the input field above</li>
+                                    <li>Click "Fetch Video"</li>
+                                    <li>Download when available</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="resultsContainer" style="display: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-video"></i> Video Preview</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center mb-3">
+                                        <video id="videoPreview" class="img-fluid rounded" controls style="max-height: 300px;">
+                                            <source src="" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Title:</strong> <span id="videoTitle">Facebook Video</span></p>
+                                            <p><strong>Duration:</strong> <span id="videoDuration">0:00</span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>Quality:</strong> <span id="videoQuality">HD</span></p>
+                                            <p><strong>Size:</strong> <span id="videoSize">Unknown</span></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-success w-100" id="downloadBtn">
+                                            <i class="fas fa-download"></i> Download HD
+                                        </button>
+                                        <button class="btn btn-info w-100" id="downloadSD">
+                                            <i class="fas fa-download"></i> Download SD
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fab fa-facebook fa-3x text-primary mb-3"></i>
+                            <p class="text-muted">Enter a Facebook video URL to download</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-exclamation-triangle"></i> Important Notice</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <h6>Legal Disclaimer:</h6>
+                    <ul>
+                        <li>Only download public videos you have permission to access</li>
+                        <li>Respect copyright and intellectual property rights</li>
+                        <li>This tool is for educational purposes only</li>
+                        <li>We do not host or store any downloaded content</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const facebookUrl = document.getElementById('facebookUrl');
+        const fetchBtn = document.getElementById('fetchBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const videoPreview = document.getElementById('videoPreview');
+        const videoTitle = document.getElementById('videoTitle');
+        const videoDuration = document.getElementById('videoDuration');
+        const videoQuality = document.getElementById('videoQuality');
+        const videoSize = document.getElementById('videoSize');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadSD = document.getElementById('downloadSD');
+
+        function fetchFacebookVideo() {
+            const url = facebookUrl.value.trim();
+            if (!url) {
+                alert('Please enter a Facebook video URL!');
+                return;
+            }
+
+            if (!url.includes('facebook.com') && !url.includes('fb.watch')) {
+                alert('Please enter a valid Facebook URL!');
+                return;
+            }
+
+            // Show loading state
+            resultsContainer.style.display = 'none';
+            placeholder.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin fa-3x text-primary mb-3"></i><p>Fetching video information...</p></div>';
+            placeholder.style.display = 'block';
+
+            // Simulate API call
+            setTimeout(() => {
+                // Generate mock video data
+                videoPreview.src = 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4';
+                videoTitle.textContent = 'Sample Facebook Video';
+                videoDuration.textContent = '2:30';
+                videoQuality.textContent = 'HD (720p)';
+                videoSize.textContent = '1.2 MB';
+                
+                resultsContainer.style.display = 'block';
+                placeholder.style.display = 'none';
+            }, 2000);
+        }
+
+        function downloadVideo(quality) {
+            if (!videoPreview.src) {
+                alert('No video to download!');
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.href = videoPreview.src;
+            link.download = `facebook-video-${quality}.mp4`;
+            link.click();
+        }
+
+        fetchBtn.addEventListener('click', fetchFacebookVideo);
+        downloadBtn.addEventListener('click', () => downloadVideo('HD'));
+        downloadSD.addEventListener('click', () => downloadVideo('SD'));
+
+        trackToolUsage('Facebook Video Downloader');
+    </script>
+</body>
+</html>

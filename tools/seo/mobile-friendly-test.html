@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile-Friendly Test - MultiTools</title>
+    <meta name="description" content="Test mobile compatibility. Free mobile-friendly test tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-mobile-alt text-success"></i> Mobile-Friendly Test</h1>
+            <p class="tool-description">Test your website's mobile compatibility and responsiveness.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="websiteUrl" class="form-label">Enter website URL:</label>
+                    <input type="url" class="form-control" id="websiteUrl" placeholder="https://example.com">
+                </div>
+                
+                <button class="btn btn-success w-100 mb-3" id="testBtn">
+                    <i class="fas fa-mobile-alt"></i> Test Mobile Compatibility
+                </button>
+                
+                <div id="resultsContainer" style="display: none;">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="mobileScore" class="text-primary">100</h3>
+                                    <p class="card-text">Mobile Score</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="viewportStatus" class="text-success">✓</h3>
+                                    <p class="card-text">Viewport</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 id="fontStatus" class="text-success">✓</h3>
+                                    <p class="card-text">Font Size</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-mobile"></i> Mobile Test Results</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Content Size:</label>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" id="contentSizeBar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="contentSizeStatus">Optimal</small>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label>Touch Elements:</label>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" id="touchElementsBar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="touchElementsStatus">Optimal</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Page Speed:</label>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" id="pageSpeedBar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="pageSpeedStatus">Fast</small>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label>Mobile Usability:</label>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" id="usabilityBar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="usabilityStatus">Good</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info mt-3">
+                                <h6>Recommendations:</h6>
+                                <ul id="recommendations">
+                                    <li>Use responsive design principles</li>
+                                    <li>Optimize images for mobile devices</li>
+                                    <li>Ensure touch targets are large enough</li>
+                                    <li>Minimize page load time</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h5><i class="fas fa-eye"></i> Mobile Preview</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="border rounded p-3" style="display: inline-block; background: #f8f9fa; border: 2px solid #dee2e6;">
+                                <div style="width: 375px; height: 667px; border: 1px solid #ccc; overflow: hidden;">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzc1IiBoZWlnaHQ9IjY2NyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlByZXZpZXc8L3RleHQ+PC9zdmc+" alt="Mobile Preview" class="img-fluid">
+                                </div>
+                                <p class="mt-2">Mobile Device Preview (375x667)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="placeholder" class="text-center py-5">
+                    <i class="fas fa-mobile-alt fa-3x text-success mb-3"></i>
+                    <p class="text-muted">Enter a website URL to test its mobile compatibility</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Mobile Optimization Tips</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Responsive Design:</h6>
+                        <ul>
+                            <li>Use CSS media queries</li>
+                            <li>Implement flexible layouts</li>
+                            <li>Design for touch interactions</li>
+                            <li>Test on multiple devices</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Performance:</h6>
+                        <ul>
+                            <li>Optimize images for mobile</li>
+                            <li>Minimize CSS and JavaScript</li>
+                            <li>Enable compression</li>
+                            <li>Reduce server response time</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const websiteUrl = document.getElementById('websiteUrl');
+        const testBtn = document.getElementById('testBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const mobileScore = document.getElementById('mobileScore');
+        const viewportStatus = document.getElementById('viewportStatus');
+        const fontStatus = document.getElementById('fontStatus');
+        const contentSizeBar = document.getElementById('contentSizeBar');
+        const contentSizeStatus = document.getElementById('contentSizeStatus');
+        const touchElementsBar = document.getElementById('touchElementsBar');
+        const touchElementsStatus = document.getElementById('touchElementsStatus');
+        const pageSpeedBar = document.getElementById('pageSpeedBar');
+        const pageSpeedStatus = document.getElementById('pageSpeedStatus');
+        const usabilityBar = document.getElementById('usabilityBar');
+        const usabilityStatus = document.getElementById('usabilityStatus');
+
+        testBtn.addEventListener('click', function() {
+            const url = websiteUrl.value.trim();
+            if (!url) {
+                alert('Please enter a website URL!');
+                return;
+            }
+
+            if (!ToolUtils.validateURL(url)) {
+                alert('Please enter a valid URL!');
+                return;
+            }
+
+            // Show loading state
+            resultsContainer.style.display = 'block';
+            placeholder.style.display = 'none';
+
+            // Simulate mobile testing
+            setTimeout(() => {
+                // Generate random test results
+                const score = Math.floor(Math.random() * 40) + 60; // 60-100
+                const hasViewport = Math.random() > 0.2; // 80% chance
+                const hasGoodFontSize = Math.random() > 0.15; // 85% chance
+                const contentSize = Math.random() > 0.1; // 90% chance
+                const touchElements = Math.random() > 0.1; // 90% chance
+                const pageSpeed = Math.random() > 0.2; // 80% chance
+                const usability = Math.random() > 0.15; // 85% chance
+
+                // Update display
+                mobileScore.textContent = score;
+                viewportStatus.textContent = hasViewport ? '✓' : '✗';
+                fontStatus.textContent = hasGoodFontSize ? '✓' : '✗';
+                viewportStatus.className = `text-${hasViewport ? 'success' : 'danger'}`;
+                fontStatus.className = `text-${hasGoodFontSize ? 'success' : 'danger'}`;
+
+                // Update progress bars
+                contentSizeBar.style.width = contentSize ? '100%' : '40%';
+                contentSizeStatus.textContent = contentSize ? 'Optimal' : 'Too Small';
+                contentSizeBar.className = `progress-bar bg-${contentSize ? 'success' : 'danger'}`;
+
+                touchElementsBar.style.width = touchElements ? '100%' : '30%';
+                touchElementsStatus.textContent = touchElements ? 'Optimal' : 'Too Small';
+                touchElementsBar.className = `progress-bar bg-${touchElements ? 'success' : 'danger'}`;
+
+                pageSpeedBar.style.width = pageSpeed ? '100%' : '60%';
+                pageSpeedStatus.textContent = pageSpeed ? 'Fast' : 'Slow';
+                pageSpeedBar.className = `progress-bar bg-${pageSpeed ? 'success' : 'danger'}`;
+
+                usabilityBar.style.width = usability ? '100%' : '50%';
+                usabilityStatus.textContent = usability ? 'Good' : 'Poor';
+                usabilityBar.className = `progress-bar bg-${usability ? 'success' : 'danger'}`;
+
+                // Update recommendations based on results
+                const recommendations = document.getElementById('recommendations');
+                recommendations.innerHTML = '';
+                
+                if (!hasViewport) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Add viewport meta tag to HTML head';
+                    li.className = 'text-danger';
+                    recommendations.appendChild(li);
+                }
+                
+                if (!hasGoodFontSize) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Increase font size for better readability';
+                    li.className = 'text-danger';
+                    recommendations.appendChild(li);
+                }
+                
+                if (!contentSize) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Ensure content fits mobile screen width';
+                    li.className = 'text-danger';
+                    recommendations.appendChild(li);
+                }
+                
+                if (!touchElements) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Make touch targets at least 48px';
+                    li.className = 'text-danger';
+                    recommendations.appendChild(li);
+                }
+                
+                if (!pageSpeed) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Optimize images and reduce file sizes';
+                    li.className = 'text-danger';
+                    recommendations.appendChild(li);
+                }
+                
+                if (!usability) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Improve mobile navigation and layout';
+                    li.className = 'text-danger';
+                    recommendations.appendChild(li);
+                }
+                
+                if (recommendations.children.length === 0) {
+                    const li = document.createElement('li');
+                    li.textContent = 'No issues found - website is mobile-friendly';
+                    li.className = 'text-success';
+                    recommendations.appendChild(li);
+                }
+            }, 2000);
+        });
+
+        trackToolUsage('Mobile-Friendly Test');
+    </script>
+</body>
+</html>

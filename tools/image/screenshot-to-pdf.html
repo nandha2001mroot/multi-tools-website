@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot to PDF - MultiTools</title>
+    <meta name="description" content="Convert screenshots to PDF format. Free screenshot to PDF converter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-file-pdf text-primary"></i> Screenshot to PDF</h1>
+            <p class="tool-description">Convert screenshots to PDF documents with customizable options.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-upload"></i> Upload Screenshots</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="screenshotFiles" class="form-label">Upload screenshot images:</label>
+                            <input type="file" class="form-control" id="screenshotFiles" accept="image/*" multiple>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="orientation" class="form-label">Orientation:</label>
+                                <select class="form-select" id="orientation">
+                                    <option value="portrait">Portrait</option>
+                                    <option value="landscape">Landscape</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pageSize" class="form-label">Page Size:</label>
+                                <select class="form-select" id="pageSize">
+                                    <option value="A4">A4</option>
+                                    <option value="A3">A3</option>
+                                    <option value="letter">Letter</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="margin" class="form-label">Margin (mm):</label>
+                            <input type="number" class="form-control" id="margin" value="10" min="0" max="50">
+                        </div>
+                        
+                        <button class="btn btn-primary w-100" id="convertBtn">
+                            <i class="fas fa-file-pdf"></i> Convert to PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-image"></i> Preview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="previewContainer">
+                            <p class="text-muted">Upload screenshots to see preview</p>
+                        </div>
+                        
+                        <button class="btn btn-success w-100" id="downloadBtn" style="display: none;">
+                            <i class="fas fa-download"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Tips</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Upload multiple screenshots to create a multi-page PDF</li>
+                            <li>Images will be resized to fit the page dimensions</li>
+                            <li>PDF will maintain the aspect ratio of your screenshots</li>
+                            <li>Supported formats: JPG, PNG, GIF, BMP</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const screenshotFiles = document.getElementById('screenshotFiles');
+        const orientation = document.getElementById('orientation');
+        const pageSize = document.getElementById('pageSize');
+        const margin = document.getElementById('margin');
+        const convertBtn = document.getElementById('convertBtn');
+        const previewContainer = document.getElementById('previewContainer');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let uploadedImages = [];
+
+        screenshotFiles.addEventListener('change', function(e) {
+            if (e.target.files) {
+                uploadedImages = [];
+                previewContainer.innerHTML = '';
+                
+                Array.from(e.target.files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        uploadedImages.push(e.target.result);
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'img-thumbnail mb-2';
+                        img.style.width = '100px';
+                        img.style.height = '100px';
+                        img.style.objectFit = 'cover';
+                        
+                        previewContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+
+        convertBtn.addEventListener('click', function() {
+            if (uploadedImages.length === 0) {
+                alert('Please upload at least one screenshot!');
+                return;
+            }
+            
+            // In a real implementation, this would use jsPDF or similar
+            // For demo purposes, we'll show a message
+            previewContainer.innerHTML = `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> 
+                    <strong>PDF Generation:</strong> In a real implementation, this would create a PDF from your screenshots.
+                </div>
+            `;
+            downloadBtn.style.display = 'block';
+        });
+
+        downloadBtn.addEventListener('click', function() {
+            alert('In a real implementation, this would download the generated PDF. You would need to integrate a PDF library like jsPDF.');
+        });
+
+        trackToolUsage('Screenshot to PDF');
+    </script>
+</body>
+</html>

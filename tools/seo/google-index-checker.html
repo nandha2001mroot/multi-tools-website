@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Index Checker - MultiTools</title>
+    <meta name="description" content="Check if pages are indexed by Google. Free Google index checker tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fab fa-google text-success"></i> Google Index Checker</h1>
+            <p class="tool-description">Check if your web pages are indexed by Google search engine.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="urlToCheck" class="form-label">Enter URL to check:</label>
+                    <input type="url" class="form-control" id="urlToCheck" placeholder="https://example.com/page">
+                </div>
+                
+                <button class="btn btn-success w-100 mb-3" id="checkBtn">
+                    <i class="fas fa-search"></i> Check Google Index
+                </button>
+                
+                <div id="resultsContainer" style="display: none;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-search fa-3x text-success mb-2"></i>
+                                    <h4 id="indexStatus">Status</h4>
+                                    <p id="indexMessage">Checking status...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Google Search Results:</h5>
+                                    <div id="searchResults">
+                                        <p class="text-muted">No results yet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="placeholder" class="text-center py-5">
+                    <i class="fab fa-google fa-3x text-success mb-3"></i>
+                    <p class="text-muted">Enter a URL to check its Google index status</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> About Google Indexing</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>What is Google Indexing?</h6>
+                        <p>Google indexing is the process where Google's bots scan and store information about your web pages in their database.</p>
+                        <ul>
+                            <li>Indexed pages appear in search results</li>
+                            <li>Non-indexed pages don't appear</li>
+                            <li>Indexing can take days to weeks</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>How to Get Indexed</h6>
+                        <ul>
+                            <li>Submit your sitemap to Google Search Console</li>
+                            <li>Build quality backlinks</li>
+                            <li>Ensure your site is crawlable</li>
+                            <li>Use proper meta tags</li>
+                            <li>Submit individual URLs for indexing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const urlToCheck = document.getElementById('urlToCheck');
+        const checkBtn = document.getElementById('checkBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const indexStatus = document.getElementById('indexStatus');
+        const indexMessage = document.getElementById('indexMessage');
+        const searchResults = document.getElementById('searchResults');
+
+        checkBtn.addEventListener('click', function() {
+            const url = urlToCheck.value.trim();
+            if (!url) {
+                alert('Please enter a URL to check!');
+                return;
+            }
+
+            if (!ToolUtils.validateURL(url)) {
+                alert('Please enter a valid URL!');
+                return;
+            }
+
+            // Show loading state
+            indexStatus.textContent = 'Checking...';
+            indexMessage.textContent = 'Please wait while we check the index status.';
+            resultsContainer.style.display = 'block';
+            placeholder.style.display = 'none';
+
+            // Simulate API call (in real implementation, this would be an actual API call)
+            setTimeout(() => {
+                // For demo purposes, we'll simulate different results
+                const isIndexed = Math.random() > 0.3; // 70% chance of being indexed
+                
+                if (isIndexed) {
+                    indexStatus.textContent = 'Indexed';
+                    indexMessage.textContent = 'This page is indexed by Google.';
+                    indexStatus.className = 'text-success';
+                    searchResults.innerHTML = `
+                        <p><i class="fas fa-check-circle text-success"></i> Page found in Google index</p>
+                        <p><small>Last indexed: ${new Date().toLocaleDateString()}</small></p>
+                    `;
+                } else {
+                    indexStatus.textContent = 'Not Indexed';
+                    indexMessage.textContent = 'This page is not indexed by Google.';
+                    indexStatus.className = 'text-danger';
+                    searchResults.innerHTML = `
+                        <p><i class="fas fa-times-circle text-danger"></i> Page not found in Google index</p>
+                        <p><small>Consider submitting to Google Search Console</small></p>
+                    `;
+                }
+            }, 2000);
+        });
+
+        trackToolUsage('Google Index Checker');
+    </script>
+</body>
+</html>

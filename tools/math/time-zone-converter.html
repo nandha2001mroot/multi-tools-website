@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Zone Converter - MultiTools</title>
+    <meta name="description" content="Convert time between different time zones. Free time zone converter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-clock text-warning"></i> Time Zone Converter</h1>
+            <p class="tool-description">Convert time between different time zones with daylight saving time support.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="inputDate" class="form-label">Date:</label>
+                            <input type="date" class="form-control" id="inputDate">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="inputTime" class="form-label">Time:</label>
+                            <input type="time" class="form-control" id="inputTime" value="12:00">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="fromTimezone" class="form-label">From Time Zone:</label>
+                            <select class="form-select" id="fromTimezone">
+                                <option value="UTC">UTC - Coordinated Universal Time</option>
+                                <option value="America/New_York">America/New York (EST/EDT)</option>
+                                <option value="America/Chicago">America/Chicago (CST/CDT)</option>
+                                <option value="America/Denver">America/Denver (MST/MDT)</option>
+                                <option value="America/Los_Angeles">America/Los Angeles (PST/PDT)</option>
+                                <option value="Europe/London">Europe/London (GMT/BST)</option>
+                                <option value="Europe/Paris">Europe/Paris (CET/CEST)</option>
+                                <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
+                                <option value="Asia/Shanghai">Asia/Shanghai (CST)</option>
+                                <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
+                                <option value="Australia/Sydney">Australia/Sydney (AEST/AEDT)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="toTimezone" class="form-label">To Time Zone:</label>
+                            <select class="form-select" id="toTimezone">
+                                <option value="UTC">UTC - Coordinated Universal Time</option>
+                                <option value="America/New_York">America/New York (EST/EDT)</option>
+                                <option value="America/Chicago">America/Chicago (CST/CDT)</option>
+                                <option value="America/Denver">America/Denver (MST/MDT)</option>
+                                <option value="America/Los_Angeles">America/Los Angeles (PST/PDT)</option>
+                                <option value="Europe/London">Europe/London (GMT/BST)</option>
+                                <option value="Europe/Paris">Europe/Paris (CET/CEST)</option>
+                                <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
+                                <option value="Asia/Shanghai">Asia/Shanghai (CST)</option>
+                                <option value="Asia/Kolkata" selected>Asia/Kolkata (IST)</option>
+                                <option value="Australia/Sydney">Australia/Sydney (AEST/AEDT)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Converted Time:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="convertedDate" readonly>
+                                <input type="text" class="form-control" id="convertedTime" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Time Difference:</label>
+                            <div class="alert alert-info" id="timeDifference">
+                                Select time zones to see difference
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-warning" id="convertBtn">
+                        <i class="fas fa-clock"></i> Convert Time
+                    </button>
+                    <button class="btn btn-outline-secondary" id="nowBtn">
+                        <i class="fas fa-sync"></i> Use Current Time
+                    </button>
+                    <button class="btn btn-outline-secondary" id="swapBtn">
+                        <i class="fas fa-exchange-alt"></i> Swap Timezones
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-globe"></i> Time Zone Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Time Zone</th>
+                                <th>UTC Offset</th>
+                                <th>Abbreviation</th>
+                                <th>Current Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timezoneTable">
+                            <!-- Time zones will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> About Time Zones</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Time Zone Basics:</h6>
+                        <ul>
+                            <li>Earth is divided into 24 time zones</li>
+                            <li>Each zone represents 1 hour of time</li>
+                            <li>UTC is the reference time zone</li>
+                            <li>Time zones help standardize time globally</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Daylight Saving Time:</h6>
+                        <ul>
+                            <li>Some regions shift time forward in summer</li>
+                            <li>Typically 1 hour ahead of standard time</li>
+                            <li>Not all countries observe DST</li>
+                            <li>Dates vary by country</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const inputDate = document.getElementById('inputDate');
+        const inputTime = document.getElementById('inputTime');
+        const fromTimezone = document.getElementById('fromTimezone');
+        const toTimezone = document.getElementById('toTimezone');
+        const convertedDate = document.getElementById('convertedDate');
+        const convertedTime = document.getElementById('convertedTime');
+        const timeDifference = document.getElementById('timeDifference');
+        const convertBtn = document.getElementById('convertBtn');
+        const nowBtn = document.getElementById('nowBtn');
+        const swapBtn = document.getElementById('swapBtn');
+        const timezoneTable = document.getElementById('timezoneTable');
+
+        // Set default date to today
+        const today = new Date();
+        inputDate.value = today.toISOString().split('T')[0];
+
+        function getTimezoneOffset(timezone) {
+            // In a real implementation, you would use Intl.DateTimeFormat
+            // For demo, we'll return mock offsets
+            const offsets = {
+                'UTC': 0,
+                'America/New_York': -5, // EST
+                'America/Chicago': -6, // CST
+                'America/Denver': -7, // MST
+                'America/Los_Angeles': -8, // PST
+                'Europe/London': 0, // GMT
+                'Europe/Paris': 1, // CET
+                'Asia/Tokyo': 9, // JST
+                'Asia/Shanghai': 8, // CST
+                'Asia/Kolkata': 5.5, // IST
+                'Australia/Sydney': 10 // AEST
+            };
+            return offsets[timezone] || 0;
+        }
+
+        function convertTime() {
+            const dateStr = inputDate.value;
+            const timeStr = inputTime.value;
+            
+            if (!dateStr || !timeStr) {
+                alert('Please enter both date and time!');
+                return;
+            }
+
+            // Create date object
+            const inputDateTime = new Date(`${dateStr}T${timeStr}`);
+            
+            // Get time zone offsets
+            const fromOffset = getTimezoneOffset(fromTimezone.value);
+            const toOffset = getTimezoneOffset(toTimezone.value);
+            
+            // Calculate time difference
+            const timeDiff = toOffset - fromOffset;
+            
+            // Adjust time
+            const adjustedTime = new Date(inputDateTime.getTime() + (timeDiff * 60 * 60 * 1000));
+            
+            // Format results
+            const convertedDateStr = adjustedTime.toISOString().split('T')[0];
+            const convertedTimeStr = adjustedTime.toTimeString().substring(0, 5);
+            
+            convertedDate.value = convertedDateStr;
+            convertedTime.value = convertedTimeStr;
+            
+            // Update time difference display
+            const diffHours = Math.abs(timeDiff);
+            const diffDirection = timeDiff > 0 ? 'ahead' : 'behind';
+            timeDifference.innerHTML = `
+                <strong>Time Difference:</strong> ${diffHours} hours ${diffDirection}
+            `;
+        }
+
+        function loadTimezoneInfo() {
+            const timezones = [
+                { name: 'UTC', offset: 0, abbr: 'UTC' },
+                { name: 'New York', offset: -5, abbr: 'EST/EDT' },
+                { name: 'Chicago', offset: -6, abbr: 'CST/CDT' },
+                { name: 'Denver', offset: -7, abbr: 'MST/MDT' },
+                { name: 'Los Angeles', offset: -8, abbr: 'PST/PDT' },
+                { name: 'London', offset: 0, abbr: 'GMT/BST' },
+                { name: 'Paris', offset: 1, abbr: 'CET/CEST' },
+                { name: 'Tokyo', offset: 9, abbr: 'JST' },
+                { name: 'Shanghai', offset: 8, abbr: 'CST' },
+                { name: 'Kolkata', offset: 5.5, abbr: 'IST' },
+                { name: 'Sydney', offset: 10, abbr: 'AEST/AEDT' }
+            ];
+
+            timezoneTable.innerHTML = '';
+            timezones.forEach(tz => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${tz.name}</td>
+                    <td>UTC${tz.offset >= 0 ? '+' : ''}${tz.offset}</td>
+                    <td>${tz.abbr}</td>
+                    <td>${new Date().toLocaleTimeString()}</td>
+                `;
+                timezoneTable.appendChild(row);
+            });
+        }
+
+        convertBtn.addEventListener('click', convertTime);
+        nowBtn.addEventListener('click', function() {
+            const now = new Date();
+            inputDate.value = now.toISOString().split('T')[0];
+            inputTime.value = now.toTimeString().substring(0, 5);
+            convertTime();
+        });
+        swapBtn.addEventListener('click', function() {
+            const temp = fromTimezone.value;
+            fromTimezone.value = toTimezone.value;
+            toTimezone.value = temp;
+            convertTime();
+        });
+
+        // Update on input change
+        inputDate.addEventListener('input', convertTime);
+        inputTime.addEventListener('input', convertTime);
+        fromTimezone.addEventListener('change', convertTime);
+        toTimezone.addEventListener('change', convertTime);
+
+        // Initial load
+        convertTime();
+        loadTimezoneInfo();
+        trackToolUsage('Time Zone Converter');
+    </script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Character Counter - MultiTools</title>
+    <meta name="description" content="Count Twitter characters. Free Twitter character counter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fab fa-twitter text-info"></i> Twitter Character Counter</h1>
+            <p class="tool-description">Count characters in your Twitter/X posts with real-time feedback.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-edit"></i> Write Your Tweet</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="tweetContent" class="form-label">Tweet Content:</label>
+                            <textarea class="form-control" id="tweetContent" rows="10" placeholder="Write your tweet here..."></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="threadTweets" class="form-label">Thread Tweets (one per line):</label>
+                            <textarea class="form-control" id="threadTweets" rows="5" placeholder="Add additional tweets for thread..."></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-info w-100" id="clearBtn">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                            <button class="btn btn-outline-secondary" id="templateBtn">
+                                <i class="fas fa-magic"></i> Template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-calculator"></i> Character Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="progress">
+                                <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h3 id="mainCharCount" class="text-info">0</h3>
+                                        <p class="card-text">Main Tweet</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h3 id="threadCharCount" class="text-warning">0</h3>
+                                        <p class="card-text">Thread Tweets</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h3 id="totalCharCount" class="text-success">0</h3>
+                                        <p class="card-text">Total</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span id="statusText">Within limit</span>
+                                <span id="remainingChars">280 remaining</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h6><i class="fas fa-info-circle"></i> Tweet Statistics</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p><strong>Words:</strong> <span id="wordCount">0</span></p>
+                                        <p><strong>Lines:</strong> <span id="lineCount">0</span></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p><strong>Hashtags:</strong> <span id="hashtagCount">0</span></p>
+                                        <p><strong>Mentions:</strong> <span id="mentionCount">0</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-lightbulb"></i> Optimization Tips</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Use abbreviations to save characters</li>
+                            <li>Include relevant hashtags (1-2 per tweet)</li>
+                            <li>Use line breaks for better readability</li>
+                            <li>Consider thread format for longer content</li>
+                            <li>Include calls-to-action</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-ruler"></i> Twitter/X Character Limits</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Limit</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Single Tweet</td>
+                                <td>280 characters</td>
+                                <td>Increased from 140 in 2017</td>
+                            </tr>
+                            <tr>
+                                <td>Thread</td>
+                                <td>No official limit</td>
+                                <td>Practical limit ~100 tweets</td>
+                            </tr>
+                            <tr>
+                                <td>Hashtags</td>
+                                <td>No limit</td>
+                                <td>Recommended: 1-2 per tweet</td>
+                            </tr>
+                            <tr>
+                                <td>Mentions</td>
+                                <td>No limit</td>
+                                <td>Recommended: 1-3 per tweet</td>
+                            </tr>
+                            <tr>
+                                <td>Media Attachments</td>
+                                <td>4 images/videos</td>
+                                <td>Per tweet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const tweetContent = document.getElementById('tweetContent');
+        const threadTweets = document.getElementById('threadTweets');
+        const clearBtn = document.getElementById('clearBtn');
+        const templateBtn = document.getElementById('templateBtn');
+        const mainCharCount = document.getElementById('mainCharCount');
+        const threadCharCount = document.getElementById('threadCharCount');
+        const totalCharCount = document.getElementById('totalCharCount');
+        const progressBar = document.getElementById('progressBar');
+        const statusText = document.getElementById('statusText');
+        const remainingChars = document.getElementById('remainingChars');
+        const wordCount = document.getElementById('wordCount');
+        const lineCount = document.getElementById('lineCount');
+        const hashtagCount = document.getElementById('hashtagCount');
+        const mentionCount = document.getElementById('mentionCount');
+
+        const TWITTER_LIMIT = 280;
+
+        function countCharacters() {
+            const mainTweet = tweetContent.value;
+            const threadTweetLines = threadTweets.value.split('\n').filter(line => line.trim());
+            
+            const mainChars = mainTweet.length;
+            const threadChars = threadTweetLines.reduce((total, line) => total + line.length, 0);
+            const totalChars = mainChars + threadChars;
+            
+            // Update character counts
+            mainCharCount.textContent = mainChars;
+            threadCharCount.textContent = threadChars;
+            totalCharCount.textContent = totalChars;
+            
+            // Update progress bar
+            const percentage = Math.min((mainChars / TWITTER_LIMIT) * 100, 100);
+            progressBar.style.width = percentage + '%';
+            
+            // Update progress bar color
+            if (mainChars <= TWITTER_LIMIT * 0.8) {
+                progressBar.className = 'progress-bar bg-success';
+            } else if (mainChars <= TWITTER_LIMIT) {
+                progressBar.className = 'progress-bar bg-warning';
+            } else {
+                progressBar.className = 'progress-bar bg-danger';
+            }
+            
+            // Update status text
+            if (mainChars === 0) {
+                statusText.textContent = 'Empty tweet';
+                statusText.className = 'text-muted';
+            } else if (mainChars <= TWITTER_LIMIT) {
+                statusText.textContent = 'Within limit';
+                statusText.className = 'text-success';
+            } else {
+                statusText.textContent = 'Over limit!';
+                statusText.className = 'text-danger';
+            }
+            
+            // Update remaining characters
+            const remaining = TWITTER_LIMIT - mainChars;
+            remainingChars.textContent = `${Math.abs(remaining)} ${remaining >= 0 ? 'remaining' : 'over'} limit`;
+            remainingChars.className = remaining >= 0 ? 'text-success' : 'text-danger';
+            
+            // Update statistics
+            wordCount.textContent = mainTweet.trim() ? mainTweet.trim().split(/\s+/).length : '0';
+            lineCount.textContent = mainTweet.split('\n').length;
+            hashtagCount.textContent = (mainTweet.match(/#/g) || []).length;
+            mentionCount.textContent = (mainTweet.match(/@/g) || []).length;
+        }
+
+        function loadTemplate() {
+            tweetContent.value = `🚀 Big announcement coming soon!
+
+We've been working hard on something exciting that will change everything about how you [topic].
+
+Stay tuned for the reveal! 
+
+#Announcement #ComingSoon`;
+            countCharacters();
+        }
+
+        tweetContent.addEventListener('input', countCharacters);
+        threadTweets.addEventListener('input', countCharacters);
+
+        clearBtn.addEventListener('click', function() {
+            tweetContent.value = '';
+            threadTweets.value = '';
+            countCharacters();
+        });
+
+        templateBtn.addEventListener('click', loadTemplate);
+
+        // Initial count
+        countCharacters();
+        trackToolUsage('Twitter Character Counter');
+    </script>
+</body>
+</html>

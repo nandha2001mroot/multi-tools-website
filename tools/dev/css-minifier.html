@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Minifier - MultiTools</title>
+    <meta name="description" content="Minify CSS code. Free CSS minifier tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-compress text-dark"></i> CSS Minifier</h1>
+            <p class="tool-description">Minify CSS code to reduce file size and improve performance.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-code"></i> CSS Input</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="cssInput" class="form-label">Enter CSS:</label>
+                            <textarea class="form-control" id="cssInput" rows="12" placeholder="Enter your CSS code here..."></textarea>
+                        </div>
+                        
+                        <button class="btn btn-dark w-100" id="minifyBtn">
+                            <i class="fas fa-compress"></i> Minify CSS
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-file-code"></i> Minified CSS</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="cssOutput" class="form-label">Minified CSS:</label>
+                            <textarea class="form-control" id="cssOutput" rows="12" readonly></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5>Original Size</h5>
+                                        <h3 id="originalSize">0 bytes</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5>Minified Size</h5>
+                                        <h3 id="minifiedSize">0 bytes</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-success" id="savingsBar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <p>Savings: <span id="savingsPercent">0%</span> (<span id="savingsBytes">0</span> bytes)</p>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button class="btn btn-outline-secondary" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <button class="btn btn-outline-secondary" id="clearBtn">
+                                <i class="fas fa-eraser"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> CSS Minification Benefits</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>What CSS Minification Does:</h6>
+                        <ul>
+                            <li>Removes unnecessary whitespace</li>
+                            <li>Removes comments</li>
+                            <li>Removes line breaks</li>
+                            <li>Compresses CSS properties</li>
+                            <li>Reduces file size</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Performance Benefits:</h6>
+                        <ul>
+                            <li>Faster page load times</li>
+                            <li>Reduced bandwidth usage</li>
+                            <li>Better user experience</li>
+                            <li>Improved SEO ranking</li>
+                            <li>Lower hosting costs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const cssInput = document.getElementById('cssInput');
+        const cssOutput = document.getElementById('cssOutput');
+        const minifyBtn = document.getElementById('minifyBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const originalSize = document.getElementById('originalSize');
+        const minifiedSize = document.getElementById('minifiedSize');
+        const savingsBar = document.getElementById('savingsBar');
+        const savingsPercent = document.getElementById('savingsPercent');
+        const savingsBytes = document.getElementById('savingsBytes');
+
+        function minifyCSS(css) {
+            // Remove comments
+            css = css.replace(/\/\*[\s\S]*?\*\//g, '');
+            
+            // Remove whitespace around braces, colons, and semicolons
+            css = css.replace(/\s*{\s*/g, '{');
+            css = css.replace(/\s*}\s*/g, '}');
+            css = css.replace(/\s*:\s*/g, ':');
+            css = css.replace(/\s*;\s*/g, ';');
+            
+            // Remove unnecessary whitespace
+            css = css.replace(/\s+/g, ' ');
+            
+            // Remove leading and trailing whitespace
+            css = css.trim();
+            
+            // Remove whitespace before and after important symbols
+            css = css.replace(/\s*{\s*/g, '{');
+            css = css.replace(/\s*}\s*/g, '}');
+            css = css.replace(/\s*:\s*/g, ':');
+            css = css.replace(/\s*;\s*/g, ';');
+            css = css.replace(/\s*,\s*/g, ',');
+            
+            return css;
+        }
+
+        function updateStats() {
+            const original = cssInput.value;
+            const minified = cssOutput.value;
+            
+            const originalBytes = new Blob([original]).size;
+            const minifiedBytes = new Blob([minified]).size;
+            
+            originalSize.textContent = originalBytes + ' bytes';
+            minifiedSize.textContent = minifiedBytes + ' bytes';
+            
+            if (originalBytes > 0) {
+                const savings = originalBytes - minifiedBytes;
+                const savingsPercentValue = ((savings / originalBytes) * 100).toFixed(1);
+                
+                savingsBar.style.width = savingsPercentValue + '%';
+                savingsPercent.textContent = savingsPercentValue + '%';
+                savingsBytes.textContent = savings + ' bytes';
+            }
+        }
+
+        minifyBtn.addEventListener('click', function() {
+            const css = cssInput.value.trim();
+            if (!css) {
+                alert('Please enter CSS to minify!');
+                return;
+            }
+            
+            const minified = minifyCSS(css);
+            cssOutput.value = minified;
+            updateStats();
+        });
+
+        cssInput.addEventListener('input', function() {
+            if (cssInput.value.trim()) {
+                const minified = minifyCSS(cssInput.value);
+                cssOutput.value = minified;
+                updateStats();
+            } else {
+                cssOutput.value = '';
+                updateStats();
+            }
+        });
+
+        copyBtn.addEventListener('click', function() {
+            if (cssOutput.value) {
+                ToolUtils.copyToClipboard(cssOutput.value);
+            }
+        });
+
+        downloadBtn.addEventListener('click', function() {
+            if (cssOutput.value) {
+                ToolUtils.downloadFile(cssOutput.value, 'minified.css', 'text/css');
+            }
+        });
+
+        clearBtn.addEventListener('click', function() {
+            cssInput.value = '';
+            cssOutput.value = '';
+            updateStats();
+        });
+
+        trackToolUsage('CSS Minifier');
+    </script>
+</body>
+</html>

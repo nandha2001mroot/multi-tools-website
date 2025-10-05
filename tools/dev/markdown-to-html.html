@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to HTML Converter - MultiTools</title>
+    <meta name="description" content="Convert Markdown to HTML. Free Markdown to HTML converter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-code text-dark"></i> Markdown to HTML Converter</h1>
+            <p class="tool-description">Convert Markdown syntax to HTML with real-time preview.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-edit"></i> Markdown Input</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="markdownInput" class="form-label">Enter Markdown:</label>
+                            <textarea class="form-control" id="markdownInput" rows="12" placeholder="# Heading 1
+
+## Heading 2
+
+**Bold text**
+
+*Italic text*
+
+[Link](https://example.com)
+
+![Image](image.jpg)
+
+- List item 1
+- List item 2
+
+> Blockquote"></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-dark w-100" id="convertBtn">
+                                <i class="fas fa-exchange-alt"></i> Convert to HTML
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-file-code"></i> HTML Output</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="htmlOutput" class="form-label">HTML Code:</label>
+                            <textarea class="form-control" id="htmlOutput" rows="12" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy HTML
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-eye"></i> Preview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="previewOutput" class="border rounded p-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Markdown Syntax Guide</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Basic Syntax:</h6>
+                        <ul>
+                            <li><code># Heading 1</code> - H1 heading</li>
+                            <li><code>## Heading 2</code> - H2 heading</li>
+                            <li><code>**bold**</code> - Bold text</li>
+                            <li><code>*italic*</code> - Italic text</li>
+                            <li><code>[text](url)</code> - Link</li>
+                            <li><code>![alt](image.jpg)</code> - Image</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Lists & Blocks:</h6>
+                        <ul>
+                            <li><code>- Item</code> - Unordered list</li>
+                            <li><code>1. Item</code> - Ordered list</li>
+                            <li><code>> Quote</code> - Blockquote</li>
+                            <li><code>`code`</code> - Inline code</li>
+                            <li><code>```code block```</code> - Code block</li>
+                            <li><code>--- or ***</code> - Horizontal rule</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const markdownInput = document.getElementById('markdownInput');
+        const htmlOutput = document.getElementById('htmlOutput');
+        const previewOutput = document.getElementById('previewOutput');
+        const convertBtn = document.getElementById('convertBtn');
+        const copyBtn = document.getElementById('copyBtn');
+
+        function markdownToHtml(markdown) {
+            let html = markdown;
+            
+            // Convert headings
+            html = html.replace(/^###### (.*$)/gim, '<h6>$1</h6>');
+            html = html.replace(/^##### (.*$)/gim, '<h5>$1</h5>');
+            html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+            
+            // Convert bold and italic
+            html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+            html = html.replace(/__(.*?)__/gim, '<strong>$1</strong>');
+            html = html.replace(/_(.*?)_/gim, '<em>$1</em>');
+            
+            // Convert links
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>');
+            
+            // Convert images
+            html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/gim, '<img src="$2" alt="$1" class="img-fluid">');
+            
+            // Convert blockquotes
+            html = html.replace(/^> (.*$)/gim, '<blockquote class="blockquote"><p>$1</p></blockquote>');
+            
+            // Convert code blocks
+            html = html.replace(/```([\s\S]*?)```/gim, '<pre class="bg-light p-3 rounded"><code>$1</code></pre>');
+            html = html.replace(/`([^`]+)`/gim, '<code class="bg-light px-2 py-1 rounded">$1</code>');
+            
+            // Convert horizontal rules
+            html = html.replace(/---/gim, '<hr>');
+            html = html.replace(/\*\*\*/gim, '<hr>');
+            
+            // Convert lists
+            html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/<li>(.*?)(?=<li>|$)/gs, '<ul><li>$1</li></ul>');
+            html = html.replace(/<ul><\/ul>/g, '');
+            
+            // Convert numbered lists
+            html = html.replace(/^\d+\. (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/<li>(.*?)(?=<li>|$)/gs, '<ol><li>$1</li></ol>');
+            html = html.replace(/<ol><\/ol>/g, '');
+            
+            // Convert paragraphs
+            html = html.replace(/^\s*([^<]+)$/gim, '<p>$1</p>');
+            
+            // Replace line breaks
+            html = html.replace(/\n/gim, '<br>');
+            
+            return html;
+        }
+
+        function convertMarkdown() {
+            const markdown = markdownInput.value;
+            const html = markdownToHtml(markdown);
+            htmlOutput.value = html;
+            previewOutput.innerHTML = html;
+        }
+
+        convertBtn.addEventListener('click', convertMarkdown);
+        markdownInput.addEventListener('input', convertMarkdown);
+
+        copyBtn.addEventListener('click', function() {
+            if (htmlOutput.value) {
+                ToolUtils.copyToClipboard(htmlOutput.value);
+            }
+        });
+
+        // Initial conversion
+        convertMarkdown();
+        trackToolUsage('Markdown to HTML Converter');
+    </script>
+</body>
+</html>

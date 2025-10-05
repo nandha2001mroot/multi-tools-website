@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Converter - MultiTools</title>
+    <meta name="description" content="Convert between different energy units. Free energy converter tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-bolt text-danger"></i> Energy Converter</h1>
+            <p class="tool-description">Convert between various energy units (joules, calories, BTU, etc.).</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="mb-3">
+                            <label for="fromUnit" class="form-label">From Unit:</label>
+                            <select class="form-select" id="fromUnit">
+                                <option value="J">Joules (J)</option>
+                                <option value="kJ">Kilojoules (kJ)</option>
+                                <option value="cal" selected>Calories (cal)</option>
+                                <option value="kcal">Kilocalories (kcal)</option>
+                                <option value="Wh">Watt-hours (Wh)</option>
+                                <option value="kWh">Kilowatt-hours (kWh)</option>
+                                <option value="BTU">British Thermal Units (BTU)</option>
+                                <option value="eV">Electronvolts (eV)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="fromValue" class="form-label">Value:</label>
+                            <input type="number" class="form-control" id="fromValue" placeholder="Enter value" value="100" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-exchange-alt fa-2x text-muted"></i>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <div class="mb-3">
+                            <label for="toUnit" class="form-label">To Unit:</label>
+                            <select class="form-select" id="toUnit">
+                                <option value="J">Joules (J)</option>
+                                <option value="kJ">Kilojoules (kJ)</option>
+                                <option value="cal">Calories (cal)</option>
+                                <option value="kcal" selected>Kilocalories (kcal)</option>
+                                <option value="Wh">Watt-hours (Wh)</option>
+                                <option value="kWh">Kilowatt-hours (kWh)</option>
+                                <option value="BTU">British Thermal Units (BTU)</option>
+                                <option value="eV">Electronvolts (eV)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="result" class="form-label">Result:</label>
+                            <input type="text" class="form-control" id="result" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-primary" id="convertBtn">
+                        <i class="fas fa-calculator"></i> Convert
+                    </button>
+                    <button class="btn btn-outline-secondary" id="swapBtn">
+                        <i class="fas fa-sync"></i> Swap
+                    </button>
+                    <button class="btn btn-outline-secondary" id="clearBtn">
+                        <i class="fas fa-eraser"></i> Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Conversion Factors</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Unit</th>
+                                <th>Symbol</th>
+                                <th>Equivalent to Joules</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Joule</td>
+                                <td>J</td>
+                                <td>1.0 J</td>
+                            </tr>
+                            <tr>
+                                <td>Kilojoule</td>
+                                <td>kJ</td>
+                                <td>1,000 J</td>
+                            </tr>
+                            <tr>
+                                <td>Calorie</td>
+                                <td>cal</td>
+                                <td>4.184 J</td>
+                            </tr>
+                            <tr>
+                                <td>Kilocalorie</td>
+                                <td>kcal</td>
+                                <td>4,184 J</td>
+                            </tr>
+                            <tr>
+                                <td>Watt-hour</td>
+                                <td>Wh</td>
+                                <td>3,600 J</td>
+                            </tr>
+                            <tr>
+                                <td>Kilowatt-hour</td>
+                                <td>kWh</td>
+                                <td>3,600,000 J</td>
+                            </tr>
+                            <tr>
+                                <td>BTU</td>
+                                <td>BTU</td>
+                                <td>1,055.06 J</td>
+                            </tr>
+                            <tr>
+                                <td>Electronvolt</td>
+                                <td>eV</td>
+                                <td>1.60218e-19 J</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-lightbulb"></i> Energy Facts</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Common Energy Conversions:</h6>
+                        <ul>
+                            <li>1 calorie = 4.184 joules</li>
+                            <li>1 kWh = 3.6 million joules</li>
+                            <li>1 BTU = 1055.06 joules</li>
+                            <li>1 food calorie = 1000 calories</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Energy Examples:</h6>
+                        <ul>
+                            <li>Apple: 80 calories</li>
+                            <li>Running for 1 hour: 600 calories</li>
+                            <li>1 kWh: 100W bulb for 10 hours</li>
+                            <li>Car fuel tank: 100+ kWh</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const fromUnit = document.getElementById('fromUnit');
+        const toUnit = document.getElementById('toUnit');
+        const fromValue = document.getElementById('fromValue');
+        const result = document.getElementById('result');
+        const convertBtn = document.getElementById('convertBtn');
+        const swapBtn = document.getElementById('swapBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // Conversion factors to joules
+        const conversionFactors = {
+            'J': 1.0,
+            'kJ': 1000.0,
+            'cal': 4.184,
+            'kcal': 4184.0,
+            'Wh': 3600.0,
+            'kWh': 3600000.0,
+            'BTU': 1055.06,
+            'eV': 1.60218e-19
+        };
+
+        function convertEnergy() {
+            const value = parseFloat(fromValue.value);
+            if (isNaN(value)) {
+                result.value = '';
+                return;
+            }
+
+            const fromFactor = conversionFactors[fromUnit.value];
+            const toFactor = conversionFactors[toUnit.value];
+            
+            const joules = value * fromFactor;
+            const convertedValue = joules / toFactor;
+            
+            result.value = convertedValue.toFixed(10);
+        }
+
+        convertBtn.addEventListener('click', convertEnergy);
+        fromValue.addEventListener('input', convertEnergy);
+        fromUnit.addEventListener('change', convertEnergy);
+        toUnit.addEventListener('change', convertEnergy);
+
+        swapBtn.addEventListener('click', function() {
+            const tempUnit = fromUnit.value;
+            fromUnit.value = toUnit.value;
+            toUnit.value = tempUnit;
+            convertEnergy();
+        });
+
+        clearBtn.addEventListener('click', function() {
+            fromValue.value = '';
+            result.value = '';
+        });
+
+        // Initial conversion
+        convertEnergy();
+        trackToolUsage('Energy Converter');
+    </script>
+</body>
+</html>

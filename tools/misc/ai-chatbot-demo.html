@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot Demo - MultiTools</title>
+    <meta name="description" content="Try AI chatbot. Free AI chatbot demo tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-robot text-info"></i> AI Chatbot Demo</h1>
+            <p class="tool-description">Experience our AI chatbot with simulated conversations.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-comments"></i> Chat Interface</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chat-container mb-3" style="height: 400px; overflow-y: auto; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px;">
+                            <div id="chatMessages">
+                                <div class="message bot-message mb-3">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-robot fa-2x text-info"></i>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <div class="alert alert-info mb-0">
+                                                Hello! I'm your AI assistant. How can I help you today?
+                                            </div>
+                                            <small class="text-muted">Just now</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="userMessage" placeholder="Type your message here...">
+                            <button class="btn btn-info" id="sendBtn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Chat Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="personality" class="form-label">Chatbot Personality:</label>
+                            <select class="form-select" id="personality">
+                                <option value="friendly">Friendly Assistant</option>
+                                <option value="professional">Professional Expert</option>
+                                <option value="humorous">Humorous Companion</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="creative">Creative Writer</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="responseLength" class="form-label">Response Length:</label>
+                            <select class="form-select" id="responseLength">
+                                <option value="short">Short Responses</option>
+                                <option value="medium" selected>Medium Responses</option>
+                                <option value="long">Long Responses</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="enableTyping" checked>
+                            <label class="form-check-label" for="enableTyping">
+                                Show Typing Indicator
+                            </label>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="enableSound">
+                            <label class="form-check-label" for="enableSound">
+                                Enable Sound Effects
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-outline-secondary w-100" id="clearBtn">
+                            <i class="fas fa-eraser"></i> Clear Chat
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-lightbulb"></i> Try These Prompts</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-info btn-sm" onclick="sendPrompt('Hello!')">
+                                <i class="fas fa-comment"></i> Hello!
+                            </button>
+                            <button class="btn btn-outline-info btn-sm" onclick="sendPrompt('Tell me a joke')">
+                                <i class="fas fa-laugh"></i> Tell me a joke
+                            </button>
+                            <button class="btn btn-outline-info btn-sm" onclick="sendPrompt('What can you help me with?')">
+                                <i class="fas fa-question-circle"></i> What can you help me with?
+                            </button>
+                            <button class="btn btn-outline-info btn-sm" onclick="sendPrompt('Write a poem about nature')">
+                                <i class="fas fa-feather-alt"></i> Write a poem about nature
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> About AI Chatbots</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Capabilities:</h6>
+                        <ul>
+                            <li>Natural language understanding</li>
+                            <li>Contextual conversation</li>
+                            <li>Information retrieval</li>
+                            <li>Creative content generation</li>
+                            <li>Problem solving assistance</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Limitations:</h6>
+                        <ul>
+                            <li>May generate incorrect information</li>
+                            <li>Limited knowledge cutoff</li>
+                            <li>Cannot browse the internet</li>
+                            <li>No memory between sessions</li>
+                            <li>May be biased or subjective</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const userMessage = document.getElementById('userMessage');
+        const sendBtn = document.getElementById('sendBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const personality = document.getElementById('personality');
+        const responseLength = document.getElementById('responseLength');
+        const enableTyping = document.getElementById('enableTyping');
+        const enableSound = document.getElementById('enableSound');
+        const clearBtn = document.getElementById('clearBtn');
+        const chatContainer = document.querySelector('.chat-container');
+
+        function sendMessage() {
+            const message = userMessage.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            userMessage.value = '';
+
+            // Show typing indicator if enabled
+            if (enableTyping.checked) {
+                showTypingIndicator();
+            }
+
+            // Simulate AI response after delay
+            setTimeout(() => {
+                const aiResponse = generateResponse(message);
+                addMessage(aiResponse, 'bot');
+                scrollToBottom();
+            }, 1500);
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message mb-3`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            
+            if (sender === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="d-flex justify-content-end">
+                        <div class="flex-grow-1 me-3">
+                            <div class="alert alert-primary mb-0 text-end">
+                                ${text}
+                            </div>
+                            <small class="text-muted float-end">${timestamp}</small>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-user fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-robot fa-2x text-info"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="alert alert-info mb-0">
+                                ${text}
+                            </div>
+                            <small class="text-muted">${timestamp}</small>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'message bot-message mb-3';
+            typingDiv.innerHTML = `
+                <div class="d-flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-robot fa-2x text-info"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="alert alert-info mb-0">
+                            <div class="typing-indicator">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            scrollToBottom();
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function generateResponse(userMessage) {
+            const responses = {
+                'hello': 'Hello there! How can I assist you today?',
+                'hi': 'Hi! Nice to meet you. What can I help you with?',
+                'how are you': 'I\'m doing great, thank you for asking! How can I help you?',
+                'help': 'I can help with answering questions, providing information, creative writing, problem solving, and much more. What do you need assistance with?',
+                'joke': 'Why don\'t scientists trust atoms? Because they make up everything! 😄',
+                'poem': 'Here\'s a simple poem:\n\nRoses are red,\nViolets are blue,\nAI is here to help,\nAnd so are you!',
+                'weather': 'I wish I could tell you the weather, but I don\'t have access to real-time data. You might want to check a weather app!',
+                'thank': 'You\'re very welcome! Is there anything else I can help you with?',
+                'bye': 'Goodbye! Feel free to come back anytime you need assistance!'
+            };
+
+            // Check for specific keywords
+            const lowerMessage = userMessage.toLowerCase();
+            
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowerMessage.includes(key)) {
+                    return response;
+                }
+            }
+
+            // Default responses based on personality
+            const personalities = {
+                friendly: [
+                    'That\'s interesting! Tell me more about that.',
+                    'I\'d be happy to help with that. Can you provide more details?',
+                    'Great question! Let me think about that for a moment.',
+                    'I understand. What would you like to know specifically?'
+                ],
+                professional: [
+                    'I can provide assistance with that matter. Please elaborate on your requirements.',
+                    'That falls within my capabilities. May I have additional specifications?',
+                    'I am equipped to address this. Please provide further information.',
+                    'This requires careful consideration. What are your primary objectives?'
+                ],
+                humorous: [
+                    'Well, that\'s a pickle! Let me think...',
+                    'Oh boy, that\'s a tough one! Here\'s what I think...',
+                    'That\'s like finding a needle in a haystack! But I\'ll give it a shot.',
+                    'Interesting! That\'s like asking why chickens cross the road...'
+                ],
+                technical: [
+                    'From a technical standpoint, this involves several components. Let me break it down.',
+                    'This requires a systematic approach. Here\'s my analysis:',
+                    'Technically speaking, there are multiple factors to consider.',
+                    'This falls under my technical expertise. Here\'s the breakdown:'
+                ],
+                creative: [
+                    'Ah, now that\'s a creative challenge! Let me paint you a picture...',
+                    'What a wonderful prompt! Let me weave some magic...',
+                    'Inspiration strikes! Here\'s what comes to mind...',
+                    'Time to unleash creativity! Picture this...'
+                ]
+            };
+
+            const personalityType = personality.value;
+            const personalityResponses = personalities[personalityType] || personalities.friendly;
+            const randomResponse = personalityResponses[Math.floor(Math.random() * personalityResponses.length)];
+
+            // Add some context based on user message
+            if (lowerMessage.includes('write') || lowerMessage.includes('create')) {
+                return 'I\'d be happy to help with that! ' + randomResponse + ' What specifically would you like me to write about?';
+            } else if (lowerMessage.includes('explain') || lowerMessage.includes('tell me')) {
+                return 'I\'ll explain that for you! ' + randomResponse + ' Here\'s what I know...';
+            } else {
+                return randomResponse + ' What else would you like to discuss?';
+            }
+        }
+
+        function sendPrompt(prompt) {
+            userMessage.value = prompt;
+            sendMessage();
+        }
+
+        function clearChat() {
+            chatMessages.innerHTML = `
+                <div class="message bot-message mb-3">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-robot fa-2x text-info"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="alert alert-info mb-0">
+                                Hello! I'm your AI assistant. How can I help you today?
+                            </div>
+                            <small class="text-muted">Just now</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Add CSS for typing indicator
+        const style = document.createElement('style');
+        style.textContent = `
+            .typing-indicator {
+                display: flex;
+                align-items: center;
+            }
+            .typing-indicator span {
+                height: 8px;
+                width: 8px;
+                float: left;
+                margin: 0 1px;
+                background-color: #9E9EA1;
+                display: block;
+                border-radius: 50%;
+                opacity: 0.4;
+            }
+            .typing-indicator span:nth-of-type(1) {
+                animation: typing 1s infinite;
+            }
+            .typing-indicator span:nth-of-type(2) {
+                animation: typing 1s infinite 0.2s;
+            }
+            .typing-indicator span:nth-of-type(3) {
+                animation: typing 1s infinite 0.4s;
+            }
+            @keyframes typing {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-5px); }
+                100% { transform: translateY(0px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        sendBtn.addEventListener('click', sendMessage);
+        userMessage.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        clearBtn.addEventListener('click', clearChat);
+
+        // Make sendPrompt available globally
+        window.sendPrompt = sendPrompt;
+
+        trackToolUsage('AI Chatbot Demo');
+    </script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leap Year Checker - MultiTools</title>
+    <meta name="description" content="Check leap years. Free leap year checker tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-calendar-alt text-info"></i> Leap Year Checker</h1>
+            <p class="tool-description">Check if a year is a leap year and learn about leap year rules.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-calendar-day"></i> Check Leap Year</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="yearInput" class="form-label">Enter Year:</label>
+                            <input type="number" class="form-control" id="yearInput" placeholder="Enter year (e.g., 2024)" value="2024">
+                        </div>
+                        
+                        <button class="btn btn-info w-100 mb-3" id="checkBtn">
+                            <i class="fas fa-search"></i> Check Year
+                        </button>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-history"></i> Recent Checks</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="recentChecks">
+                                    <p class="text-muted">Recent checks will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-calculator"></i> Check Results</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="resultsContainer">
+                            <i class="fas fa-calendar-alt fa-3x text-info mb-3"></i>
+                            <h2 id="yearResult" class="mb-3">2024</h2>
+                            <h3 id="leapResult" class="text-info mb-3">Leap Year</h3>
+                            <p id="leapExplanation" class="lead">This year has 366 days with February 29th</p>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h6>Year Information:</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Days in Year:</strong></td>
+                                                <td id="daysInYear">365</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>February Days:</strong></td>
+                                                <td id="februaryDays">28</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Next Leap Year:</strong></td>
+                                                <td id="nextLeapYear">2028</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Previous Leap Year:</strong></td>
+                                                <td id="prevLeapYear">2020</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-book"></i> Leap Year Rules</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Gregorian Calendar Rules:</h6>
+                        <ol>
+                            <li>If divisible by 4 → Leap Year</li>
+                            <li>Unless divisible by 100 → Not Leap Year</li>
+                            <li>Unless also divisible by 400 → Leap Year</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Examples:</h6>
+                        <ul>
+                            <li><strong>2024:</strong> Divisible by 4 → Leap Year</li>
+                            <li><strong>1900:</strong> Divisible by 100 but not 400 → Not Leap Year</li>
+                            <li><strong>2000:</strong> Divisible by 400 → Leap Year</li>
+                            <li><strong>2023:</strong> Not divisible by 4 → Not Leap Year</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-calendar-week"></i> Leap Year Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Why Leap Years Exist:</h6>
+                        <p>Earth takes approximately 365.25 days to orbit the sun. Leap years add an extra day every four years to keep our calendar aligned with astronomical seasons.</p>
+                        <ul>
+                            <li>Keeps calendar synchronized</li>
+                            <li>Prevents seasonal drift</li>
+                            <li>Maintains agricultural timing</li>
+                            <li>Ensures holiday consistency</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Interesting Facts:</h6>
+                        <ul>
+                            <li>Julius Caesar introduced leap years</li>
+                            <li>February 29th occurs every 4 years</li>
+                            <li>People born on Feb 29th celebrate on Feb 28th or Mar 1st</li>
+                            <li>Next skipped leap year: 2100</li>
+                            <li>Leap years have 366 days</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const yearInput = document.getElementById('yearInput');
+        const checkBtn = document.getElementById('checkBtn');
+        const yearResult = document.getElementById('yearResult');
+        const leapResult = document.getElementById('leapResult');
+        const leapExplanation = document.getElementById('leapExplanation');
+        const daysInYear = document.getElementById('daysInYear');
+        const februaryDays = document.getElementById('februaryDays');
+        const nextLeapYear = document.getElementById('nextLeapYear');
+        const prevLeapYear = document.getElementById('prevLeapYear');
+        const recentChecks = document.getElementById('recentChecks');
+
+        let recentResults = [];
+
+        function checkLeapYear() {
+            const year = parseInt(yearInput.value) || 2024;
+            
+            // Leap year calculation
+            const isLeap = isLeapYear(year);
+            
+            // Update display
+            yearResult.textContent = year;
+            leapResult.textContent = isLeap ? 'Leap Year' : 'Not a Leap Year';
+            leapResult.className = `mb-3 ${isLeap ? 'text-success' : 'text-danger'}`;
+            leapExplanation.textContent = isLeap ? 
+                'This year has 366 days with February 29th' : 
+                'This year has 365 days with standard February';
+            daysInYear.textContent = isLeap ? '366' : '365';
+            februaryDays.textContent = isLeap ? '29' : '28';
+            nextLeapYear.textContent = getNextLeapYear(year);
+            prevLeapYear.textContent = getPrevLeapYear(year);
+            
+            // Add to recent checks
+            addToRecentChecks(year, isLeap);
+        }
+
+        function isLeapYear(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        }
+
+        function getNextLeapYear(startYear) {
+            let year = startYear + 1;
+            while (!isLeapYear(year)) {
+                year++;
+            }
+            return year;
+        }
+
+        function getPrevLeapYear(startYear) {
+            let year = startYear - 1;
+            while (!isLeapYear(year)) {
+                year--;
+            }
+            return year;
+        }
+
+        function addToRecentChecks(year, isLeap) {
+            const result = {
+                year: year,
+                isLeap: isLeap,
+                timestamp: new Date().toLocaleTimeString()
+            };
+            
+            recentResults.unshift(result);
+            recentResults = recentResults.slice(0, 5); // Keep only last 5 results
+            
+            updateRecentChecks();
+        }
+
+        function updateRecentChecks() {
+            if (recentResults.length === 0) {
+                recentChecks.innerHTML = '<p class="text-muted">Recent checks will appear here</p>';
+                return;
+            }
+            
+            let html = '<div class="list-group">';
+            recentResults.forEach(result => {
+                html += `
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>${result.year}</strong>
+                            <span class="badge ${result.isLeap ? 'bg-success' : 'bg-danger'} ms-2">
+                                ${result.isLeap ? 'Leap' : 'Not Leap'}
+                            </span>
+                        </div>
+                        <small class="text-muted">${result.timestamp}</small>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            recentChecks.innerHTML = html;
+        }
+
+        function generateRandomYear() {
+            const year = Math.floor(Math.random() * 2024) + 1;
+            yearInput.value = year;
+            checkLeapYear();
+        }
+
+        checkBtn.addEventListener('click', checkLeapYear);
+        yearInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkLeapYear();
+            }
+        });
+
+        // Initialize with current year
+        yearInput.value = new Date().getFullYear();
+        checkLeapYear();
+        trackToolUsage('Leap Year Checker');
+    </script>
+</body>
+</html>

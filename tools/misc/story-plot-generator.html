@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Plot Generator - MultiTools</title>
+    <meta name="description" content="Generate story plots. Free story plot generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-book text-purple"></i> Story Plot Generator</h1>
+            <p class="tool-description">Generate creative story plots and narrative structures for writers.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Plot Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="genre" class="form-label">Genre:</label>
+                            <select class="form-select" id="genre">
+                                <option value="fantasy">Fantasy</option>
+                                <option value="sci-fi">Science Fiction</option>
+                                <option value="mystery">Mystery</option>
+                                <option value="romance">Romance</option>
+                                <option value="thriller">Thriller</option>
+                                <option value="horror">Horror</option>
+                                <option value="adventure">Adventure</option>
+                                <option value="drama">Drama</option>
+                                <option value="comedy">Comedy</option>
+                                <option value="historical">Historical Fiction</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="storyLength" class="form-label">Story Length:</label>
+                            <select class="form-select" id="storyLength">
+                                <option value="short">Short Story (1,000-5,000 words)</option>
+                                <option value="novella" selected>Novella (20,000-50,000 words)</option>
+                                <option value="novel">Novel (50,000+ words)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="tone" class="form-label">Tone:</label>
+                            <select class="form-select" id="tone">
+                                <option value="serious">Serious</option>
+                                <option value="humorous">Humorous</option>
+                                <option value="dark">Dark</option>
+                                <option value="light">Light</option>
+                                <option value="epic">Epic</option>
+                                <option value="realistic">Realistic</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includeConflict" checked>
+                            <label class="form-check-label" for="includeConflict">
+                                Include Central Conflict
+                            </label>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includeTwist" checked>
+                            <label class="form-check-label" for="includeTwist">
+                                Include Plot Twist
+                            </label>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includeCharacterArc">
+                            <label class="form-check-label" for="includeCharacterArc">
+                                Include Character Arc
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-purple w-100" id="generateBtn">
+                            <i class="fas fa-magic"></i> Generate Plot
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-scroll"></i> Generated Plot</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="plotContainer">
+                            <div class="text-center py-5">
+                                <i class="fas fa-book fa-3x text-purple mb-3"></i>
+                                <p class="text-muted">Click "Generate Plot" to create your story idea</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-2 mt-3">
+                            <button class="btn btn-success w-100" id="copyBtn" style="display: none;">
+                                <i class="fas fa-copy"></i> Copy Plot
+                            </button>
+                            <button class="btn btn-outline-secondary" id="regenerateBtn" style="display: none;">
+                                <i class="fas fa-redo"></i> Regenerate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-lightbulb"></i> Writing Tips</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Start with a strong hook</li>
+                            <li>Develop compelling characters</li>
+                            <li>Create meaningful conflict</li>
+                            <li>Build toward a climax</li>
+                            <li>Resolve with satisfying conclusion</li>
+                            <li>Show, don't tell</li>
+                            <li>Use sensory details</li>
+                            <li>Maintain consistent POV</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-theater-masks"></i> Story Elements</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                                <h6>Characters</h6>
+                                <p class="small">Protagonist, antagonist, supporting characters</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-bolt fa-2x text-warning mb-2"></i>
+                                <h6>Conflict</h6>
+                                <p class="small">Internal, external, interpersonal conflicts</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-route fa-2x text-success mb-2"></i>
+                                <h6>Resolution</h6>
+                                <p class="small">Climax, falling action, conclusion</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const genre = document.getElementById('genre');
+        const storyLength = document.getElementById('storyLength');
+        const tone = document.getElementById('tone');
+        const includeConflict = document.getElementById('includeConflict');
+        const includeTwist = document.getElementById('includeTwist');
+        const includeCharacterArc = document.getElementById('includeCharacterArc');
+        const generateBtn = document.getElementById('generateBtn');
+        const plotContainer = document.getElementById('plotContainer');
+        const copyBtn = document.getElementById('copyBtn');
+        const regenerateBtn = document.getElementById('regenerateBtn');
+
+        function generatePlot() {
+            const genreValue = genre.value;
+            const lengthValue = storyLength.value;
+            const toneValue = tone.value;
+            const conflict = includeConflict.checked;
+            const twist = includeTwist.checked;
+            const characterArc = includeCharacterArc.checked;
+
+            // Generate plot based on settings
+            const protagonists = [
+                'A young apprentice', 'An experienced detective', 'A reluctant hero', 'A brilliant scientist',
+                'A struggling artist', 'A retired soldier', 'A curious journalist', 'A mysterious stranger'
+            ];
+            
+            const settings = {
+                fantasy: ['a magical kingdom', 'an enchanted forest', 'a mystical realm', 'a wizarding academy'],
+                'sci-fi': ['a space station', 'a distant planet', 'a futuristic city', 'a research facility'],
+                mystery: ['a grand mansion', 'a busy city', 'a small town', 'an old library'],
+                romance: ['a charming café', 'a beach resort', 'a corporate office', 'a wedding venue'],
+                thriller: ['a government agency', 'a remote cabin', 'a luxury yacht', 'a high-security prison'],
+                horror: ['an abandoned asylum', 'a cursed village', 'an ancient tomb', 'a haunted house'],
+                adventure: ['a tropical island', 'a mountain range', 'a desert oasis', 'a hidden cave'],
+                drama: ['a family home', 'a hospital', 'a courthouse', 'a small community'],
+                comedy: ['a quirky office', 'a wedding planning company', 'a cooking school', 'a pet grooming salon'],
+                historical: ['medieval England', 'Victorian London', 'Ancient Rome', '1920s Paris']
+            };
+            
+            const conflicts = [
+                'must overcome a powerful enemy', 'discovers a shocking secret', 'faces a life-changing decision',
+                'embarks on a dangerous journey', 'must solve a mysterious puzzle', 'protects a valuable treasure',
+                'confronts their deepest fears', 'seeks redemption for past mistakes'
+            ];
+            
+            const twists = [
+                'the trusted ally is actually the villain', 'the treasure was never real', 'the protagonist discovers they have supernatural powers',
+                'the mentor has been lying all along', 'the apparent victim is the perpetrator', 'what seemed like coincidence was actually fate',
+                'the protagonist is not who they think they are', 'the quest was orchestrated by the antagonist'
+            ];
+            
+            const characterArcs = [
+                'learns to trust others', 'discovers inner strength', 'finds courage to face challenges',
+                'learns to forgive themselves', 'discovers their true calling', 'overcomes personal demons',
+                'learns the value of friendship', 'finds peace with their past'
+            ];
+
+            // Generate plot elements
+            const protagonist = protagonists[Math.floor(Math.random() * protagonists.length)];
+            const setting = settings[genreValue][Math.floor(Math.random() * settings[genreValue].length)];
+            const conflictText = conflicts[Math.floor(Math.random() * conflicts.length)];
+            const twistText = twists[Math.floor(Math.random() * twists.length)];
+            const arcText = characterArcs[Math.floor(Math.random() * characterArcs.length)];
+
+            // Build plot
+            let plot = `<div class="plot-content">
+                <h4 class="text-center mb-4">Generated Story Plot</h4>
+                
+                <div class="mb-4">
+                    <h5><i class="fas fa-book-open text-purple"></i> Story Setup</h5>
+                    <p><strong>Genre:</strong> ${genreValue.charAt(0).toUpperCase() + genreValue.slice(1)}</p>
+                    <p><strong>Setting:</strong> ${protagonist} finds themselves in ${setting}</p>
+                    <p><strong>Tone:</strong> ${toneValue.charAt(0).toUpperCase() + toneValue.slice(1)}</p>
+                </div>`;
+
+            if (conflict) {
+                plot += `
+                <div class="mb-4">
+                    <h5><i class="fas fa-bolt text-warning"></i> Central Conflict</h5>
+                    <p>${protagonist} ${conflictText}</p>
+                </div>`;
+            }
+
+            if (characterArc) {
+                plot += `
+                <div class="mb-4">
+                    <h5><i class="fas fa-user text-primary"></i> Character Development</h5>
+                    <p>Throughout their journey, ${arcText}</p>
+                </div>`;
+            }
+
+            if (twist) {
+                plot += `
+                <div class="mb-4">
+                    <h5><i class="fas fa-surprise text-danger"></i> Plot Twist</h5>
+                    <p>Just when things seem resolved, ${twistText}</p>
+                </div>`;
+            }
+
+            plot += `
+                <div class="mb-4">
+                    <h5><i class="fas fa-trophy text-success"></i> Resolution</h5>
+                    <p>The story concludes with a satisfying resolution that ties together all elements</p>
+                </div>
+                
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-lightbulb"></i> Writing Prompt:</h6>
+                    <p>Use this plot as inspiration for your story. Feel free to modify any elements to suit your vision!</p>
+                </div>
+            </div>`;
+
+            plotContainer.innerHTML = plot;
+            copyBtn.style.display = 'block';
+            regenerateBtn.style.display = 'block';
+        }
+
+        function copyPlot() {
+            const plotContent = plotContainer.innerText;
+            if (plotContent) {
+                ToolUtils.copyToClipboard(plotContent);
+            }
+        }
+
+        generateBtn.addEventListener('click', generatePlot);
+        copyBtn.addEventListener('click', copyPlot);
+        regenerateBtn.addEventListener('click', generatePlot);
+
+        trackToolUsage('Story Plot Generator');
+    </script>
+</body>
+</html>

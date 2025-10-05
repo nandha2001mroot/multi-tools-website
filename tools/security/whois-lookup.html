@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whois Lookup - MultiTools</title>
+    <meta name="description" content="Lookup domain registration information. Free Whois lookup tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-search text-info"></i> Whois Lookup</h1>
+            <p class="tool-description">Lookup domain registration information and ownership details.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="domainName" class="form-label">Enter Domain Name:</label>
+                            <input type="text" class="form-control" id="domainName" placeholder="example.com">
+                        </div>
+                        
+                        <button class="btn btn-info w-100 mb-3" id="lookupBtn">
+                            <i class="fas fa-search"></i> Lookup Domain
+                        </button>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-info-circle"></i> About Whois</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Whois is a protocol used to query databases that store registered domain name information.</p>
+                                <ul>
+                                    <li>Domain registration details</li>
+                                    <li>Registrar information</li>
+                                    <li>Name servers</li>
+                                    <li>Creation and expiration dates</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="resultsContainer" style="display: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-server"></i> Domain Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Domain:</strong> <span id="domain"></span></p>
+                                            <p><strong>Registrar:</strong> <span id="registrar"></span></p>
+                                            <p><strong>Status:</strong> <span id="status" class="badge bg-success">Active</span></p>
+                                            <p><strong>Name Servers:</strong> <span id="nameservers"></span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>Created:</strong> <span id="created"></span></p>
+                                            <p><strong>Expires:</strong> <span id="expires"></span></p>
+                                            <p><strong>Updated:</strong> <span id="updated"></span></p>
+                                            <p><strong>Registrar URL:</strong> <span id="registrarUrl"></span></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-3">
+                                        <h6>Registrant Contact:</h6>
+                                        <div class="border rounded p-2" id="registrantInfo">
+                                            <!-- Registrant info would go here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fas fa-search fa-3x text-info mb-3"></i>
+                            <p class="text-muted">Enter a domain name to lookup registration information</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-shield-alt"></i> Privacy Protection</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Domain Privacy:</h6>
+                        <p>Many registrars offer privacy protection services that hide personal information from public Whois records.</p>
+                        <ul>
+                            <li>Protects against spam</li>
+                            <li>Prevents identity theft</li>
+                            <li>Reduces unwanted calls</li>
+                            <li>Legal compliance</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>GDPR Impact:</h6>
+                        <p>The General Data Protection Regulation has limited the amount of personal information displayed in Whois records.</p>
+                        <ul>
+                            <li>Reduced personal data exposure</li>
+                            <li>Enhanced privacy rights</li>
+                            <li>Regulatory compliance</li>
+                            <li>Balanced access needs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const domainName = document.getElementById('domainName');
+        const lookupBtn = document.getElementById('lookupBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const placeholder = document.getElementById('placeholder');
+        const domain = document.getElementById('domain');
+        const registrar = document.getElementById('registrar');
+        const status = document.getElementById('status');
+        const nameservers = document.getElementById('nameservers');
+        const created = document.getElementById('created');
+        const expires = document.getElementById('expires');
+        const updated = document.getElementById('updated');
+        const registrarUrl = document.getElementById('registrarUrl');
+        const registrantInfo = document.getElementById('registrantInfo');
+
+        function lookupDomain() {
+            const domainValue = domainName.value.trim();
+            if (!domainValue) {
+                alert('Please enter a domain name!');
+                return;
+            }
+
+            // Show loading state
+            resultsContainer.style.display = 'none';
+            placeholder.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin fa-3x text-muted mb-3"></i><p>Looking up domain information...</p></div>';
+            placeholder.style.display = 'block';
+
+            // Simulate API call
+            setTimeout(() => {
+                // Generate mock domain data
+                const today = new Date();
+                const creationDate = new Date(today.getTime() - (365 * 24 * 60 * 60 * 1000)); // 1 year ago
+                const expiryDate = new Date(today.getTime() + (365 * 24 * 60 * 60 * 1000)); // 1 year from now
+                const updateDate = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000)); // 30 days ago
+                
+                domain.textContent = domainValue;
+                registrar.textContent = 'Example Registrar Inc.';
+                nameservers.textContent = 'ns1.example.com, ns2.example.com';
+                created.textContent = creationDate.toLocaleDateString();
+                expires.textContent = expiryDate.toLocaleDateString();
+                updated.textContent = updateDate.toLocaleDateString();
+                registrarUrl.textContent = 'https://www.exampleregistrar.com';
+                
+                registrantInfo.innerHTML = `
+                    <div class="small">
+                        <div class="mb-1"><strong>Name:</strong> John Doe</div>
+                        <div class="mb-1"><strong>Organization:</strong> Example Corporation</div>
+                        <div class="mb-1"><strong>Address:</strong> 123 Main St, Anytown, ST 12345</div>
+                        <div><strong>Email:</strong> admin@example.com</div>
+                    </div>
+                `;
+
+                resultsContainer.style.display = 'block';
+                placeholder.style.display = 'none';
+            }, 1500);
+        }
+
+        lookupBtn.addEventListener('click', lookupDomain);
+        trackToolUsage('Whois Lookup');
+    </script>
+</body>
+</html>

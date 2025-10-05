@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robots.txt Generator - MultiTools</title>
+    <meta name="description" content="Generate robots.txt files for SEO. Free robots.txt generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-robot text-success"></i> Robots.txt Generator</h1>
+            <p class="tool-description">Generate robots.txt files to control search engine crawling.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Robots.txt Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="userAgent" class="form-label">User-Agent:</label>
+                            <select class="form-select" id="userAgent">
+                                <option value="*">All Bots (*)</option>
+                                <option value="Googlebot">Googlebot</option>
+                                <option value="Googlebot-Image">Googlebot-Image</option>
+                                <option value="Googlebot-Video">Googlebot-Video</option>
+                                <option value="Bingbot">Bingbot</option>
+                                <option value="Slurp">Slurp (Yahoo)</option>
+                                <option value="DuckDuckBot">DuckDuckBot</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Allow/Deny Rules:</label>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="ruleType" id="allowRule" value="allow" checked>
+                                <label class="form-check-label" for="allowRule">
+                                    Allow Access
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="ruleType" id="denyRule" value="deny">
+                                <label class="form-check-label" for="denyRule">
+                                    Block Access
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="path" class="form-label">Path to Allow/Block:</label>
+                            <input type="text" class="form-control" id="path" placeholder="/admin/" value="/">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="crawlDelay" class="form-label">Crawl Delay (seconds):</label>
+                            <input type="number" class="form-control" id="crawlDelay" min="0" max="30" value="0">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="sitemapUrl" class="form-label">Sitemap URL:</label>
+                            <input type="url" class="form-control" id="sitemapUrl" placeholder="https://example.com/sitemap.xml">
+                        </div>
+                        
+                        <button class="btn btn-success w-100" id="generateBtn">
+                            <i class="fas fa-cogs"></i> Generate robots.txt
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-code"></i> Generated robots.txt</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="robotsOutput" class="form-label">robots.txt Content:</label>
+                            <textarea class="form-control" id="robotsOutput" rows="12" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button class="btn btn-primary" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Robots.txt Best Practices</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Place robots.txt in your website root directory</li>
+                            <li>Use specific paths, not wildcards when possible</li>
+                            <li>Test your robots.txt with Google Search Console</li>
+                            <li>Remember that robots.txt is not a security measure</li>
+                            <li>Use noindex in meta tags for more reliable blocking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const userAgent = document.getElementById('userAgent');
+        const allowRule = document.getElementById('allowRule');
+        const denyRule = document.getElementById('denyRule');
+        const path = document.getElementById('path');
+        const crawlDelay = document.getElementById('crawlDelay');
+        const sitemapUrl = document.getElementById('sitemapUrl');
+        const generateBtn = document.getElementById('generateBtn');
+        const robotsOutput = document.getElementById('robotsOutput');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        function generateRobotsTxt() {
+            let robots = `User-agent: ${userAgent.value}\n`;
+            
+            const ruleType = document.querySelector('input[name="ruleType"]:checked').value;
+            const ruleValue = ruleType === 'allow' ? 'Allow' : 'Disallow';
+            
+            robots += `${ruleValue}: ${path.value}\n`;
+            
+            if (crawlDelay.value > 0) {
+                robots += `Crawl-delay: ${crawlDelay.value}\n`;
+            }
+            
+            if (sitemapUrl.value.trim()) {
+                robots += `Sitemap: ${sitemapUrl.value}\n`;
+            }
+            
+            robotsOutput.value = robots;
+        }
+
+        generateBtn.addEventListener('click', generateRobotsTxt);
+        copyBtn.addEventListener('click', function() {
+            if (robotsOutput.value) {
+                ToolUtils.copyToClipboard(robotsOutput.value);
+            }
+        });
+        downloadBtn.addEventListener('click', function() {
+            if (robotsOutput.value) {
+                ToolUtils.downloadFile(robotsOutput.value, 'robots.txt', 'text/plain');
+            }
+        });
+
+        // Update on input change
+        userAgent.addEventListener('change', generateRobotsTxt);
+        allowRule.addEventListener('change', generateRobotsTxt);
+        denyRule.addEventListener('change', generateRobotsTxt);
+        path.addEventListener('input', generateRobotsTxt);
+        crawlDelay.addEventListener('input', generateRobotsTxt);
+        sitemapUrl.addEventListener('input', generateRobotsTxt);
+
+        // Initial generation
+        generateRobotsTxt();
+        trackToolUsage('Robots.txt Generator');
+    </script>
+</body>
+</html>

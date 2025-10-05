@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation Generator - MultiTools</title>
+    <meta name="description" content="Create wedding invitations. Free wedding invitation generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-ring text-pink"></i> Wedding Invitation Generator</h1>
+            <p class="tool-description">Create beautiful wedding invitations with customizable templates.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-edit"></i> Invitation Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="coupleNames" class="form-label">Couple Names:</label>
+                            <input type="text" class="form-control" id="coupleNames" placeholder="Bride & Groom Names">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="weddingDate" class="form-label">Wedding Date:</label>
+                                <input type="date" class="form-control" id="weddingDate">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="weddingTime" class="form-label">Wedding Time:</label>
+                                <input type="time" class="form-control" id="weddingTime" value="16:00">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="venue" class="form-label">Venue:</label>
+                            <input type="text" class="form-control" id="venue" placeholder="Wedding Venue">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="venueAddress" class="form-label">Venue Address:</label>
+                            <textarea class="form-control" id="venueAddress" rows="3" placeholder="Venue Address"></textarea>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="hostedBy" class="form-label">Hosted By:</label>
+                                <input type="text" class="form-control" id="hostedBy" placeholder="Parents' Names">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="rsvpDate" class="form-label">RSVP Date:</label>
+                                <input type="date" class="form-control" id="rsvpDate">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="additionalInfo" class="form-label">Additional Information:</label>
+                            <textarea class="form-control" id="additionalInfo" rows="3" placeholder="Dress code, parking, etc."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-paint-brush"></i> Design Options</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="template" class="form-label">Invitation Template:</label>
+                            <select class="form-select" id="template">
+                                <option value="classic">Classic Elegant</option>
+                                <option value="modern">Modern Minimalist</option>
+                                <option value="vintage">Vintage Romance</option>
+                                <option value="floral">Floral Garden</option>
+                                <option value="beach">Beach Theme</option>
+                                <option value="rustic">Rustic Charm</option>
+                            </select>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="primaryColor" class="form-label">Primary Color:</label>
+                                <input type="color" class="form-control form-control-color" id="primaryColor" value="#d81b60">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="accentColor" class="form-label">Accent Color:</label>
+                                <input type="color" class="form-control form-control-color" id="accentColor" value="#1e88e5">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="fontStyle" class="form-label">Font Style:</label>
+                            <select class="form-select" id="fontStyle">
+                                <option value="serif">Serif (Traditional)</option>
+                                <option value="sans-serif">Sans-serif (Modern)</option>
+                                <option value="script">Script (Elegant)</option>
+                                <option value="monospace">Monospace (Clean)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includeRsvp" checked>
+                            <label class="form-check-label" for="includeRsvp">
+                                Include RSVP Section
+                            </label>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="includeMap" checked>
+                            <label class="form-check-label" for="includeMap">
+                                Include Map Link
+                            </label>
+                        </div>
+                        
+                        <button class="btn btn-pink w-100 mb-3" id="generateBtn">
+                            <i class="fas fa-magic"></i> Generate Invitation
+                        </button>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="downloadBtn" style="display: none;">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <button class="btn btn-outline-secondary" id="printBtn" style="display: none;">
+                                <i class="fas fa-print"></i> Print
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Wedding Planning Tips</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Send invitations 6-8 weeks before wedding</li>
+                            <li>Include all essential details</li>
+                            <li>Proofread carefully</li>
+                            <li>Consider digital copies</li>
+                            <li>Match your wedding theme</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-eye"></i> Invitation Preview</h5>
+            </div>
+            <div class="card-body">
+                <div id="invitationPreview" class="text-center">
+                    <p class="text-muted">Your invitation preview will appear here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const coupleNames = document.getElementById('coupleNames');
+        const weddingDate = document.getElementById('weddingDate');
+        const weddingTime = document.getElementById('weddingTime');
+        const venue = document.getElementById('venue');
+        const venueAddress = document.getElementById('venueAddress');
+        const hostedBy = document.getElementById('hostedBy');
+        const rsvpDate = document.getElementById('rsvpDate');
+        const additionalInfo = document.getElementById('additionalInfo');
+        const template = document.getElementById('template');
+        const primaryColor = document.getElementById('primaryColor');
+        const accentColor = document.getElementById('accentColor');
+        const fontStyle = document.getElementById('fontStyle');
+        const includeRsvp = document.getElementById('includeRsvp');
+        const includeMap = document.getElementById('includeMap');
+        const generateBtn = document.getElementById('generateBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const printBtn = document.getElementById('printBtn');
+        const invitationPreview = document.getElementById('invitationPreview');
+
+        // Set default dates
+        const today = new Date();
+        weddingDate.valueAsDate = new Date(today.getTime() + (180 * 24 * 60 * 60 * 1000)); // 180 days from now
+        rsvpDate.valueAsDate = new Date(today.getTime() + (150 * 24 * 60 * 60 * 1000)); // 150 days from now
+
+        function generateInvitation() {
+            const names = coupleNames.value.trim() || 'Bride & Groom';
+            const date = weddingDate.value ? new Date(weddingDate.value) : new Date();
+            const time = weddingTime.value || '16:00';
+            const venueName = venue.value.trim() || 'Beautiful Venue';
+            const address = venueAddress.value.trim() || 'Venue Address';
+            const host = hostedBy.value.trim() || 'Proud Parents';
+            const rsvp = rsvpDate.value ? new Date(rsvpDate.value) : new Date();
+            const info = additionalInfo.value.trim() || 'Additional information';
+            const templateType = template.value;
+            const primary = primaryColor.value;
+            const accent = accentColor.value;
+            const font = fontStyle.value;
+
+            // Format dates
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            const formattedTime = new Date(`2000-01-01T${time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const formattedRsvp = rsvp.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Generate invitation based on template
+            let invitationHTML = '';
+            
+            switch(templateType) {
+                case 'classic':
+                    invitationHTML = `
+                        <div class="invitation-classic" style="font-family: ${font}; max-width: 600px; margin: 0 auto; padding: 40px; border: 2px solid ${primary}; border-radius: 15px; background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-heart" style="color: ${primary}; font-size: 2rem;"></i>
+                                <h1 style="color: ${primary}; margin: 20px 0;">Together with Joy</h1>
+                                <i class="fas fa-heart" style="color: ${primary}; font-size: 2rem;"></i>
+                            </div>
+                            
+                            <div class="text-center mb-4">
+                                <h2 style="color: ${accent};">${names}</h2>
+                                <p class="lead">request the honor of your presence</p>
+                                <p>at their marriage</p>
+                            </div>
+                            
+                            <div class="text-center mb-4">
+                                <p><strong>${formattedDate}</strong></p>
+                                <p>at ${formattedTime}</p>
+                                <p>at ${venueName}</p>
+                                <p>${address}</p>
+                            </div>
+                            
+                            <div class="text-center mb-4">
+                                <p>Reception to follow</p>
+                            </div>
+                            
+                            <div class="text-center mb-4">
+                                <p>${host} request the pleasure of your company</p>
+                            </div>
+                            
+                            ${includeRsvp.checked ? `
+                            <div class="text-center">
+                                <p><strong>Kindly respond by ${formattedRsvp}</strong></p>
+                                <p>${info}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                    break;
+                    
+                case 'modern':
+                    invitationHTML = `
+                        <div class="invitation-modern" style="font-family: ${font}; max-width: 600px; margin: 0 auto; padding: 40px; border: 1px solid #eee; border-radius: 0; background: #fff;">
+                            <div class="text-center mb-4">
+                                <h1 style="color: ${primary}; font-weight: 300; letter-spacing: 3px;">THE WEDDING OF</h1>
+                            </div>
+                            
+                            <div class="text-center mb-4">
+                                <h2 style="color: ${accent}; font-weight: 300; font-size: 2.5rem;">${names}</h2>
+                            </div>
+                            
+                            <div class="text-center mb-4">
+                                <div style="border-top: 1px solid ${primary}; width: 100px; margin: 20px auto;"></div>
+                            </div>
+                            
+                            <div class="text-center mb-4">
+                                <p style="font-size: 1.2rem;">${formattedDate}</p>
+                                <p style="font-size: 1.1rem;">${formattedTime}</p>
+                                <p style="font-size: 1.1rem;">${venueName}</p>
+                            </div>
+                            
+                            ${includeRsvp.checked ? `
+                            <div class="text-center">
+                                <p style="background: ${primary}; color: white; padding: 10px; margin: 20px 0;">RSVP by ${formattedRsvp}</p>
+                                <p>${info}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                    break;
+                    
+                default:
+                    invitationHTML = `
+                        <div class="invitation-default" style="font-family: ${font}; max-width: 600px; margin: 0 auto; padding: 40px; border: 1px solid ${primary}; border-radius: 10px; background: #fff;">
+                            <div class="text-center mb-4">
+                                <h1 style="color: ${primary};">Wedding Invitation</h1>
+                                <h2 style="color: ${accent};">${names}</h2>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <p><strong>Date:</strong> ${formattedDate}</p>
+                                <p><strong>Time:</strong> ${formattedTime}</p>
+                                <p><strong>Venue:</strong> ${venueName}</p>
+                                <p><strong>Address:</strong> ${address}</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <p><strong>Hosted by:</strong> ${host}</p>
+                            </div>
+                            
+                            ${includeRsvp.checked ? `
+                            <div class="mb-4">
+                                <p><strong>RSVP by:</strong> ${formattedRsvp}</p>
+                                <p><strong>Additional Info:</strong> ${info}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+            }
+
+            invitationPreview.innerHTML = invitationHTML;
+            downloadBtn.style.display = 'block';
+            printBtn.style.display = 'block';
+        }
+
+        function downloadInvitation() {
+            alert('In a real implementation, this would download your invitation as a PDF. You would need to integrate a PDF generation library.');
+        }
+
+        function printInvitation() {
+            window.print();
+        }
+
+        generateBtn.addEventListener('click', generateInvitation);
+        downloadBtn.addEventListener('click', downloadInvitation);
+        printBtn.addEventListener('click', printInvitation);
+
+        // Update on input change
+        document.querySelectorAll('input, textarea, select').forEach(element => {
+            element.addEventListener('input', generateInvitation);
+            element.addEventListener('change', generateInvitation);
+        });
+
+        trackToolUsage('Wedding Invitation Generator');
+    </script>
+</body>
+</html>

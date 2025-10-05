@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashtag Generator - MultiTools</title>
+    <meta name="description" content="Generate popular hashtags. Free hashtag generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-hashtag text-primary"></i> Hashtag Generator</h1>
+            <p class="tool-description">Generate popular and relevant hashtags for your social media posts.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-edit"></i> Generate Hashtags</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="topicInput" class="form-label">Enter topic or keywords:</label>
+                            <input type="text" class="form-control" id="topicInput" placeholder="Enter topic, keywords, or description">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="platform" class="form-label">Platform:</label>
+                                <select class="form-select" id="platform">
+                                    <option value="instagram">Instagram</option>
+                                    <option value="twitter">Twitter</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="tiktok">TikTok</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="count" class="form-label">Number of Hashtags:</label>
+                                <input type="number" class="form-control" id="count" value="10" min="1" max="30">
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100" id="generateBtn">
+                            <i class="fas fa-hashtag"></i> Generate Hashtags
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-tags"></i> Generated Hashtags</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="hashtagOutput" class="form-label">Hashtags:</label>
+                            <textarea class="form-control" id="hashtagOutput" rows="8" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success w-100" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Hashtags
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-lightbulb"></i> Hashtag Tips</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Use 3-5 hashtags on Twitter</li>
+                            <li>Use 10-15 hashtags on Instagram</li>
+                            <li>Use 1-2 hashtags on Facebook</li>
+                            <li>Use 3-5 hashtags on TikTok</li>
+                            <li>Include trending hashtags</li>
+                            <li>Use location-specific hashtags</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const topicInput = document.getElementById('topicInput');
+        const platform = document.getElementById('platform');
+        const count = document.getElementById('count');
+        const generateBtn = document.getElementById('generateBtn');
+        const hashtagOutput = document.getElementById('hashtagOutput');
+        const copyBtn = document.getElementById('copyBtn');
+
+        function generateHashtags() {
+            const topic = topicInput.value.trim();
+            if (!topic) {
+                alert('Please enter a topic or keywords!');
+                return;
+            }
+
+            const hashtagCount = parseInt(count.value) || 10;
+            const platformValue = platform.value;
+
+            // Generate hashtags based on topic
+            const words = topic.split(/\s+/);
+            let hashtags = [];
+
+            // Add topic-related hashtags
+            words.forEach(word => {
+                if (word.length > 2) {
+                    hashtags.push(`#${word}`);
+                    hashtags.push(`#${word}life`);
+                    hashtags.push(`#${word}love`);
+                }
+            });
+
+            // Add popular platform-specific hashtags
+            const popularHashtags = {
+                instagram: [
+                    '#instagood', '#photooftheday', '#love', '#fashion', '#photography',
+                    '#art', '#picoftheday', '#life', '#beautiful', '#happy'
+                ],
+                twitter: [
+                    '#trending', '#news', '#politics', '#sports', '#technology',
+                    '#music', '#entertainment', '#health', '#business', '#education'
+                ],
+                facebook: [
+                    '#facebook', '#like', '#share', '#community', '#news',
+                    '#family', '#friends', '#life', '#happy', '#love'
+                ],
+                tiktok: [
+                    '#fyp', '#foryou', '#trending', '#viral', '#dance',
+                    '#music', '#fun', '#tiktok', '#tiktokindia', '#comedy'
+                ]
+            };
+
+            // Add some popular hashtags
+            const platformHashtags = popularHashtags[platformValue] || popularHashtags.instagram;
+            for (let i = 0; i < Math.min(hashtagCount - hashtags.length, platformHashtags.length); i++) {
+                hashtags.push(platformHashtags[i]);
+            }
+
+            // Shuffle and take the requested number
+            hashtags = hashtags.sort(() => 0.5 - Math.random()).slice(0, hashtagCount);
+
+            hashtagOutput.value = hashtags.join(' ');
+        }
+
+        generateBtn.addEventListener('click', generateHashtags);
+
+        copyBtn.addEventListener('click', function() {
+            if (hashtagOutput.value) {
+                ToolUtils.copyToClipboard(hashtagOutput.value);
+            }
+        });
+
+        trackToolUsage('Hashtag Generator');
+    </script>
+</body>
+</html>

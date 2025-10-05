@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name to Numerology Calculator - MultiTools</title>
+    <meta name="description" content="Calculate numerology numbers. Free name to numerology calculator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-calculator text-purple"></i> Name to Numerology Calculator</h1>
+            <p class="tool-description">Discover the numerological significance of your name and birth date.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-user"></i> Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name:</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="birthDate" class="form-label">Birth Date:</label>
+                            <input type="date" class="form-control" id="birthDate">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="calculationType" class="form-label">Calculation Type:</label>
+                            <select class="form-select" id="calculationType">
+                                <option value="pythagorean">Pythagorean (Western)</option>
+                                <option value="chaldean">Chaldean (Eastern)</option>
+                                <option value="kabbalah">Kabbalah</option>
+                                <option value="vowels">Vowels Only</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-purple w-100" id="calculateBtn">
+                            <i class="fas fa-calculator"></i> Calculate Numerology
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-pie"></i> Numerology Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="resultsContainer">
+                            <div class="text-center py-5">
+                                <i class="fas fa-calculator fa-3x text-purple mb-3"></i>
+                                <p class="text-muted">Enter your name and birth date to calculate numerology</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h6>Life Path Number:</h6>
+                                <div class="progress">
+                                    <div class="progress-bar bg-purple" id="lifePathBar" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <p id="lifePathDesc" class="text-muted">Enter your birth date to calculate</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-book"></i> Numerology Meanings</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4 class="text-purple">1</h4>
+                                <h6>Leader</h6>
+                                <p class="small">Independent, ambitious, pioneering spirit</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4 class="text-purple">2</h4>
+                                <h6>Peacemaker</h6>
+                                <p class="small">Diplomatic, cooperative, sensitive</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4 class="text-purple">3</h4>
+                                <h6>Creator</h6>
+                                <p class="small">Expressive, optimistic, artistic</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4 class="text-purple">4</h4>
+                                <h6>Builder</h6>
+                                <p class="small">Practical, reliable, hardworking</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4 class="text-purple">5</h4>
+                                <h6>Explorer</h6>
+                                <p class="small">Adventurous, versatile, freedom-loving</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h4 class="text-purple">6</h4>
+                                <h6>Nurturer</h6>
+                                <p class="small">Responsible, caring, harmonious</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> About Numerology</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Pythagorean System:</h6>
+                        <ul>
+                            <li>Uses numbers 1-9</li>
+                            <li>Based on Greek mathematics</li>
+                            <li>Most common system</li>
+                            <li>Easy to calculate</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Chaldean System:</h6>
+                        <ul>
+                            <li>Uses numbers 1-8</li>
+                            <li>More complex calculations</li>
+                            <li>Ancient Babylonian origin</li>
+                            <li>Considers sound vibrations</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <h6>Important Note:</h6>
+                    <p>Numerology is a belief system that assigns meaning to numbers. It is not scientifically proven and should be enjoyed as entertainment rather than fact.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const fullName = document.getElementById('fullName');
+        const birthDate = document.getElementById('birthDate');
+        const calculationType = document.getElementById('calculationType');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const lifePathBar = document.getElementById('lifePathBar');
+        const lifePathDesc = document.getElementById('lifePathDesc');
+
+        // Set default date to today
+        birthDate.valueAsDate = new Date();
+
+        function calculateNumerology() {
+            const name = fullName.value.trim();
+            const date = birthDate.value;
+            
+            if (!name) {
+                alert('Please enter your full name!');
+                return;
+            }
+
+            // Calculate name numbers
+            const expressionNumber = calculateExpressionNumber(name, calculationType.value);
+            const soulUrgeNumber = calculateSoulUrgeNumber(name, calculationType.value);
+            const personalityNumber = calculatePersonalityNumber(name, calculationType.value);
+            
+            // Calculate life path number if date is provided
+            let lifePathNumber = 0;
+            let lifePathDescText = 'Enter your birth date to calculate';
+            
+            if (date) {
+                lifePathNumber = calculateLifePathNumber(date);
+                lifePathDescText = getLifePathDescription(lifePathNumber);
+            }
+
+            // Update display
+            resultsContainer.innerHTML = `
+                <div class="text-center mb-4">
+                    <h2 class="text-purple">${name}</h2>
+                    <p class="lead">Numerology Analysis</p>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-purple">${expressionNumber}</h3>
+                                <p class="card-text">Expression Number</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-purple">${soulUrgeNumber}</h3>
+                                <p class="card-text">Soul Urge Number</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h3 class="text-purple">${personalityNumber}</h3>
+                                <p class="card-text">Personality Number</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <h6>Life Path Number:</h6>
+                        <div class="progress">
+                            <div class="progress-bar bg-purple" role="progressbar" style="width: ${lifePathNumber * 11}%"></div>
+                        </div>
+                        <p class="mt-2">${lifePathDescText}</p>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h6>Calculation Details:</h6>
+                        <p><strong>System:</strong> ${calculationType.options[calculationType.selectedIndex].text}</p>
+                        <p><strong>Letters:</strong> ${name.replace(/\s+/g, '').length} letters analyzed</p>
+                        <p><strong>Date:</strong> ${date ? new Date(date).toLocaleDateString() : 'Not provided'}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Update life path bar
+            if (lifePathNumber > 0) {
+                lifePathBar.style.width = (lifePathNumber * 11) + '%';
+                lifePathBar.textContent = lifePathNumber;
+                lifePathDesc.textContent = lifePathDescText;
+            }
+        }
+
+        function calculateExpressionNumber(name, type) {
+            const letters = name.replace(/\s+/g, '').toUpperCase();
+            let total = 0;
+            
+            // Pythagorean system
+            const pythagorean = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            
+            // Chaldean system
+            const chaldean = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 8, 'G': 3, 'H': 5, 'I': 1,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 7, 'P': 8, 'Q': 1, 'R': 2,
+                'S': 3, 'T': 4, 'U': 6, 'V': 6, 'W': 6, 'X': 5, 'Y': 1, 'Z': 7
+            };
+            
+            const system = type === 'chaldean' ? chaldean : pythagorean;
+            
+            for (let i = 0; i < letters.length; i++) {
+                const letter = letters[i];
+                if (system[letter]) {
+                    total += system[letter];
+                }
+            }
+            
+            return reduceToSingleDigit(total);
+        }
+
+        function calculateSoulUrgeNumber(name, type) {
+            const vowels = name.match(/[AEIOUaeiou]/g) || [];
+            const vowelString = vowels.join('');
+            return calculateExpressionNumber(vowelString, type);
+        }
+
+        function calculatePersonalityNumber(name, type) {
+            const consonants = name.replace(/[AEIOUaeiou]/g, '');
+            return calculateExpressionNumber(consonants, type);
+        }
+
+        function calculateLifePathNumber(dateString) {
+            const date = new Date(dateString);
+            let total = date.getDate() + (date.getMonth() + 1) + date.getFullYear();
+            return reduceToSingleDigit(total);
+        }
+
+        function reduceToSingleDigit(number) {
+            while (number > 9) {
+                let sum = 0;
+                while (number > 0) {
+                    sum += number % 10;
+                    number = Math.floor(number / 10);
+                }
+                number = sum;
+            }
+            return number;
+        }
+
+        function getLifePathDescription(number) {
+            const descriptions = {
+                1: 'The Leader - Independent, ambitious, pioneering',
+                2: 'The Peacemaker - Diplomatic, cooperative, sensitive',
+                3: 'The Creator - Expressive, optimistic, artistic',
+                4: 'The Builder - Practical, reliable, hardworking',
+                5: 'The Explorer - Adventurous, versatile, freedom-loving',
+                6: 'The Nurturer - Responsible, caring, harmonious',
+                7: 'The Seeker - Analytical, spiritual, introspective',
+                8: 'The Powerhouse - Ambitious, organized, goal-oriented',
+                9: 'The Humanitarian - Compassionate, generous, selfless'
+            };
+            
+            return descriptions[number] || 'Unknown';
+        }
+
+        calculateBtn.addEventListener('click', calculateNumerology);
+        fullName.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateNumerology();
+            }
+        });
+
+        trackToolUsage('Name to Numerology Calculator');
+    </script>
+</body>
+</html>

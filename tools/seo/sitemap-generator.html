@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap Generator - MultiTools</title>
+    <meta name="description" content="Generate XML sitemaps for SEO. Free sitemap generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="container tool-container">
+        <div class="tool-header">
+            <h1><i class="fas fa-sitemap text-success"></i> Sitemap Generator</h1>
+            <p class="tool-description">Generate XML sitemaps to help search engines index your website.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cog"></i> Sitemap Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="baseUrl" class="form-label">Base URL:</label>
+                            <input type="url" class="form-control" id="baseUrl" placeholder="https://example.com">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="sitemapUrls" class="form-label">Page URLs (one per line):</label>
+                            <textarea class="form-control" id="sitemapUrls" rows="10" placeholder="https://example.com/page1
+https://example.com/page2
+https://example.com/page3"></textarea>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="changeFreq" class="form-label">Change Frequency:</label>
+                                <select class="form-select" id="changeFreq">
+                                    <option value="always">Always</option>
+                                    <option value="hourly">Hourly</option>
+                                    <option value="daily" selected>Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="yearly">Yearly</option>
+                                    <option value="never">Never</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="priority" class="form-label">Priority:</label>
+                                <select class="form-select" id="priority">
+                                    <option value="0.1">0.1 - Lowest</option>
+                                    <option value="0.2">0.2</option>
+                                    <option value="0.3">0.3</option>
+                                    <option value="0.4">0.4</option>
+                                    <option value="0.5">0.5</option>
+                                    <option value="0.6">0.6</option>
+                                    <option value="0.7">0.7</option>
+                                    <option value="0.8">0.8</option>
+                                    <option value="0.9">0.9</option>
+                                    <option value="1.0" selected>1.0 - Highest</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success w-100" id="generateBtn">
+                            <i class="fas fa-cogs"></i> Generate Sitemap
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-code"></i> Generated Sitemap</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="sitemapOutput" class="form-label">XML Sitemap:</label>
+                            <textarea class="form-control" id="sitemapOutput" rows="12" readonly></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button class="btn btn-primary" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Sitemap Best Practices</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Submit your sitemap to Google Search Console</li>
+                            <li>Keep sitemaps under 50,000 URLs</li>
+                            <li>Use HTTPS URLs</li>
+                            <li>Update sitemap when content changes</li>
+                            <li>Include only canonical URLs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        loadHeaderFooter();
+
+        const baseUrl = document.getElementById('baseUrl');
+        const sitemapUrls = document.getElementById('sitemapUrls');
+        const changeFreq = document.getElementById('changeFreq');
+        const priority = document.getElementById('priority');
+        const generateBtn = document.getElementById('generateBtn');
+        const sitemapOutput = document.getElementById('sitemapOutput');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        function generateSitemap() {
+            const base = baseUrl.value.trim();
+            const urls = sitemapUrls.value.trim().split('\n').filter(url => url.trim());
+            const freq = changeFreq.value;
+            const prio = priority.value;
+
+            if (!base) {
+                alert('Please enter a base URL!');
+                return;
+            }
+
+            if (urls.length === 0) {
+                alert('Please enter at least one URL!');
+                return;
+            }
+
+            let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+            sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+
+            urls.forEach(url => {
+                const cleanUrl = url.trim();
+                if (cleanUrl) {
+                    sitemap += `  <url>\n`;
+                    sitemap += `    <loc>${cleanUrl}</loc>\n`;
+                    sitemap += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
+                    sitemap += `    <changefreq>${freq}</changefreq>\n`;
+                    sitemap += `    <priority>${prio}</priority>\n`;
+                    sitemap += `  </url>\n`;
+                }
+            });
+
+            sitemap += '</urlset>';
+            sitemapOutput.value = sitemap;
+        }
+
+        generateBtn.addEventListener('click', generateSitemap);
+        copyBtn.addEventListener('click', function() {
+            if (sitemapOutput.value) {
+                ToolUtils.copyToClipboard(sitemapOutput.value);
+            }
+        });
+        downloadBtn.addEventListener('click', function() {
+            if (sitemapOutput.value) {
+                ToolUtils.downloadFile(sitemapOutput.value, 'sitemap.xml', 'application/xml');
+            }
+        });
+
+        trackToolUsage('Sitemap Generator');
+    </script>
+</body>
+</html>
